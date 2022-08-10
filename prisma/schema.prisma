@@ -41,11 +41,79 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  emailVerified DateTime?
   image         String?
+  isAdmin       Boolean   @default(false)
   accounts      Account[]
   sessions      Session[]
+  reviews       Review[]
+  orders        Order[]
 }
+
+model Product {
+  id              String    @id @default(cuid())
+  name            String    @unique
+  description     String?
+  price           Int       @default(0)
+  image           String?
+  brand           String?
+  category        String?
+  rating          Int       @default(0)
+  numReviews      Int       @default(0)
+  reviews         Review[]
+  stock           Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  orders          Order[]
+
+}
+
+model Review {
+  id              String    @id @default(cuid())
+  productId       String
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product         Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  rating          Int       @default(0)
+  comment         String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Order {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products        Product[]
+  name            String
+  description     String?
+  image           String
+  price           Int       @default(0)
+  quantity        Int       @default(0)
+
+  shippingAddress String
+  shippingCity    String
+  shippingState   String
+  shippingZip     String
+
+  paymentMethod   String
+  paymentStatus   String
+  paymentAmount   Int       @default(0)
+  tax             Int       @default(0)
+  shipping        Int       @default(0)
+  total           Int       @default(0)
+
+  isPaid          Boolean   @default(false)
+  paidAt          DateTime?
+  isShipped       Boolean   @default(false)
+  shippedAt       DateTime?
+  isDelivered     Boolean   @default(false)
+  deliveredAt     DateTime?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+  
+
 
 model VerificationToken {
   identifier String

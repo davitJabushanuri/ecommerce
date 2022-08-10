@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import { useSession, signIn, signOut } from 'next-auth/react'
 
 import { Button, ButtonGroup } from '@chakra-ui/react'
+import Header from 'components/Header/Header'
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession()
@@ -19,6 +20,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <Header />
         {session ? (
           <>
             <Button onClick={() => signOut()} colorScheme="blue">
@@ -26,13 +28,6 @@ const Home: NextPage = () => {
             </Button>
 
             <p>{session?.user?.name}</p>
-            <Image
-              src={session?.user?.image}
-              alt="avatar"
-              width="40px"
-              height="40px"
-            />
-
             <p>{session?.user?.email}</p>
           </>
         ) : (

@@ -10,8 +10,19 @@ export default async function products(
   res: NextApiResponse
 ) {
   try {
-    const products = await prisma.product.findMany()
-    res.status(200).json(products)
+    const { name, description, price, image, brand, category, stock } = req.body
+    const product = await prisma.product.create({
+      data: {
+        name,
+        description,
+        price,
+        image,
+        brand,
+        category,
+        stock,
+      },
+    })
+    res.status(201).json(product)
   } catch (e) {
     console.log(e)
   }

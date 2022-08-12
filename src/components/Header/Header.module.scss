@@ -1,11 +1,27 @@
-.header {
-  padding: 1rem 0.4rem;
+.container {
+  padding: 1rem;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 1rem;
+  justify-content: space-between;
 
-  &__logo {
-    margin-right: auto;
+  @media (min-width: 600px) {
+    gap: 1rem;
+  }
+
+  .logo {
+    display: none;
+
+    @media screen and (min-width: 600px) {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+
+  .search {
+    width: 100%;
+
+    @media screen and (min-width: 600px) {
+      max-width: 600px;
+    }
   }
 }

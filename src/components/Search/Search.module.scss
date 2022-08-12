@@ -7,7 +7,6 @@
   grid-gap: 0.4rem;
   align-items: center;
   justify-items: center;
-  max-width: 300px;
 
   input {
     border: none;
@@ -16,6 +15,7 @@
     font-weight: 500;
     color: #333;
     background-color: transparent;
+    width: 100%;
 
     &::placeholder {
       color: rgb(153, 153, 153);
@@ -25,6 +25,9 @@
   button {
     font-size: 20px;
     color: rgb(153, 153, 153);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       color: #333;

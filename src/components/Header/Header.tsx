@@ -7,12 +7,14 @@ import Navbar from 'components/Navbar/navbar'
 
 const Header = () => {
   return (
-    <header className={styles.header}>
-      <div className={styles.header__logo}>Logo</div>
-      <div className={styles.header__search}>
+    <header className={styles.container}>
+      <div className={styles.logo}>Logo</div>
+
+      <div className={styles.search}>
         <Search />
       </div>
-      <div className={styles.header__navbar}>
+
+      <div className={styles.navbar}>
         <Navbar />
       </div>
     </header>

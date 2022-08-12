@@ -1,19 +1,20 @@
 import styles from './Header.module.scss'
 import { IconButton } from '@chakra-ui/react'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
-import ShoppingCartIcon from '../../assets/icons/shopping-bag.svg'
-import BackIcon from '../../assets/icons/back.svg'
 import Image from 'next/image'
+import Search from 'components/Search/Search'
+import Navbar from 'components/Navbar/navbar'
 
 const Header = () => {
   return (
     <header className={styles.header}>
-      <button className="backIcon">
-        <Image src={BackIcon} alt="" />
-      </button>
-      <button className="shoppingCartIcon">
-        <Image src={ShoppingCartIcon} alt="" />
-      </button>
+      <div className={styles.header__logo}>Logo</div>
+      <div className={styles.header__search}>
+        <Search />
+      </div>
+      <div className={styles.header__navbar}>
+        <Navbar />
+      </div>
     </header>
   )
 }

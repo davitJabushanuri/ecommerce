@@ -1,7 +1,13 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import SecondaryHeader from 'components/SecondaryHeader/SecondaryHeader'
 
 const ProductPage = () => {
-  return <div>productPage</div>
+  return (
+    <div>
+      <main>
+        <SecondaryHeader header="Product Details" />
+      </main>
+    </div>
+  )
 }
 
 export default ProductPage

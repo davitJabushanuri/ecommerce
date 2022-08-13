@@ -1,5 +1,13 @@
+import SecondaryHeader from 'components/SecondaryHeader/SecondaryHeader'
+
 const Settings = () => {
-  return <div>settings</div>
+  return (
+    <div>
+      <main>
+        <SecondaryHeader header="Settings" />
+      </main>
+    </div>
+  )
 }
 
 export default Settings

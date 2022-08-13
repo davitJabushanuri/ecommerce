@@ -7,6 +7,7 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import Header from 'components/Header/Header'
+import CardsContainer from 'components/CardsContainer/CardsContainer'
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession()
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
         <Header />
         {session ? (
           <>
@@ -35,6 +36,8 @@ const Home: NextPage = () => {
             Sign in with Github
           </Button>
         )}
+
+        <CardsContainer />
       </main>
     </div>
   )

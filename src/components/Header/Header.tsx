@@ -1,14 +1,14 @@
 import styles from './Header.module.scss'
-import { IconButton } from '@chakra-ui/react'
-import { ChevronLeftIcon } from '@chakra-ui/icons'
-import Image from 'next/image'
 import Search from 'components/Search/Search'
 import Navbar from 'components/Navbar/navbar'
+import Link from 'next/link'
 
 const Header = () => {
   return (
     <header className={styles.container}>
-      <div className={styles.logo}>Logo</div>
+      <div className={styles.logo}>
+        <Link href="/">Logo</Link>
+      </div>
 
       <div className={styles.search}>
         <Search />

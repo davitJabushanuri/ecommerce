@@ -43,25 +43,27 @@ const ProductDetails = () => {
       </div>
       <div className={styles.payment}>
         <p>in Stock</p>
-        <div className={styles.quantity}>
-          <button
-            disabled={quantity <= 1}
-            onClick={() => setQuantity((prev) => prev - 1)}
-            className={styles.minus}
-          >
-            <AiOutlineMinus />
-          </button>
-          <span>{quantity}</span>
+        <div className={styles.actions}>
+          <div className={styles.quantity}>
+            <button
+              disabled={quantity <= 1}
+              onClick={() => setQuantity((prev) => prev - 1)}
+              className={styles.minus}
+            >
+              <AiOutlineMinus />
+            </button>
+            <span>{quantity}</span>
 
-          <button
-            disabled={quantity >= MAX_QUANTITY}
-            onClick={() => setQuantity((prev) => prev + 1)}
-            className={styles.plus}
-          >
-            <AiOutlinePlus />
-          </button>
+            <button
+              disabled={quantity >= MAX_QUANTITY}
+              onClick={() => setQuantity((prev) => prev + 1)}
+              className={styles.plus}
+            >
+              <AiOutlinePlus />
+            </button>
+          </div>
+          <button className={styles.addToCart}>Add to Cart</button>
         </div>
-        <button className={styles.addToCart}>Add to Cart</button>
       </div>
     </div>
   )

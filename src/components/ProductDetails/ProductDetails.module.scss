@@ -1,7 +1,21 @@
 .container {
-  width: 100%;
+  @media screen and (min-width: 700px) {
+    margin-top: 2rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 2fr 3fr;
+    grid-template-areas:
+      'image details'
+      'image payment';
+  }
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: 2fr 3fr 300px;
+    grid-template-areas: 'image details payment';
+  }
 
   .imageContainer {
+    grid-area: image;
     position: relative;
     width: 100%;
     aspect-ratio: 12 / 10;
@@ -13,6 +27,7 @@
   }
 
   .infoContainer {
+    grid-area: details;
     padding: 1rem;
 
     .info {
@@ -63,51 +78,69 @@
     }
   }
   .payment {
+    grid-area: payment;
     padding: 1rem;
+
+    @media screen and (min-width: 700px) {
+    }
     p {
       color: #59ce8f;
       font-weight: 600;
     }
 
-    .quantity {
+    .actions {
       display: flex;
       align-items: center;
+      gap: 1rem;
       justify-content: space-between;
-      margin-top: 1rem;
+      padding: 1rem 0;
 
-      span {
-        font-size: 1.2rem;
-        text-align: center;
+      @media screen and (min-width: 700px) {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
-      button {
-        border: none;
+      .quantity {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+
+        span {
+          width: 20px;
+          font-size: 1.2rem;
+          text-align: center;
+        }
+
+        button {
+          border: none;
+          background-color: #59ce8f;
+          color: white;
+          padding: 0.3rem;
+          border-radius: 0.4rem;
+          font-size: 0.8rem;
+          cursor: pointer;
+          box-shadow: rgba(34, 219, 17, 0.2) 0px 8px 24px;
+        }
+
+        .minus {
+          border: 1px solid #59ce8f;
+          background-color: #fff;
+          color: #59ce8f;
+        }
+      }
+
+      .addToCart {
+        width: 100%;
+        max-width: 300px;
         background-color: #59ce8f;
         color: white;
-        padding: 0.3rem;
-        border-radius: 0.4rem;
-        font-size: 0.8rem;
-        cursor: pointer;
+        border-radius: 0.3rem;
+        padding: 0.7rem;
+        font-weight: bold;
+        font-size: 0.9rem;
         box-shadow: rgba(34, 219, 17, 0.2) 0px 8px 24px;
       }
-
-      .minus {
-        border: 1px solid #59ce8f;
-        background-color: #fff;
-        color: #59ce8f;
-      }
-    }
-
-    .addToCart {
-      margin: 1rem 0;
-      width: 100%;
-      background-color: #59ce8f;
-      color: white;
-      border-radius: 0.3rem;
-      padding: 0.7rem;
-      font-weight: bold;
-      font-size: 0.9rem;
-      box-shadow: rgba(34, 219, 17, 0.2) 0px 8px 24px;
     }
   }
 }

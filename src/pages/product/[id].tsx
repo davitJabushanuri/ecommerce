@@ -4,8 +4,10 @@ import SecondaryHeader from 'components/SecondaryHeader/SecondaryHeader'
 const ProductPage = () => {
   return (
     <div>
-      <SecondaryHeader header="Product Details" />
-      <ProductDetails />
+      <main>
+        <SecondaryHeader header="Product Details" />
+        <ProductDetails />
+      </main>
     </div>
   )
 }

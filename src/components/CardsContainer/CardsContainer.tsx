@@ -3,9 +3,19 @@ import styles from './CardsContainer.module.scss'
 
 const CardsContainer = () => {
   return (
-    <div className={styles.container}>
-      <Card />
-    </div>
+    <>
+      <h1>New Arrivals!</h1>
+      <div className={styles.container}>
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
+    </>
   )
 }
 

@@ -1,0 +1,113 @@
+.container {
+  width: 100%;
+
+  .imageContainer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 12 / 10;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    .image {
+      object-fit: cover;
+    }
+  }
+
+  .infoContainer {
+    padding: 1rem;
+
+    .info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .shipping {
+        background-color: #59ce8f;
+        color: white;
+        border-radius: 0.3rem;
+        padding: 0.2rem 0.4rem;
+        font-size: 0.7rem;
+      }
+
+      .favorites {
+        color: #ccc;
+        border-radius: 50%;
+        padding: 0.3rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+
+    .description {
+      color: rgb(134, 131, 131);
+    }
+
+    .price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+  }
+  .payment {
+    padding: 1rem;
+    p {
+      color: #59ce8f;
+      font-weight: 600;
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+
+      span {
+        font-size: 1.2rem;
+        text-align: center;
+      }
+
+      button {
+        border: none;
+        background-color: #59ce8f;
+        color: white;
+        padding: 0.3rem;
+        border-radius: 0.4rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+        box-shadow: rgba(34, 219, 17, 0.2) 0px 8px 24px;
+      }
+
+      .minus {
+        border: 1px solid #59ce8f;
+        background-color: #fff;
+        color: #59ce8f;
+      }
+    }
+
+    .addToCart {
+      margin: 1rem 0;
+      width: 100%;
+      background-color: #59ce8f;
+      color: white;
+      border-radius: 0.3rem;
+      padding: 0.7rem;
+      font-weight: bold;
+      font-size: 0.9rem;
+      box-shadow: rgba(34, 219, 17, 0.2) 0px 8px 24px;
+    }
+  }
+}

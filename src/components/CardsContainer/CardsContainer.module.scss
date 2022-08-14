@@ -1,0 +1,9 @@
+.container {
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(240px, 200px + 10vw, 360px);
+  overflow: auto;
+  scroll-snap-stop: always;
+  padding: 1rem 0;
+}

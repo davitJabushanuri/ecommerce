@@ -1,0 +1,47 @@
+.container {
+  margin: 1rem 0;
+  padding: 1rem clamp(1rem, 0.6rem + 2vw, 2rem);
+  background-image: url('https://images.pexels.com/photos/1619652/pexels-photo-1619652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+  background-size: cover;
+  background-color: #fff;
+  background-position: center;
+  aspect-ratio: 16 / 5;
+  color: #fff;
+  border-radius: 0.2rem;
+
+  h1 {
+    font-size: clamp(1rem, 0.8rem + 2vw, 1.8rem);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    max-width: 300px;
+  }
+
+  p {
+    max-width: 300px;
+    margin-bottom: 1rem;
+    font-weight: 300;
+    font-size: clamp(0.8rem, 0.6rem + 2vw, 1rem);
+  }
+
+  button {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 0.4rem;
+    padding: clamp(0.2rem, 0.1rem + 1vw, 0.6rem) 1rem;
+    font-size: clamp(0.6rem, 0.4rem + 2vw, 1rem);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border: 2px solid #fff;
+
+    &:hover {
+      background-color: transparent;
+      color: #fff;
+    }
+  }
+}

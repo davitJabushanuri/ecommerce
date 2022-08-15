@@ -1,16 +1,16 @@
 .container {
   width: 100%;
   background-color: #fff;
-  border-radius: 1rem;
+  border-radius: 0.4rem;
   background-color: rgb(236, 236, 236);
 
   .imageContainer {
     position: relative;
     width: 100%;
-    border-radius: 0.4rem;
+    border-radius: 0.4rem 0.4rem 0 0;
     overflow: hidden;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 16 / 9;
 
     .image {
       object-fit: cover;

@@ -1,9 +1,28 @@
 .container {
   padding: 1rem 0;
   margin-bottom: 2rem;
-  h1 {
-    font-size: clamp(1rem, 0.8rem + 2vw, 1.6rem);
-    font-weight: 600;
-    margin-bottom: 0.6rem;
+
+  .seeAll {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+
+    h1 {
+      font-size: clamp(1rem, 0.8rem + 2vw, 1.4rem);
+      font-weight: 600;
+    }
+
+    a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }

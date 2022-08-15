@@ -10,7 +10,7 @@
   }
 
   @media screen and (min-width: 1024px) {
-    grid-template-columns: 2fr 3fr 300px;
+    grid-template-columns: 2fr 2fr 280px;
     grid-template-areas: 'image details payment';
   }
 
@@ -19,7 +19,10 @@
     position: relative;
     width: 100%;
     aspect-ratio: 12 / 10;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    @media screen and (min-width: 700px) {
+      margin-left: 1rem;
+    }
 
     .image {
       object-fit: cover;

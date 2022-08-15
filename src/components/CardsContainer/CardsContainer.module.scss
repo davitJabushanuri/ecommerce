@@ -1,9 +1,9 @@
 .container {
-  display: grid;
-  gap: 1rem;
-  grid-auto-flow: column;
-  grid-auto-columns: clamp(240px, 200px + 10vw, 360px);
-  overflow: auto;
-  scroll-snap-stop: always;
   padding: 1rem 0;
+  margin-bottom: 2rem;
+  h1 {
+    font-size: clamp(1rem, 0.8rem + 2vw, 1.6rem);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
 }

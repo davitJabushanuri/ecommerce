@@ -13,9 +13,10 @@ import Link from 'next/link'
 
 interface CardsContainerProps {
   title: string
+  products: any
 }
 
-const CardsContainer = ({ title }: CardsContainerProps) => {
+const CardsContainer = ({ title, products }: CardsContainerProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.seeAll}>
@@ -50,27 +51,13 @@ const CardsContainer = ({ title }: CardsContainerProps) => {
           },
         }}
       >
-        <SwiperSlide>
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card />
-        </SwiperSlide>
+        {products.map((product: any) => {
+          return (
+            <SwiperSlide key={product.id}>
+              <Card product={product} />
+            </SwiperSlide>
+          )
+        })}
       </Swiper>
     </div>
   )

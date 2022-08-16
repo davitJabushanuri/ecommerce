@@ -2,16 +2,36 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-
 import { useSession, signIn, signOut } from 'next-auth/react'
+import { useState } from 'react'
 
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import Header from 'components/Header/Header'
 import CardsContainer from 'components/CardsContainer/CardsContainer'
 import Hero from 'components/Hero/Hero'
 import Footer from 'components/Footer/Footer'
+import axios from 'axios'
 
-const Home: NextPage = () => {
+interface Products {
+  products: {
+    brand: string
+    category: string
+    description: string
+    id: string
+    image: string
+    isBestSeller: boolean
+    isNew: boolean
+    isOnSale: boolean
+    isTrending: boolean
+    name: string
+    numReviews: number
+    price: number
+    rating: number
+    stock: number
+  }
+}
+
+const Home: NextPage<Products> = ({ products }) => {
   const { data: session, status } = useSession()
 
   return (
@@ -25,13 +45,27 @@ const Home: NextPage = () => {
       <main>
         <Header />
         <Hero />
-        <CardsContainer title="New Arrivals" />
-        <CardsContainer title="Trending" />
-        <CardsContainer title="Recently Viewed" />
+        <CardsContainer title="New Arrivals" products={products} />
+        <CardsContainer title="Trending" products={products} />
+        <CardsContainer title="On sale" products={products} />
+        <CardsContainer title="Recently Viewed" products={products} />
         <Footer />
       </main>
     </div>
   )
+}
+
+// getStaticProps
+export async function getStaticProps() {
+  const products = await axios
+    .get('http://localhost:3000/api/products')
+    .then((res) => res.data)
+
+  return {
+    props: {
+      products,
+    },
+  }
 }
 
 export default Home

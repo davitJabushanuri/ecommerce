@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 import { AiFillHeart } from 'react-icons/ai'
 
-const Card = () => {
+const Card = ({ product }: any) => {
   const router = useRouter()
 
   const addToCart = (e: any) => {
@@ -22,25 +22,25 @@ const Card = () => {
       <div className={styles.imageContainer}>
         <Image
           className={styles.image}
-          src="https://images.pexels.com/photos/303383/pexels-photo-303383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          src={product.image}
           alt="macbook"
           layout="fill"
         />
       </div>
-      <h3>Macbook Air M1</h3>
+      <h3>{product?.name}</h3>
 
       <div className={styles.description}>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.saasd</p>
+        <p>{product?.description}</p>
       </div>
 
       <div className={styles.addToCart}>
-        <p className={styles.price}>$825</p>
+        <p className={styles.price}>${product?.price}</p>
         <button onClick={addToCart} className={styles.addToCartButton}>
           Add to Cart
         </button>
       </div>
 
-      <p className={styles.bestseller}>Best Seller</p>
+      {product.isBestSeller && <p className={styles.bestseller}>Best Seller</p>}
       <button className={styles.favorites}>
         <AiFillHeart />
       </button>

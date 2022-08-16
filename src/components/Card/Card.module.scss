@@ -2,9 +2,9 @@
   width: 100%;
   background-color: #fff;
   border-radius: 0.2rem;
-  background-color: rgb(236, 236, 236);
   position: relative;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
     background-color: #f1f1f1;
@@ -61,7 +61,7 @@
       background-color: #59ce8f;
       color: white;
       padding: 0.4rem 0.8rem;
-      border-radius: 0.4rem;
+      border-radius: 0.2rem;
       font-size: 0.9rem;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
@@ -88,11 +88,12 @@
     top: 0;
     right: 0;
     margin: 0.4rem;
-    background-color: rgb(202, 201, 201);
+    background-color: transparent;
+    border: 1px solid #b4b4b4;
     color: #000;
     border-radius: 50%;
-    padding: 0.3rem;
-    font-size: 1.2rem;
+    padding: 0.4rem;
+    font-size: 0.9rem;
     color: rgb(236, 236, 236);
     transition: all 0.2s ease-in-out;
     display: none;

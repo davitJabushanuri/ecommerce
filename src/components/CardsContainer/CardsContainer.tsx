@@ -32,9 +32,6 @@ const CardsContainer = ({ title }: CardsContainerProps) => {
         slidesPerGroup={1}
         spaceBetween={20}
         loopFillGroupWithBlank={true}
-        pagination={{
-          clickable: true,
-        }}
         navigation={true}
         modules={[Pagination, Navigation]}
         className="mySwiper"

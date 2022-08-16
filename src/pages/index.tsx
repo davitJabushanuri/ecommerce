@@ -9,6 +9,7 @@ import { Button, ButtonGroup } from '@chakra-ui/react'
 import Header from 'components/Header/Header'
 import CardsContainer from 'components/CardsContainer/CardsContainer'
 import Hero from 'components/Hero/Hero'
+import Footer from 'components/Footer/Footer'
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession()
@@ -27,6 +28,7 @@ const Home: NextPage = () => {
         <CardsContainer title="New Arrivals" />
         <CardsContainer title="Trending" />
         <CardsContainer title="Recently Viewed" />
+        <Footer />
       </main>
     </div>
   )

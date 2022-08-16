@@ -1,6 +1,5 @@
 import styles from './ProductDetails.module.scss'
 import {
-  AiOutlineHeart,
   AiFillStar,
   AiFillHeart,
   AiOutlinePlus,

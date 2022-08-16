@@ -1,48 +1,106 @@
 .container {
   width: 100%;
   background-color: #fff;
-  border-radius: 0.4rem;
+  border-radius: 0.2rem;
   background-color: rgb(236, 236, 236);
-  padding-bottom: 1rem;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f1f1f1;
+
+    .favorites {
+      display: flex;
+    }
+  }
 
   .imageContainer {
     position: relative;
     width: 100%;
-    border-radius: 0.4rem 0.4rem 0 0;
     overflow: hidden;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     aspect-ratio: 16 / 9;
 
     .image {
       object-fit: cover;
+      border-radius: 0.2rem 0.2rem 0 0;
     }
   }
 
-  .contentContainer {
+  h3 {
     padding: 1rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    h3 {
-      font-weight: 700;
-    }
-
-    .price {
-      font-weight: 700;
-    }
+    font-weight: 500;
+    font-size: clamp(0.9rem, 0.6rem + 2vw, 1.2rem);
   }
 
   .description {
-    padding: 0 1rem 1rem;
+    padding: 0 1rem;
     overflow: hidden;
     p {
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
-      color: #acacac;
-      margin-bottom: 0.4rem;
+      color: #b4b4b4;
+      font-size: clamp(0.8rem, 0.6rem + 2vw, 1rem);
+    }
+  }
+
+  .addToCart {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .price {
+      font-weight: 700;
+      font-size: clamp(1rem, 1rem + 2vw, 1.4rem);
+    }
+
+    .addToCartButton {
+      border: none;
+      background-color: #59ce8f;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.4rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #4de996;
+      }
+    }
+  }
+
+  .bestseller {
+    position: absolute;
+    top: 0;
+    margin: 0.4rem;
+    font-size: 0.8rem;
+    color: #fff;
+    background-color: #5746b8;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.2rem;
+    border: none;
+  }
+  .favorites {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0.4rem;
+    background-color: rgb(202, 201, 201);
+    color: #000;
+    border-radius: 50%;
+    padding: 0.3rem;
+    font-size: 1.2rem;
+    color: rgb(236, 236, 236);
+    transition: all 0.2s ease-in-out;
+    display: none;
+
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
     }
   }
 }

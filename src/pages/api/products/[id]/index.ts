@@ -7,21 +7,23 @@ export default async function products(
 ) {
   const id: any = req.query.id
 
-  try {
-    const product = await prisma.product.findUnique({
-      where: {
-        id,
-      },
-    })
-
-    if (!product) {
-      res.status(404).json({
-        message: 'Product not found',
+  if (req.method === 'GET') {
+    try {
+      const product = await prisma.product.findUnique({
+        where: {
+          id,
+        },
       })
-    }
 
-    res.status(200).json(product)
-  } catch (e) {
-    console.log(e)
+      if (!product) {
+        res.status(404).json({
+          message: 'Product not found',
+        })
+      }
+
+      res.status(200).json(product)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }

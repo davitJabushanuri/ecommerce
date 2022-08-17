@@ -11,24 +11,10 @@ import CardsContainer from 'components/CardsContainer/CardsContainer'
 import Hero from 'components/Hero/Hero'
 import Footer from 'components/Footer/Footer'
 import axios from 'axios'
+import { Product } from '../ts/interfaces/db_interfaces'
 
 interface Products {
-  products: {
-    brand: string
-    category: string
-    description: string
-    id: string
-    image: string
-    isBestSeller: boolean
-    isNew: boolean
-    isOnSale: boolean
-    isTrending: boolean
-    name: string
-    numReviews: number
-    price: number
-    rating: number
-    stock: number
-  }
+  products: Product
 }
 
 const Home: NextPage<Products> = ({ products }) => {

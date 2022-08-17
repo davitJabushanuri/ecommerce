@@ -15,7 +15,7 @@ const Card = ({ product }: any) => {
   return (
     <div
       onClick={() => {
-        router.push('/product/1')
+        router.push(`/product/${product.id}`)
       }}
       className={styles.container}
     >

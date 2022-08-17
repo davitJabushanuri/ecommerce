@@ -7,18 +7,19 @@ import {
 } from 'react-icons/ai'
 import Image from 'next/image'
 import { useState } from 'react'
+import axios from 'axios'
+import { Product } from '../../ts/interfaces/db_interfaces'
 
-const ProductDetails = () => {
+const ProductDetails: React.FC<Product> = ({ product }) => {
   const [quantity, setQuantity] = useState(1)
-  const MAX_QUANTITY = 10
 
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
         <Image
           className={styles.image}
-          src="https://images.pexels.com/photos/13125805/pexels-photo-13125805.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          alt="product"
+          src={product?.image}
+          alt={product?.name}
           layout="fill"
         />
       </div>
@@ -29,23 +30,20 @@ const ProductDetails = () => {
             <AiFillHeart />
           </button>
         </div>
-        <h1 className={styles.title}>Macbook M1 Air</h1>
-        <p className={styles.description}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit,
-          architecto!
-        </p>
+        <h1 className={styles.title}>{product?.name}</h1>
+        <p className={styles.description}>{product?.description}</p>
         <p className={styles.price}>$1,000.00</p>
         <p className={styles.rating}>
-          <span>4.5</span>
+          <span>{product?.rating}</span>
           <AiFillStar />
         </p>
       </div>
       <div className={styles.payment}>
-        <p>in Stock</p>
+        <p>{product?.stock ? 'In stock' : 'Out of stock'}</p>
         <div className={styles.actions}>
           <div className={styles.quantity}>
             <button
-              disabled={quantity <= 1}
+              disabled={product?.stock <= 1}
               onClick={() => setQuantity((prev) => prev - 1)}
               className={styles.minus}
             >
@@ -54,7 +52,7 @@ const ProductDetails = () => {
             <span>{quantity}</span>
 
             <button
-              disabled={quantity >= MAX_QUANTITY}
+              disabled={quantity >= product?.stock}
               onClick={() => setQuantity((prev) => prev + 1)}
               className={styles.plus}
             >

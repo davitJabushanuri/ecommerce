@@ -65,6 +65,7 @@ model Product {
   isNew           Boolean   @default(false)
   isOnSale        Boolean   @default(false)
   isTrending      Boolean   @default(false)
+  shipping        Int       @default(0)
 
   reviews         Review[]
   stock           Int       @default(0)

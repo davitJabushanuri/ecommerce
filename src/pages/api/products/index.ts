@@ -1,7 +1,7 @@
-// import { prisma } from '../../../lib/prisma'
+import { prisma } from '../../../lib/prisma'
 
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+// import { PrismaClient } from '@prisma/client'
+// const prisma = new PrismaClient()
 
 import { NextApiRequest, NextApiResponse } from 'next'
 

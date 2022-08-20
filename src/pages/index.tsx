@@ -5,7 +5,6 @@ import styles from '../styles/Home.module.css'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useState } from 'react'
 
-import { Button, ButtonGroup } from '@chakra-ui/react'
 import Header from 'components/Header/Header'
 import CardsContainer from 'components/CardsContainer/CardsContainer'
 import Hero from 'components/Hero/Hero'
@@ -13,12 +12,26 @@ import Footer from 'components/Footer/Footer'
 import axios from 'axios'
 import { Product } from '../ts/interfaces/db_interfaces'
 
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
+
 interface Products {
   products: Product
 }
 
-const Home: NextPage<Products> = ({ products }) => {
-  const { data: session, status } = useSession()
+const Home: NextPage<Products> = () => {
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useQuery(['products'], getProducts)
+
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
+
+  if (isError) {
+    return <p>Error :(</p>
+  }
 
   return (
     <div>
@@ -41,16 +54,21 @@ const Home: NextPage<Products> = ({ products }) => {
   )
 }
 
+const getProducts = async () => {
+  const response = await axios.get('http://localhost:3000/api/products')
+  return response.data
+}
+
 // getStaticProps
 export async function getStaticProps() {
-  const products = await axios
-    .get('http://localhost:3000/api/products')
-    .then((res) => res.data)
+  const queryClient = new QueryClient()
+  await queryClient.prefetchQuery(['products'], getProducts)
 
   return {
     props: {
-      products,
+      dehydratedState: dehydrate(queryClient),
     },
+    revalidate: 60,
   }
 }
 

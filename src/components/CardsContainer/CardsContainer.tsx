@@ -10,6 +10,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import Link from 'next/link'
+import { Product } from '@prisma/client'
 
 interface CardsContainerProps {
   title: string
@@ -51,13 +52,29 @@ const CardsContainer = ({ title, products }: CardsContainerProps) => {
           },
         }}
       >
-        {products.map((product: any) => {
-          return (
-            <SwiperSlide key={product.id}>
-              <Card product={product} />
-            </SwiperSlide>
-          )
-        })}
+        {products
+          .filter((product: Product) => {
+            switch (title) {
+              case 'New Arrivals':
+                return product.isNew
+
+              case 'Trending':
+                return product.isTrending
+
+              case 'On sale':
+                return product.isOnSale
+
+              default:
+                return product
+            }
+          })
+          .map((product: any) => {
+            return (
+              <SwiperSlide key={product.id}>
+                <Card product={product} />
+              </SwiperSlide>
+            )
+          })}
       </Swiper>
     </div>
   )

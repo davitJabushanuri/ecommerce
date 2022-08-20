@@ -7,11 +7,12 @@ import {
 } from 'react-icons/ai'
 import Image from 'next/image'
 import { useState } from 'react'
-import axios from 'axios'
 import { Product } from '../../ts/interfaces/db_interfaces'
 
 const ProductDetails: React.FC<Product> = ({ product }) => {
   const [quantity, setQuantity] = useState(1)
+
+  console.log(typeof product.stock)
 
   return (
     <div className={styles.container}>
@@ -32,7 +33,7 @@ const ProductDetails: React.FC<Product> = ({ product }) => {
         </div>
         <h1 className={styles.title}>{product?.name}</h1>
         <p className={styles.description}>{product?.description}</p>
-        <p className={styles.price}>$1,000.00</p>
+        <p className={styles.price}>{product?.price}</p>
         <p className={styles.rating}>
           <span>{product?.rating}</span>
           <AiFillStar />
@@ -43,7 +44,7 @@ const ProductDetails: React.FC<Product> = ({ product }) => {
         <div className={styles.actions}>
           <div className={styles.quantity}>
             <button
-              disabled={product?.stock <= 1}
+              disabled={quantity <= 1}
               onClick={() => setQuantity((prev) => prev - 1)}
               className={styles.minus}
             >

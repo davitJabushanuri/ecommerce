@@ -5,26 +5,40 @@ import { BsArrowRight } from 'react-icons/bs'
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Navigation } from 'swiper'
-
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
+
 import Link from 'next/link'
 import { IProduct } from '../../ts/interfaces/db_interfaces'
-
 import useProductStore from '../store/productStore'
 
 const CardsContainer = ({ title, products }: any) => {
-  const storeProducts = useProductStore((state: any) => state?.products)
-  const setProducts = useProductStore((state: any) => state?.setProducts)
-  console.log(storeProducts)
+  const setProducts = useProductStore((state: any) => state.setProducts)
+
+  const filterProducts = () => {
+    switch (title) {
+      case 'New Arrivals':
+        setProducts('New Arrivals')
+        break
+      case 'Trending':
+        setProducts('Trending')
+        break
+      case 'On sale':
+        setProducts('On sale')
+        break
+      default:
+        setProducts('Recently Viewed')
+        break
+    }
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.seeAll}>
         <h1>{title}</h1>
-        <Link href={`/products`}>
-          <a>
+        <Link href={`/products/${title}`}>
+          <a onClick={filterProducts}>
             <span>See all</span>
             <BsArrowRight />
           </a>

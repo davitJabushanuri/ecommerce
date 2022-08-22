@@ -2,7 +2,7 @@ import create from 'zustand'
 import { IProduct } from 'ts/interfaces/db_interfaces'
 
 const useProductStore = create((set) => ({
-  products: [],
+  products: '',
   setProducts: (products: IProduct[]) => set({ products: products }),
 }))
 

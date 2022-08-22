@@ -8,6 +8,10 @@
   align-items: center;
   justify-items: center;
 
+  &:focus-within {
+    outline: 1px solid #000000;
+  }
+
   input {
     border: none;
     outline: none;

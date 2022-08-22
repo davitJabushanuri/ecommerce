@@ -10,12 +10,12 @@ import CardsContainer from 'components/CardsContainer/CardsContainer'
 import Hero from 'components/Hero/Hero'
 import Footer from 'components/Footer/Footer'
 import axios from 'axios'
-import { Product } from '../ts/interfaces/db_interfaces'
+import { IProduct } from '../ts/interfaces/db_interfaces'
 
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
 
 interface Products {
-  products: Product
+  products: IProduct
 }
 
 const Home: NextPage<Products> = () => {

@@ -10,14 +10,15 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import Link from 'next/link'
-import { Product } from '@prisma/client'
+import { IProduct } from '../../ts/interfaces/db_interfaces'
 
-interface CardsContainerProps {
-  title: string
-  products: any
-}
+import useProductStore from '../store/productStore'
 
-const CardsContainer = ({ title, products }: CardsContainerProps) => {
+const CardsContainer = ({ title, products }: any) => {
+  const storeProducts = useProductStore((state: any) => state?.products)
+  const setProducts = useProductStore((state: any) => state?.setProducts)
+  console.log(storeProducts)
+
   return (
     <div className={styles.container}>
       <div className={styles.seeAll}>
@@ -35,8 +36,10 @@ const CardsContainer = ({ title, products }: CardsContainerProps) => {
         spaceBetween={20}
         loopFillGroupWithBlank={true}
         navigation={true}
+        pagination={true}
+        touchMoveStopPropagation={true}
         modules={[Pagination, Navigation]}
-        className="mySwiper"
+        className="productSwiper"
         breakpoints={{
           0: {
             slidesPerView: 1,
@@ -53,11 +56,10 @@ const CardsContainer = ({ title, products }: CardsContainerProps) => {
         }}
       >
         {products
-          .filter((product: Product) => {
+          .filter((product: IProduct) => {
             switch (title) {
               case 'New Arrivals':
                 return product.isNew
-
               case 'Trending':
                 return product.isTrending
 

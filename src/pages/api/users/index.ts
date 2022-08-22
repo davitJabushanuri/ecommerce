@@ -1,14 +1,8 @@
 import { prisma } from '../../../lib/prisma'
 
-// import { PrismaClient } from '@prisma/client'
-// const prisma = new PrismaClient()
-
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function products(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function users(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
     res.status(405).json({
       message: 'only GET method is supported',
@@ -16,8 +10,8 @@ export default async function products(
   }
 
   try {
-    const products = await await prisma.product.findMany()
-    res.status(200).json(products)
+    const users = await prisma.user.findMany()
+    res.status(200).json(users)
   } catch (e) {
     console.log(e)
   }

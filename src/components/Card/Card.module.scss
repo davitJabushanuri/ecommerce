@@ -1,13 +1,14 @@
 .container {
   width: 100%;
   background-color: #fff;
+  margin-bottom: 2.4rem;
   border-radius: 0.2rem;
   position: relative;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 
   &:hover {
-    background-color: #f1f1f1;
+    background-color: #dad8d8;
 
     .favorites {
       display: flex;

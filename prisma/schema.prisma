@@ -90,8 +90,8 @@ model Review {
 
 model Order {
   id              String    @id @default(cuid())
-  userId          String
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userEmail          String
+  user            User      @relation(fields: [userEmail], references: [id], onDelete: Cascade)
   products        Product[]
   name            String
   description     String?

@@ -37,7 +37,7 @@ const CardsContainer = ({ title, products }: any) => {
     <div className={styles.container}>
       <div className={styles.seeAll}>
         <h1>{title}</h1>
-        <Link href={`/products/${title}`}>
+        <Link href={`/products`}>
           <a onClick={filterProducts}>
             <span>See all</span>
             <BsArrowRight />
@@ -69,7 +69,7 @@ const CardsContainer = ({ title, products }: any) => {
           },
         }}
       >
-        {products
+        {products.products
           .filter((product: IProduct) => {
             switch (title) {
               case 'New Arrivals':

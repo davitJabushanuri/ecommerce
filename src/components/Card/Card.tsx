@@ -54,7 +54,9 @@ const Card = ({ product }: any) => {
           layout="fill"
         />
       </div>
-      <h3>{product?.name}</h3>
+      <div className={styles.nameContainer}>
+        <h3>{product?.name}</h3>
+      </div>
 
       <div className={styles.description}>
         <p>{product?.description}</p>

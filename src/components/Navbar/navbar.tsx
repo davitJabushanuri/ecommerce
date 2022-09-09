@@ -58,20 +58,26 @@ const Navbar = () => {
                 alt="profile image"
               />
               <p>{session?.user?.name}</p>
-              <BiChevronDown className={styles.arrowDown} />
+              <BiChevronDown
+                className={`${styles.arrowDown} ${
+                  profileModal && styles.arrowUp
+                }`}
+              />
             </a>
 
-            {profileModal && (
-              <div className={styles.profileModal}>
-                <div className={styles.account}>
-                  <Link href={`/profile`}>
-                    <a>Account settings</a>
-                  </Link>
-                </div>
-
-                <button onClick={handleSignOut}>Sign out</button>
+            <div
+              className={`${styles.profileModal} ${
+                profileModal && styles.openModal
+              }`}
+            >
+              <div className={styles.account}>
+                <Link href={`/profile`}>
+                  <a>Account settings</a>
+                </Link>
               </div>
-            )}
+
+              <button onClick={handleSignOut}>Sign out</button>
+            </div>
           </>
         ) : (
           <Link href="/auth/signin">

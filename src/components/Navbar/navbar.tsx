@@ -6,10 +6,21 @@ import { RiUser6Line } from 'react-icons/ri'
 import { TbSettings } from 'react-icons/tb'
 import Link from 'next/link'
 
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
+import { useState } from 'react'
+import { redirect } from 'next/dist/server/api-utils'
 
 const Navbar = () => {
   const { data: session, status } = useSession()
+  const [profileModal, setProfileModal] = useState(false)
+
+  const openProfileModal = () => {
+    setProfileModal((prev) => !prev)
+  }
+
+  const handleSignOut = () => {
+    signOut()
+  }
 
   return (
     <div className={styles.container}>
@@ -39,8 +50,8 @@ const Navbar = () => {
 
       <div className={styles.user}>
         {session ? (
-          <Link href="/profile">
-            <a>
+          <>
+            <a className={styles.profileContainer} onClick={openProfileModal}>
               <img
                 className={styles.profileImage}
                 src={session.user?.image! ?? <RiUser6Line />}
@@ -49,7 +60,19 @@ const Navbar = () => {
               <p>{session?.user?.name}</p>
               <BiChevronDown className={styles.arrowDown} />
             </a>
-          </Link>
+
+            {profileModal && (
+              <div className={styles.profileModal}>
+                <div className={styles.account}>
+                  <Link href={`/profile`}>
+                    <a>Account settings</a>
+                  </Link>
+                </div>
+
+                <button onClick={handleSignOut}>Sign out</button>
+              </div>
+            )}
+          </>
         ) : (
           <Link href="/auth/signin">
             <a>

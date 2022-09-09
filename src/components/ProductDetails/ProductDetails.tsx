@@ -7,12 +7,39 @@ import {
 } from 'react-icons/ai'
 import Image from 'next/image'
 import { useState } from 'react'
-import { Product } from '../../ts/interfaces/db_interfaces'
+import { IProduct } from '../../ts/interfaces/IProduct'
+import { useRouter } from 'next/router'
+import { useQuery, QueryCache } from '@tanstack/react-query'
+import fetchProducts from 'components/helpers/fetchProducts'
+import fetchProduct from 'components/helpers/fetchProduct'
+import axios from 'axios'
 
-const ProductDetails: React.FC<Product> = ({ product }) => {
+const ProductDetails: React.FC = () => {
   const [quantity, setQuantity] = useState(1)
+  const router = useRouter()
+  const { id } = router.query
 
-  console.log(typeof product.stock)
+  const queryCache = new QueryCache({
+    onError: (error) => {
+      console.log(error)
+    },
+    onSuccess: (data) => {
+      console.log(data)
+    },
+  })
+
+  const { data: product } = useQuery(
+    ['product', id],
+    async () => {
+      return axios.get(`/api/products/${id}`).then((response) => {
+        return response.data
+      })
+    },
+    {
+      initialData: () => console.log(queryCache.findAll(['products'])),
+    }
+  )
+  if (!product) return null
 
   return (
     <div className={styles.container}>

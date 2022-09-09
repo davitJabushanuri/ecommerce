@@ -1,5 +1,5 @@
-import DashboardHeader from 'components/dashboard/DashboardHeader'
-import DashboardNavbar from 'components/dashboard/DashboardNavbar'
+import DashboardHeader from 'components/Dashboard/DashboardHeader'
+import DashboardNavbar from 'components/Dashboard/DashboardNavbar'
 import { GetStaticProps } from 'next'
 import styles from './dashboard.module.scss'
 

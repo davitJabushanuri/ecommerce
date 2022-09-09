@@ -15,13 +15,18 @@ export default async function products(
 
   try {
     const products = await prisma.product.findMany({
-      skip: page * 5,
-      take: 5,
+      skip: page * 10,
+      take: 10,
+      where: {
+        isNew: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },
     })
-    return res.status(200).json({ products, hasMore: page < 9 })
+    return res
+      .status(200)
+      .json({ products, hasMore: page < products.length * page })
   } catch (e) {
     console.log(e)
   }

@@ -1,38 +1,17 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import { useSession, signIn, signOut } from 'next-auth/react'
-import { useState } from 'react'
 
 import Header from 'components/Header/Header'
 import CardsContainer from 'components/CardsContainer/CardsContainer'
 import Hero from 'components/Hero/Hero'
 import Footer from 'components/Footer/Footer'
 import axios from 'axios'
-import { IProduct } from '../ts/interfaces/db_interfaces'
+import Trending from 'components/sort/Trending'
+import NewArrivals from 'components/sort/NewArrivals'
+import OnSale from 'components/sort/OnSale'
+import RecentlyViewed from 'components/sort/RecentlyViewed'
 
-import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
-
-interface Products {
-  products: IProduct
-}
-
-const Home: NextPage<Products> = () => {
-  const {
-    data: products,
-    isLoading,
-    isError,
-  } = useQuery(['products'], getProducts)
-
-  if (isLoading) {
-    return <p>Loading...</p>
-  }
-
-  if (isError) {
-    return <p>Error :(</p>
-  }
-
+const Home: NextPage = () => {
   return (
     <div>
       <Head>
@@ -44,32 +23,14 @@ const Home: NextPage<Products> = () => {
       <main>
         <Header />
         <Hero />
-        <CardsContainer title="New Arrivals" products={products} />
-        <CardsContainer title="Trending" products={products} />
-        <CardsContainer title="On sale" products={products} />
-        <CardsContainer title="Recently Viewed" products={products} />
+        <NewArrivals />
+        <Trending />
+        <OnSale />
+        <RecentlyViewed />
         <Footer />
       </main>
     </div>
   )
-}
-
-const getProducts = async () => {
-  const response = await axios.get('http://localhost:3000/api/products')
-  return response.data
-}
-
-// getStaticProps
-export async function getStaticProps() {
-  const queryClient = new QueryClient()
-  await queryClient.prefetchQuery(['products'], getProducts)
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-    revalidate: 60,
-  }
 }
 
 export default Home

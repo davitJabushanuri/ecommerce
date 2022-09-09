@@ -1,9 +1,8 @@
 import create from 'zustand'
-import { IProduct } from 'ts/interfaces/db_interfaces'
 
 const useProductStore = create((set) => ({
-  products: '',
-  setProducts: (products: IProduct[]) => set({ products: products }),
+  productPath: '',
+  setProductPath: (productPath: string) => set({ productPath: productPath }),
 }))
 
 export default useProductStore

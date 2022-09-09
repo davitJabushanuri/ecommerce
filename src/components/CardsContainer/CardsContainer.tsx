@@ -10,35 +10,21 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
 import Link from 'next/link'
-import { IProduct } from '../../ts/interfaces/db_interfaces'
-import useProductStore from '../store/productStore'
+import { IProduct } from '../../ts/interfaces/IProduct'
 
-const CardsContainer = ({ title, products }: any) => {
-  const setProducts = useProductStore((state: any) => state.setProducts)
+interface IProps {
+  products: any
+  title: string
+  path: string
+}
 
-  const filterProducts = () => {
-    switch (title) {
-      case 'New Arrivals':
-        setProducts('New Arrivals')
-        break
-      case 'Trending':
-        setProducts('Trending')
-        break
-      case 'On sale':
-        setProducts('On sale')
-        break
-      default:
-        setProducts('Recently Viewed')
-        break
-    }
-  }
-
+const CardsContainer: React.FC<IProps> = ({ products, title, path }) => {
   return (
     <div className={styles.container}>
       <div className={styles.seeAll}>
         <h1>{title}</h1>
-        <Link href={`/products`}>
-          <a onClick={filterProducts}>
+        <Link href={`/products/${path}`}>
+          <a>
             <span>See all</span>
             <BsArrowRight />
           </a>
@@ -69,28 +55,29 @@ const CardsContainer = ({ title, products }: any) => {
           },
         }}
       >
-        {products.products
-          .filter((product: IProduct) => {
-            switch (title) {
-              case 'New Arrivals':
-                return product.isNew
-              case 'Trending':
-                return product.isTrending
+        {products &&
+          products
+            .filter((product: IProduct) => {
+              switch (title) {
+                case 'New Arrivals':
+                  return product.isNew
+                case 'Trending':
+                  return product.isTrending
 
-              case 'On sale':
-                return product.isOnSale
+                case 'On sale':
+                  return product.isOnSale
 
-              default:
-                return product
-            }
-          })
-          .map((product: any) => {
-            return (
-              <SwiperSlide key={product.id}>
-                <Card product={product} />
-              </SwiperSlide>
-            )
-          })}
+                default:
+                  return product
+              }
+            })
+            .map((product: IProduct) => {
+              return (
+                <SwiperSlide key={product.id}>
+                  <Card product={product} />
+                </SwiperSlide>
+              )
+            })}
       </Swiper>
     </div>
   )

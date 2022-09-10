@@ -1,17 +1,11 @@
-import { Role } from '@prisma/client'
 import { NextResponse } from 'next/server'
-import { withAuth } from 'next-auth/middleware'
+import type { NextRequest } from 'next/server'
 
-export default withAuth(function middleware(req) {
-  // Redirect if they don't have the appropriate role
-  if (
-    req.nextUrl.pathname.startsWith('/admin') &&
-    req.nextauth.token?.role !== Role.ADMIN
-  ) {
+export default function middleware(req: NextRequest) {
+  // Redirect from login page if already logged in
+  const verify = req.cookies.get('next-auth.session-token')
+
+  if (verify && req.url.includes('/signin')) {
     return NextResponse.redirect(new URL('/', req.url))
   }
-})
-
-export const config = {
-  matcher: ['/admin/:path*', '/nonAdminButSecure/:path*'],
 }

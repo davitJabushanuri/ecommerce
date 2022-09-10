@@ -16,9 +16,15 @@ export default NextAuth({
   pages: {
     signIn: '/auth/login',
   },
+
+  session: {
+    strategy: 'jwt',
+  },
+
   callbacks: {
-    redirect(params) {
-      return '/'
+    async session({ session, token, user }) {
+      session.user.role = 'admin'
+      return session
     },
   },
 

@@ -46,7 +46,7 @@ const SignIn: NextPage = ({ providers }: any) => {
             <div key={provider.name}>
               <button
                 className={styles.githubLogin}
-                onClick={() => signIn(provider.id)}
+                onClick={() => signIn(provider.id, { callbackUrl: '/' })}
               >
                 Sign in with {provider.name}
               </button>

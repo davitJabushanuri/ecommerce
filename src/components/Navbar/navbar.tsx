@@ -3,7 +3,7 @@ import styles from './Navbar.module.scss'
 import { TbSmartHome } from 'react-icons/tb'
 import { BiShoppingBag, BiChevronDown, BiBell } from 'react-icons/bi'
 import { RiUser6Line } from 'react-icons/ri'
-import { TbSettings } from 'react-icons/tb'
+import { TbLayoutDashboard } from 'react-icons/tb'
 import Link from 'next/link'
 
 import { useSession, signOut } from 'next-auth/react'
@@ -43,6 +43,14 @@ const Navbar = () => {
         <Link href="/settings">
           <a>
             <BiBell />
+          </a>
+        </Link>
+      </div>
+
+      <div className={styles.dashboard}>
+        <Link href="/dashboard">
+          <a>
+            <TbLayoutDashboard />
           </a>
         </Link>
       </div>

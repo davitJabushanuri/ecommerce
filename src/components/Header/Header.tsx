@@ -3,11 +3,15 @@ import Search from 'components/Search/Search'
 import Navbar from 'components/Navbar/navbar'
 import Link from 'next/link'
 
+import { IoLogoPolymer } from 'react-icons/io'
+
 const Header = () => {
   return (
     <header className={styles.container}>
       <div className={styles.logo}>
-        <Link href="/">Logo</Link>
+        <Link href="/">
+          <IoLogoPolymer />
+        </Link>
       </div>
 
       <div className={styles.search}>

@@ -21,6 +21,10 @@ export default NextAuth({
     strategy: 'jwt',
   },
 
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
+
   callbacks: {
     jwt({ token, user }) {
       if (user) {
@@ -36,6 +40,6 @@ export default NextAuth({
     },
   },
 
-  // debug: process.env.NODE_ENV === 'development',
+  debug: process.env.NODE_ENV === 'development',
   secret: process.env.AUTH_SECRET,
 })

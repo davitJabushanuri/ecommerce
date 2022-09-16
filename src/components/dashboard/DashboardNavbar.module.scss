@@ -1,0 +1,32 @@
+.container {
+  padding: 2rem 1rem;
+  background-color: rgb(240, 240, 240);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 240px;
+  height: 100vh;
+  .logo {
+    margin-bottom: 2rem;
+  }
+
+  .navbar {
+    display: flex;
+    flex-direction: column;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      cursor: pointer;
+      border-radius: 0.4rem;
+
+      &:hover {
+        background-color: rgb(219, 219, 219);
+      }
+    }
+
+    .logout {
+      margin-top: auto;
+    }
+  }
+}

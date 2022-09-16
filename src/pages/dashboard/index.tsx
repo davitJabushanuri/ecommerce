@@ -6,8 +6,10 @@ import styles from './dashboard.module.scss'
 const index = () => {
   return (
     <div className={styles.container}>
-      <DashboardHeader />
-      <DashboardNavbar />
+      <main>
+        <DashboardHeader />
+        <DashboardNavbar />
+      </main>
     </div>
   )
 }

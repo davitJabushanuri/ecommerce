@@ -9,8 +9,9 @@
   box-shadow: rgba(0, 0, 0, 0.25) 0 10px 30px;
   width: 240px;
   height: 100vh;
-  display: grid;
-  grid-template-rows: 40px 80px 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   transition: all 0.3s ease-in-out;
 
   .close {
@@ -23,6 +24,10 @@
       display: grid;
       place-items: center;
       background-color: transparent;
+    }
+
+    @media screen and (min-width: 768px) {
+      display: none;
     }
   }
 
@@ -53,6 +58,7 @@
     display: flex;
     flex-direction: column;
     transition: all 0.2s ease-in-out;
+    height: 100%;
 
     &__item {
       display: flex;
@@ -90,6 +96,14 @@
         font-weight: 600;
       }
     }
+  }
+
+  @media screen and (min-width: 768px) {
+    position: relative;
+    transform: translateX(0);
+    box-shadow: none;
+    border-right: 1px solid #ccc;
+    height: 100vh;
   }
 }
 

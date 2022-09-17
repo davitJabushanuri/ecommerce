@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+
+  .hamburger {
+    button {
+      cursor: pointer;
+      display: flex;
+      font-size: 1.2rem;
+    }
+  }
+
+  .greeting {
+    display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    align-items: flex-start;
+    padding: 2rem 1rem 2rem 3rem;
+
+    .hamburger {
+      display: none;
+    }
+
+    .greeting {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+
+      h1 {
+        font-size: clamp(1.4rem, 1rem + 1vw, 1.8rem);
+      }
+
+      p {
+        font-size: clamp(0.7rem, 0.5rem + 1vw, 1rem);
+      }
+    }
+  }
+}

@@ -1,25 +1,14 @@
-import DashboardHeader from 'components/Dashboard/DashboardHeader'
-import DashboardNavbar from 'components/Dashboard/DashboardNavbar'
-import { GetStaticProps } from 'next'
+import DashboardLayout from 'components/layouts/dashboardLayout/DashboardLayout'
 import styles from './dashboard.module.scss'
 
 const index = () => {
   return (
     <div className={styles.container}>
       <main>
-        <DashboardHeader />
-        <DashboardNavbar />
+        <DashboardLayout />
       </main>
     </div>
   )
-}
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  return {
-    props: {
-      data: null,
-    },
-  }
 }
 
 export default index

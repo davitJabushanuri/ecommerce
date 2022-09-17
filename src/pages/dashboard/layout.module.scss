@@ -1,8 +1,20 @@
 .container {
+  .headerContainer {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+  }
+
+  .navbarContainer {
+    z-index: 999;
+  }
+
   main {
     @media screen and (min-width: 768px) {
       display: grid;
       grid-template-columns: 240px 1fr;
+      grid-template-rows: auto 1fr;
       grid-template-areas:
         'sidebar header'
         'sidebar content';
@@ -13,6 +25,7 @@
 
       .headerContainer {
         grid-area: header;
+        position: relative;
       }
     }
   }

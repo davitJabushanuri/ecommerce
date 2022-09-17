@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import styles from './customers.module.scss'
 import layout from '../layout.module.scss'
 import DashboardNavbar from 'components/Dashboard/DashboardNavbar'
@@ -16,6 +17,19 @@ const Customers = ({ customers }: any) => {
             </div>
             <div className={layout.headerContainer}>
               <DashboardHeader />
+            </div>
+
+            <div className={styles.content}>
+              {customers.map((customer: any) => {
+                return (
+                  <div key={customer.id}>
+                    <h1>{customer.name}</h1>
+                    <p>{customer.email}</p>
+                    <img src={customer.image} alt="" />
+                    <p>{customer.role}</p>
+                  </div>
+                )
+              })}
             </div>
           </main>
         </div>

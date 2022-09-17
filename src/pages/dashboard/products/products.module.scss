@@ -1,0 +1,46 @@
+.container {
+  .content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .card {
+      background-color: #dbdbdb;
+      display: grid;
+      gap: 1rem;
+      border-radius: 0.4rem;
+      box-shadow: rgba(92, 92, 92, 0.35) 0px 5px 15px 0px;
+
+      .imageContainer {
+        border-radius: 0.4rem;
+        overflow: hidden;
+        aspect-ratio: 16/12;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .content {
+      padding: 2rem 1rem 1rem 3rem;
+
+      .card {
+        padding: 1rem;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .card {
+      grid-template-columns: 300px 1fr;
+
+      .imageContainer {
+      }
+    }
+  }
+}

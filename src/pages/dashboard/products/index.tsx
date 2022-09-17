@@ -22,11 +22,29 @@ const products = ({ products }: any) => {
             <div className={styles.content}>
               {products?.products.map((product: any) => {
                 return (
-                  <div key={product.id}>
-                    <h1>{product.name}</h1>
-                    <p>{product.description}</p>
-                    <img src={product.image} alt="" />
-                    <p>{product.price}</p>
+                  <div key={product.id} className={styles.card}>
+                    <div className={styles.imageContainer}>
+                      <img src={product?.image} alt={product?.name} />
+                    </div>
+                    <div className={styles.info}>
+                      <h3>{product?.name}</h3>
+                      <p>{product?.description}</p>
+                      <p>{product?.brand}</p>
+                      <p>{product?.category}</p>
+                      <p>{product?.price}</p>
+                      <p>{product?.rating}</p>
+                      <p>{product?.numReviews}</p>
+                      <p>{product?.shipping}</p>
+                      <p>{product?.stock}</p>
+                      <p>{product?.isTrending ? 'Trending' : 'Not Trending'}</p>
+                      <p>
+                        {product?.isBestSeller
+                          ? 'Best seller'
+                          : 'Not best seller'}
+                      </p>
+                      <p>{product?.isNew ? 'New arrival' : 'Not new'}</p>
+                      <p>{product?.isOnSale ? 'On sale' : 'Not on sale'}</p>
+                    </div>
                   </div>
                 )
               })}
@@ -40,7 +58,7 @@ const products = ({ products }: any) => {
 
 export default products
 
-export const getServerSideProps = async (context: any) => {
+export const getStaticProps = async (context: any) => {
   const res = await fetch('http://localhost:3000/api/products')
   const products = await res.json()
 

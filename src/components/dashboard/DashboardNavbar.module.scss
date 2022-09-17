@@ -1,16 +1,58 @@
 .container {
-  padding: 2rem 1rem;
-  background-color: rgb(240, 240, 240);
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(-260px);
+
+  padding: 1rem;
+  background-color: rgb(233, 233, 233);
+  box-shadow: rgba(0, 0, 0, 0.25) 0 10px 30px;
   width: 240px;
   height: 100vh;
-  .logo {
-    margin-bottom: 2rem;
+  display: grid;
+  grid-template-rows: 40px 80px 1fr;
+  transition: all 0.3s ease-in-out;
+
+  .close {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.6rem;
+
+    button {
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      background-color: transparent;
+    }
+  }
+
+  .logoContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1rem;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .icon {
+        display: flex;
+        font-size: 2rem;
+      }
+
+      span {
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+    }
   }
 
   .navbar {
     display: flex;
     flex-direction: column;
+    transition: all 0.2s ease-in-out;
 
     &__item {
       display: flex;
@@ -19,14 +61,38 @@
       padding: 1rem;
       cursor: pointer;
       border-radius: 0.4rem;
+      color: rgb(43, 41, 41);
 
       &:hover {
         background-color: rgb(219, 219, 219);
+      }
+
+      &:focus {
+        background-color: rgb(214, 214, 214);
+      }
+
+      font-size: 1.2rem;
+
+      span {
+        font-size: 1rem;
       }
     }
 
     .logout {
       margin-top: auto;
     }
+
+    .active {
+      color: rgb(106, 212, 238);
+
+      span {
+        color: rgb(0, 0, 0);
+        font-weight: 600;
+      }
+    }
   }
+}
+
+.open {
+  transform: translateX(0);
 }

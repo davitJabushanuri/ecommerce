@@ -74,6 +74,9 @@
       padding: 1rem 0;
       cursor: pointer;
       background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &:hover {
         background-color: #cfcfcf;

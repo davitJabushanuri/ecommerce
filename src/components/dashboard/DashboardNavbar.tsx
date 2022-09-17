@@ -23,8 +23,6 @@ const DashboardNavbar = () => {
     signOut({ callbackUrl: '/' })
   }
 
-  console.log(isNavbarOpen)
-
   return (
     <div className={`${styles.container} ${isNavbarOpen ? styles.open : ''}`}>
       <div className={styles.close}>

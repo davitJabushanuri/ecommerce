@@ -10,7 +10,9 @@ const Header = () => {
     <header className={styles.container}>
       <div className={styles.logo}>
         <Link href="/">
-          <IoLogoPolymer />
+          <a>
+            <IoLogoPolymer />
+          </a>
         </Link>
       </div>
 

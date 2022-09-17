@@ -16,6 +16,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["src", "middleware.ts", "_middleware.ts"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

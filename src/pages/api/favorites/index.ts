@@ -17,7 +17,6 @@ export default async function favorites(
 
   if (req.method === 'POST') {
     const { productId, userId } = req.body
-    console.log(productId, userId)
     try {
       const favorite = await prisma.favorite.create({
         data: {

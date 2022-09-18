@@ -1,51 +1,48 @@
-// import { prisma } from '../../../lib/prisma'
+import { prisma } from '../../../../lib/prisma'
+import { productValidation } from 'components/Schemas/productValidation'
 
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
-
-import { NextApiRequest, NextApiResponse } from 'next'
-import Error from 'next/error'
+import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 
 export default async function products(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== 'POST') {
-    res.status(405).json({
+  const { method, body } = req
+
+  if (method !== 'POST') {
+    return res.status(405).json({
       message: 'only POST method is supported',
     })
   }
 
-  try {
-    const { name, description, price, image, brand, category, stock } = req.body
-    if (
-      !name ||
-      !description ||
-      !price ||
-      !image ||
-      !brand ||
-      !category ||
-      !stock
-    ) {
-      res.status(400).json({
-        message:
-          'name, description, price, image, brand, category, stock are required',
-      })
-    }
+  const { errors } = await validation(productValidation, body)
 
-    const product = await prisma.product.create({
-      data: {
-        name,
-        description,
-        price,
-        image,
-        brand,
-        category,
-        stock,
-      },
+  if (errors) {
+    return res.status(400).json({
+      errors,
     })
-    res.status(201).json(product)
-  } catch (e: any) {
-    res.status(500).json({ message: e.message })
+  }
+
+  // post data to database
+  try {
+    const product = await prisma.product.create({
+      data: body,
+    })
+  } catch (error: any) {
+    res.status(500).json({ error })
+  }
+
+  res.status(200).json({
+    message: 'product created successfully',
+  })
+}
+
+export const validation = async (schema: any, data: any) => {
+  try {
+    await schema.validate(data)
+    return { isValid: true, errors: null }
+  } catch (error: any) {
+    const { errors } = error
+    return { isValid: false, errors }
   }
 }

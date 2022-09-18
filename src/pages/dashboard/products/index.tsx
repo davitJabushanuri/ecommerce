@@ -6,7 +6,6 @@ import layout from '../layout.module.scss'
 
 const products = ({ products }: any) => {
   console.log(products)
-
   return (
     <div className={styles.container}>
       <main>

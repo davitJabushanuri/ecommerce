@@ -3,6 +3,7 @@
   top: 0;
   left: 0;
   transform: translateX(-260px);
+  z-index: 99999;
 
   padding: 1rem;
   background-color: rgb(233, 233, 233);
@@ -99,7 +100,7 @@
   }
 
   @media screen and (min-width: 768px) {
-    position: relative;
+    position: sticky;
     transform: translateX(0);
     box-shadow: none;
     border-right: 1px solid #ccc;

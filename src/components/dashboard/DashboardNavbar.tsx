@@ -13,15 +13,21 @@ import { CgClose } from 'react-icons/cg'
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/react'
 import useNavbarStore from 'components/store/navbarStore'
+import { useEffect } from 'react'
 
 const DashboardNavbar = () => {
   const router = useRouter()
   const isNavbarOpen = useNavbarStore((state: any) => state.isNavbarOpen)
   const toggleNavbar = useNavbarStore((state: any) => state.toggleNavbar)
+  const closeNavbar = useNavbarStore((state: any) => state.closeNavbar)
 
   const handleSignOut = () => {
     signOut({ callbackUrl: '/' })
   }
+
+  useEffect(() => {
+    closeNavbar()
+  }, [closeNavbar])
 
   return (
     <div className={`${styles.container} ${isNavbarOpen ? styles.open : ''}`}>

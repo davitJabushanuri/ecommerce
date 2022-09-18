@@ -58,27 +58,26 @@ model User {
 
 model Product {
   id              String    @id @default(cuid())
-  name            String    @unique
-  description     String?
-  price           Int       @default(0)
-  image           String?
-  brand           String?
-  category        String?
+  name            String    
+  description     String
+  price           Int       
+  image           String
+  brand           String
+  category        String
+  stock           Int       @default(0)
+  shipping        Int       @default(0)
   rating          Int       @default(0)
   numReviews      Int       @default(0)
   isBestSeller    Boolean   @default(false)
   isNew           Boolean   @default(false)
   isOnSale        Boolean   @default(false)
   isTrending      Boolean   @default(false)
-  shipping        Int       @default(0)
 
   reviews         Review[]
-  stock           Int       @default(0)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   orders          Order[]
   favorites       Favorite[]
-
 }
 
 model Review {

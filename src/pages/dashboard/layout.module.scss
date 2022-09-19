@@ -10,6 +10,10 @@
     z-index: 999;
   }
 
+  .content {
+    padding: 1rem;
+  }
+
   main {
     @media screen and (min-width: 768px) {
       display: grid;
@@ -26,6 +30,11 @@
       .headerContainer {
         grid-area: header;
         position: relative;
+      }
+
+      .content {
+        grid-area: content;
+        padding: 2rem 3rem;
       }
     }
   }

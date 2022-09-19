@@ -10,6 +10,7 @@ export const productValidation = yup.object().shape({
   image: yup.string().required('Image is required'),
   brand: yup.string().required('Brand is required'),
   category: yup.string().required('Category is required'),
+  condition: yup.string().required('Condition is required'),
   stock: yup
     .string()
     .required('stock is required')

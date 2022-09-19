@@ -64,6 +64,7 @@ model Product {
   image           String
   brand           String
   category        String
+  condition       String
   stock           Int    
   shipping        Int
   rating          Int       @default(0)

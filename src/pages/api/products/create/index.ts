@@ -26,13 +26,22 @@ export default async function products(
   // post data to database
   try {
     const product = await prisma.product.create({
-      data: body,
+      data: {
+        name: body.name,
+        description: body.description,
+        price: Number(body.price),
+        image: body.image,
+        brand: body.brand,
+        category: body.category,
+        stock: Number(body.stock),
+        shipping: Number(body.shipping),
+      },
     })
   } catch (error: any) {
-    res.status(500).json({ error })
+    return res.status(500).json({ error })
   }
 
-  res.status(200).json({
+  return res.status(200).json({
     message: 'product created successfully',
   })
 }

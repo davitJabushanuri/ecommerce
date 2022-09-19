@@ -60,12 +60,12 @@ model Product {
   id              String    @id @default(cuid())
   name            String    
   description     String
-  price           String       
+  price           Int       
   image           String
   brand           String
   category        String
-  stock           String    
-  shipping        String
+  stock           Int    
+  shipping        Int
   rating          Int       @default(0)
   numReviews      Int       @default(0)
   isBestSeller    Boolean   @default(false)

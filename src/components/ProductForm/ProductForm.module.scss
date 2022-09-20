@@ -1,5 +1,5 @@
 .container {
-  .form {
+  form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -14,11 +14,10 @@
         font-weight: 600;
       }
 
-      .input {
+      input {
         padding: 0.8rem;
         border: 1px solid #ccc;
         border-radius: 0.4rem;
-        font-size: 1.2rem;
       }
 
       .inputError {

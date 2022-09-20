@@ -1,7 +1,8 @@
 import styles from './ProductForm.module.scss'
 
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { useFormik, Form, Field, ErrorMessage } from 'formik'
 import { productValidation } from 'components/Schemas/productValidation'
+import { useRef, useState } from 'react'
 
 interface IProductValues {
   name: string
@@ -16,6 +17,9 @@ interface IProductValues {
 }
 
 const ProductForm = () => {
+  const imageRef = useRef<HTMLInputElement>(null)
+  const [displayImage, setDisplayImage] = useState<string>('')
+
   const initialValues: IProductValues = {
     name: '',
     description: '',
@@ -28,6 +32,35 @@ const ProductForm = () => {
     shipping: '',
   }
 
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: productValidation,
+    onSubmit: (values) => {
+      console.log(values)
+      handleSubmit(values)
+    },
+  })
+
+  const uploadImage = (e: any) => {
+    if (e.target.files[0]) {
+      const file = e.target.files[0]
+
+      const reader: any = new FileReader()
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        setDisplayImage(reader.result)
+        formik.setFieldValue('image', reader.result)
+        console.log(formik.values)
+      }
+    }
+  }
+
+  const removeImage = () => {
+    formik.setFieldValue('image', '')
+    setDisplayImage('')
+  }
+
   const handleSubmit = async (data: IProductValues) => {
     // submit data to backend
     const response = await fetch('/api/products/create', {
@@ -37,177 +70,177 @@ const ProductForm = () => {
       },
       body: JSON.stringify(data),
     })
+      .then((res) => {
+        if (res.ok) {
+          setDisplayImage('')
+          formik.resetForm()
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return (
     <div className={styles.container}>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={productValidation}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values)
-          handleSubmit(values)
-          setSubmitting(false)
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form className={styles.form}>
-            <div className={styles.inputGroup}>
-              <label htmlFor="name">Title</label>
-              <Field
-                type="text"
-                name="name"
-                className={styles.input}
-                placeholder="Iphone 12 pro max"
-              />
-              <ErrorMessage
-                name="name"
-                className={styles.inputError}
-                component="div"
-              />
-            </div>
+      <form onSubmit={formik.handleSubmit}>
+        <div className={styles.inputGroup}>
+          <label htmlFor="name">Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.name}
+          />
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="description">Description</label>
-              <Field
-                name="description"
-                as="textarea"
-                className={styles.input}
-                placeholder="best phone ever"
-              />
-              <ErrorMessage
-                name="description"
-                className={styles.inputError}
-                component="div"
-              />
-            </div>
+          {formik.touched.name && formik.errors.name ? (
+            <div className={styles.inputError}>{formik.errors.name}</div>
+          ) : null}
+        </div>
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="category">Category</label>
-              <Field
-                type="text"
-                name="category"
-                className={styles.input}
-                placeholder="Phones"
-              />
-              <ErrorMessage
-                name="category"
-                className={styles.inputError}
-                component="div"
-              />
-            </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="description">Description</label>
+          <input
+            id="description"
+            name="description"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.description}
+          />
+          {formik.touched.description && formik.errors.description ? (
+            <div className={styles.inputError}>{formik.errors.description}</div>
+          ) : null}
+        </div>
 
-            <div className={styles.selectGroup}>
-              <label htmlFor="condition">Condition</label>
-              <Field
-                name="condition"
-                as="select"
-                className={styles.select}
-                placeholder="dfs"
-              >
-                <option className={styles.option} value="new">
-                  New
-                </option>
-                <option className={styles.option} value="open-box">
-                  Open box
-                </option>
-                <option className={styles.option} value="used">
-                  Used
-                </option>
-                <option className={styles.option} value="refurbished">
-                  Refurbished
-                </option>
-              </Field>
-              <ErrorMessage
-                name="condition"
-                className={styles.inputError}
-                component="div"
-              />
-            </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="category">Category</label>
+          <input
+            id="category"
+            name="category"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.category}
+          />
+          {formik.touched.category && formik.errors.category ? (
+            <div className={styles.inputError}>{formik.errors.category}</div>
+          ) : null}
+        </div>
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="image">Image</label>
-              <Field
-                type="text"
-                name="image"
-                className={styles.input}
-                placeholder="pexels.com/iphone12"
-              />
-              <ErrorMessage
-                name="image"
-                className={styles.inputError}
-                component="div"
-              />
-            </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="category">Category</label>
+          <input
+            id="category"
+            name="category"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.category}
+          />
+          {formik.touched.category && formik.errors.category ? (
+            <div className={styles.inputError}>{formik.errors.category}</div>
+          ) : null}
+        </div>
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="brand">Brand</label>
-              <Field
-                type="text"
-                name="brand"
-                className={styles.input}
-                placeholder="Apple"
-              />
-              <ErrorMessage
-                name="brand"
-                className={styles.inputError}
-                component="div"
-              />
-            </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="condition">Condition</label>
+          <input
+            id="condition"
+            name="condition"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.condition}
+          />
+          {formik.touched.condition && formik.errors.condition ? (
+            <div className={styles.inputError}>{formik.errors.condition}</div>
+          ) : null}
+        </div>
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="price">Price</label>
-              <Field
-                type="text"
-                name="price"
-                className={styles.input}
-                placeholder="990"
-              />
-              <ErrorMessage
-                name="price"
-                className={styles.inputError}
-                component="div"
-              />
-            </div>
+        <div className={styles.inputGroup}>
+          <button type="button" onClick={() => imageRef.current?.click()}>
+            Upload image
+          </button>
+          <button onClick={removeImage}>remove image</button>
+          <input
+            style={{ display: 'none' }}
+            ref={imageRef}
+            type="file"
+            onChange={uploadImage}
+          />
+          {displayImage && <img src={displayImage} alt="product" />}
+          {formik.touched.image && formik.errors.image ? (
+            <div className={styles.inputError}>{formik.errors.image}</div>
+          ) : null}
+        </div>
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="stock">Quantity</label>
-              <Field
-                type="text"
-                name="stock"
-                className={styles.input}
-                placeholder="1"
-              />
-              <ErrorMessage
-                name="stock"
-                className={styles.inputError}
-                component="div"
-              />
-            </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="brand">Brand</label>
+          <input
+            id="brand"
+            name="brand"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.brand}
+          />
+          {formik.touched.brand && formik.errors.brand ? (
+            <div className={styles.inputError}>{formik.errors.brand}</div>
+          ) : null}
+        </div>
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="shipping">Shipping</label>
-              <Field
-                type="text"
-                name="shipping"
-                className={styles.input}
-                placeholder="20"
-              />
-              <ErrorMessage
-                name="shipping"
-                className={styles.inputError}
-                component="div"
-              />
-            </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="price">Price</label>
+          <input
+            id="price"
+            name="price"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.price}
+          />
+          {formik.touched.price && formik.errors.price ? (
+            <div className={styles.inputError}>{formik.errors.price}</div>
+          ) : null}
+        </div>
 
-            <div className={styles.buttonContainer}>
-              <button type="submit" disabled={isSubmitting}>
-                Submit
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        <div className={styles.inputGroup}>
+          <label htmlFor="stock">Stock</label>
+          <input
+            id="stock"
+            name="stock"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.stock}
+          />
+          {formik.touched.stock && formik.errors.stock ? (
+            <div className={styles.inputError}>{formik.errors.stock}</div>
+          ) : null}
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label htmlFor="shipping">Shipping</label>
+          <input
+            id="shipping"
+            name="shipping"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.shipping}
+          />
+          {formik.touched.shipping && formik.errors.shipping ? (
+            <div className={styles.inputError}>{formik.errors.shipping}</div>
+          ) : null}
+        </div>
+
+        <div className={styles.buttonContainer}>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
     </div>
   )
 }

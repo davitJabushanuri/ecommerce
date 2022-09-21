@@ -1,35 +1,38 @@
+/* eslint-disable @next/next/no-img-element */
 import styles from './ProductForm.module.scss'
 
 import { useFormik, Form, Field, ErrorMessage } from 'formik'
 import { productValidation } from 'components/Schemas/productValidation'
 import { useRef, useState } from 'react'
+import Router from 'next/router'
 
 interface IProductValues {
   name: string
   description: string
   category: string
   condition: string
-  image: string
   brand: string
   price: string
   stock: string
   shipping: string
+  image: string
 }
 
 const ProductForm = () => {
   const imageRef = useRef<HTMLInputElement>(null)
   const [displayImage, setDisplayImage] = useState<string>('')
+  const [formDataImage, setFormDataImage] = useState('')
 
   const initialValues: IProductValues = {
     name: '',
     description: '',
     category: '',
     condition: '',
-    image: '',
     brand: '',
     price: '',
     stock: '',
     shipping: '',
+    image: '',
   }
 
   const formik = useFormik({
@@ -44,14 +47,14 @@ const ProductForm = () => {
   const uploadImage = (e: any) => {
     if (e.target.files[0]) {
       const file = e.target.files[0]
+      setFormDataImage(file)
+      formik.setFieldValue('image', file)
 
       const reader: any = new FileReader()
       reader.readAsDataURL(file)
 
       reader.onload = () => {
         setDisplayImage(reader.result)
-        formik.setFieldValue('image', reader.result)
-        console.log(formik.values)
       }
     }
   }
@@ -59,21 +62,28 @@ const ProductForm = () => {
   const removeImage = () => {
     formik.setFieldValue('image', '')
     setDisplayImage('')
+    setFormDataImage('')
   }
 
-  const handleSubmit = async (data: IProductValues) => {
+  const handleSubmit = async (data: any) => {
+    const formData = new FormData()
+    for (var key in data) {
+      formData.append(key, data[key])
+    }
+    formData.set('image', formDataImage)
+
     // submit data to backend
     const response = await fetch('/api/products/create', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      body: formData,
     })
       .then((res) => {
         if (res.ok) {
           setDisplayImage('')
+          setFormDataImage('')
           formik.resetForm()
+          Router.push('/')
+          return res.json()
         }
       })
       .catch((error) => {
@@ -131,21 +141,6 @@ const ProductForm = () => {
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="category">Category</label>
-          <input
-            id="category"
-            name="category"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.category}
-          />
-          {formik.touched.category && formik.errors.category ? (
-            <div className={styles.inputError}>{formik.errors.category}</div>
-          ) : null}
-        </div>
-
-        <div className={styles.inputGroup}>
           <label htmlFor="condition">Condition</label>
           <input
             id="condition"
@@ -164,12 +159,16 @@ const ProductForm = () => {
           <button type="button" onClick={() => imageRef.current?.click()}>
             Upload image
           </button>
-          <button onClick={removeImage}>remove image</button>
+          <button type="button" onClick={removeImage}>
+            remove image
+          </button>
           <input
             style={{ display: 'none' }}
             ref={imageRef}
             type="file"
             onChange={uploadImage}
+            accept="image/*"
+            multiple={false}
           />
           {displayImage && <img src={displayImage} alt="product" />}
           {formik.touched.image && formik.errors.image ? (

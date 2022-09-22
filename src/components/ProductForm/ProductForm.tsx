@@ -23,6 +23,7 @@ const ProductForm = () => {
   const [displayImage, setDisplayImage] = useState<string>('')
   const [formDataImage, setFormDataImage] = useState('')
 
+  console.log(formDataImage)
   const initialValues: IProductValues = {
     name: '',
     description: '',
@@ -70,11 +71,17 @@ const ProductForm = () => {
     for (var key in data) {
       formData.append(key, data[key])
     }
-    formData.set('image', formDataImage)
+    formData.set(
+      'image',
+      'https://images.pexels.com/photos/10866644/pexels-photo-10866644.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load'
+    )
 
     // submit data to backend
     const response = await fetch('/api/products/create', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
       body: formData,
     })
       .then((res) => {
@@ -89,6 +96,8 @@ const ProductForm = () => {
       .catch((error) => {
         console.log(error)
       })
+
+    console.log(response)
   }
 
   return (

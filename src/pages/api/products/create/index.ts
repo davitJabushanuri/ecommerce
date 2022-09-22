@@ -35,10 +35,12 @@ export default async function products(
         category: body.category,
         stock: Number(body.stock),
         shipping: Number(body.shipping),
+        condition: body.condition,
       },
     })
   } catch (error: any) {
-    return res.status(500).json({ error })
+    const { errors } = error
+    return res.status(500).json({ errors })
   }
 
   return res.status(200).json({

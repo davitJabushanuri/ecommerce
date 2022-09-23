@@ -13,6 +13,7 @@ export const productValidation = yup
     brand: yup.string().required('Brand is required'),
     category: yup.string().required('Category is required'),
     condition: yup.string().required('Condition is required'),
+    image: yup.string().required('Image is required'),
     stock: yup
       .string()
       .required('stock is required')

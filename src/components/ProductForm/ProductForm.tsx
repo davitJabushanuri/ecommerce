@@ -45,44 +45,35 @@ const ProductForm = () => {
     },
   })
 
-  const uploadImage = (e: any) => {
-    if (e.target.files[0]) {
-      const file = e.target.files[0]
-      setFormDataImage(file)
-      formik.setFieldValue('image', file)
+  // const uploadImage = (e: any) => {
+  //   if (e.target.files[0]) {
+  //     const file = e.target.files[0]
+  //     setFormDataImage(file)
 
-      const reader: any = new FileReader()
-      reader.readAsDataURL(file)
+  //     const reader: any = new FileReader()
+  //     reader.readAsDataURL(file)
 
-      reader.onload = () => {
-        setDisplayImage(reader.result)
-      }
-    }
-  }
+  //     reader.onload = (readerEvent: any) => {
+  //       formik.setFieldValue('image', readerEvent.target.result)
+  //       setDisplayImage(readerEvent.target.result)
+  //     }
+  //   }
+  // }
 
-  const removeImage = () => {
-    formik.setFieldValue('image', '')
-    setDisplayImage('')
-    setFormDataImage('')
-  }
+  // const removeImage = () => {
+  //   formik.setFieldValue('image', '')
+  //   setDisplayImage('')
+  //   setFormDataImage('')
+  // }
 
   const handleSubmit = async (data: any) => {
-    const formData = new FormData()
-    for (var key in data) {
-      formData.append(key, data[key])
-    }
-    formData.set(
-      'image',
-      'https://images.pexels.com/photos/10866644/pexels-photo-10866644.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load'
-    )
-
     // submit data to backend
     const response = await fetch('/api/products/create', {
       method: 'POST',
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       },
-      body: formData,
+      body: JSON.stringify(data),
     })
       .then((res) => {
         if (res.ok) {
@@ -165,6 +156,21 @@ const ProductForm = () => {
         </div>
 
         <div className={styles.inputGroup}>
+          <label htmlFor="Image">Image</label>
+          <input
+            id="image"
+            name="image"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.image}
+          />
+          {formik.touched.image && formik.errors.image ? (
+            <div className={styles.inputError}>{formik.errors.image}</div>
+          ) : null}
+        </div>
+
+        {/* <div className={styles.inputGroup}>
           <button type="button" onClick={() => imageRef.current?.click()}>
             Upload image
           </button>
@@ -183,7 +189,7 @@ const ProductForm = () => {
           {formik.touched.image && formik.errors.image ? (
             <div className={styles.inputError}>{formik.errors.image}</div>
           ) : null}
-        </div>
+        </div> */}
 
         <div className={styles.inputGroup}>
           <label htmlFor="brand">Brand</label>

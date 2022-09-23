@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default async function fetchProducts(path = 'recently-viewed') {
-  const response = await axios.get('/api/products/' + path)
+export default async function fetchProducts() {
+  const response = await axios.get('/api/products')
   return response.data.products
 }

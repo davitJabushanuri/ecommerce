@@ -11,19 +11,25 @@ import 'swiper/css/navigation'
 
 import Link from 'next/link'
 import { IProduct } from '../../ts/interfaces/IProduct'
+import { useQuery } from '@tanstack/react-query'
+import fetchProducts from 'components/helpers/fetchProducts'
 
 interface IProps {
-  products: any
   title: string
-  path: string
 }
 
-const CardsContainer: React.FC<IProps> = ({ products, title, path }) => {
+const CardsContainer: React.FC<IProps> = ({ title }) => {
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useQuery(['products'], fetchProducts)
+
   return (
     <div className={styles.container}>
       <div className={styles.seeAll}>
         <h1>{title}</h1>
-        <Link href={`/products/${path}`}>
+        <Link href={`/products`}>
           <a>
             <span>See all</span>
             <BsArrowRight />
@@ -64,7 +70,7 @@ const CardsContainer: React.FC<IProps> = ({ products, title, path }) => {
                 case 'Trending':
                   return product.isTrending
 
-                case 'On sale':
+                case 'On Sale':
                   return product.isOnSale
 
                 default:

@@ -5,11 +5,6 @@ import Header from 'components/Header/Header'
 import CardsContainer from 'components/CardsContainer/CardsContainer'
 import Hero from 'components/Hero/Hero'
 import Footer from 'components/Footer/Footer'
-import axios from 'axios'
-import Trending from 'components/sort/Trending'
-import NewArrivals from 'components/sort/NewArrivals'
-import OnSale from 'components/sort/OnSale'
-import RecentlyViewed from 'components/sort/RecentlyViewed'
 
 const Home: NextPage = () => {
   return (
@@ -23,10 +18,11 @@ const Home: NextPage = () => {
       <main>
         <Header />
         <Hero />
-        <NewArrivals />
-        <Trending />
-        <OnSale />
-        <RecentlyViewed />
+        <CardsContainer title="New Arrivals" />
+        <CardsContainer title="Trending" />
+        <CardsContainer title="On Sale" />
+        <CardsContainer title="All" />
+
         <Footer />
       </main>
     </div>

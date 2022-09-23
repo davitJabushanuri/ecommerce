@@ -3,9 +3,24 @@ import DashboardHeader from 'components/Dashboard/DashboardHeader'
 import DashboardNavbar from 'components/Dashboard/DashboardNavbar'
 import styles from './products.module.scss'
 import layout from '../layout.module.scss'
+import fetchProducts from 'components/helpers/fetchProducts'
+import { useQuery } from '@tanstack/react-query'
 
-const products = ({ products }: any) => {
-  console.log(products)
+const Products = () => {
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useQuery(['products'], fetchProducts)
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Error</div>
+  }
+
   return (
     <div className={styles.container}>
       <main>
@@ -55,15 +70,4 @@ const products = ({ products }: any) => {
   )
 }
 
-export default products
-
-export const getStaticProps = async (context: any) => {
-  const res = await fetch('http://localhost:3000/api/products')
-  const products = await res.json()
-
-  return {
-    props: {
-      products,
-    },
-  }
-}
+export default Products

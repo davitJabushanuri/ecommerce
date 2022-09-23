@@ -25,21 +25,6 @@ export default NextAuth({
     secret: process.env.JWT_SECRET,
   },
 
-  callbacks: {
-    jwt({ token, user }) {
-      if (user) {
-        token.role = user.role
-      }
-      return token
-    },
-    session({ session, token, user }) {
-      if (user) {
-        session.user.role = token.role
-      }
-      return session
-    },
-  },
-
-  debug: process.env.NODE_ENV === 'development',
+  // debug: process.env.NODE_ENV === 'development',
   secret: process.env.AUTH_SECRET,
 })

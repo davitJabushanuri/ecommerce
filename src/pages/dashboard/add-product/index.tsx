@@ -1,8 +1,8 @@
-import DashboardHeader from 'components/Dashboard/DashboardHeader'
-import DashboardNavbar from 'components/Dashboard/DashboardNavbar'
 import styles from './add-product.module.scss'
 import layout from '../layout.module.scss'
 import ProductForm from 'components/ProductForm/ProductForm'
+import DashboardNavbar from '@components/dashboard/DashboardNavbar'
+import DashboardHeader from '@components/dashboard/DashboardHeader'
 
 const addProduct = () => {
   return (

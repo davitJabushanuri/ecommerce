@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from './customers.module.scss'
 import layout from '../layout.module.scss'
-import DashboardNavbar from 'components/Dashboard/DashboardNavbar'
-import DashboardHeader from 'components/Dashboard/DashboardHeader'
+import DashboardNavbar from '@components/dashboard/DashboardNavbar'
+import DashboardHeader from '@components/dashboard/DashboardHeader'
 
 const Customers = ({ customers }: any) => {
   console.log(customers)

@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from './ProductForm.module.scss'
 
-import { useFormik, Form, Field, ErrorMessage } from 'formik'
+import { useFormik } from 'formik'
 import { productValidation } from 'components/Schemas/productValidation'
-import { useRef, useState } from 'react'
-import Router from 'next/router'
+import { useMutation } from '@tanstack/react-query'
+import postData from '@components/helpers/postData'
+import { IPostProduct } from '@ts/interfaces/types'
 
 interface IProductValues {
   name: string
@@ -19,11 +20,6 @@ interface IProductValues {
 }
 
 const ProductForm = () => {
-  const imageRef = useRef<HTMLInputElement>(null)
-  const [displayImage, setDisplayImage] = useState<string>('')
-  const [formDataImage, setFormDataImage] = useState('')
-
-  console.log(formDataImage)
   const initialValues: IProductValues = {
     name: '',
     description: '',
@@ -41,7 +37,7 @@ const ProductForm = () => {
     validationSchema: productValidation,
     onSubmit: (values) => {
       console.log(values)
-      handleSubmit(values)
+      mutate(values)
     },
   })
 
@@ -66,30 +62,20 @@ const ProductForm = () => {
   //   setFormDataImage('')
   // }
 
-  const handleSubmit = async (data: any) => {
-    // submit data to backend
-    const response = await fetch('/api/products/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+  const { mutate, isError, isIdle, isLoading, isSuccess } = useMutation(
+    (data: IPostProduct) => postData(data),
+    {
+      onSuccess: () => {
+        console.log('success')
       },
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
-        if (res.ok) {
-          setDisplayImage('')
-          setFormDataImage('')
-          formik.resetForm()
-          Router.push('/')
-          return res.json()
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-
-    console.log(response)
-  }
+      onError: () => {
+        console.log('error')
+      },
+      onSettled: () => {
+        console.log('settled')
+      },
+    }
+  )
 
   return (
     <div className={styles.container}>
@@ -252,7 +238,15 @@ const ProductForm = () => {
         </div>
 
         <div className={styles.buttonContainer}>
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading
+              ? 'Saving...'
+              : isError
+              ? 'Error!'
+              : isSuccess
+              ? 'Saved!'
+              : 'Submit'}
+          </button>
         </div>
       </form>
     </div>

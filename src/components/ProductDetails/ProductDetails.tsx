@@ -7,7 +7,7 @@ import {
 } from 'react-icons/ai'
 import Image from 'next/image'
 import { useState } from 'react'
-import { IProduct } from '../../ts/interfaces/IProduct'
+import { IProduct } from '../../ts/interfaces/types'
 import { useRouter } from 'next/router'
 import { useQuery, QueryCache } from '@tanstack/react-query'
 import fetchProducts from 'components/helpers/fetchProducts'

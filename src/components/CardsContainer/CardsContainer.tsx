@@ -10,7 +10,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
 import Link from 'next/link'
-import { IProduct } from '../../ts/interfaces/IProduct'
+import { IProduct } from '../../ts/interfaces/types'
 import { useQuery } from '@tanstack/react-query'
 import fetchProducts from 'components/helpers/fetchProducts'
 

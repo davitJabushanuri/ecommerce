@@ -4,9 +4,7 @@ import layout from '../layout.module.scss'
 import DashboardNavbar from '@components/dashboard/DashboardNavbar'
 import DashboardHeader from '@components/dashboard/DashboardHeader'
 
-const Customers = ({ customers }: any) => {
-  console.log(customers)
-
+const Customers = () => {
   return (
     <div className={styles.container}>
       <main>
@@ -19,18 +17,7 @@ const Customers = ({ customers }: any) => {
               <DashboardHeader />
             </div>
 
-            <div className={styles.content}>
-              {customers.map((customer: any) => {
-                return (
-                  <div key={customer.id}>
-                    <h1>{customer.name}</h1>
-                    <p>{customer.email}</p>
-                    <img src={customer.image} alt="" />
-                    <p>{customer.role}</p>
-                  </div>
-                )
-              })}
-            </div>
+            <div className={styles.content}></div>
           </main>
         </div>
       </main>
@@ -39,14 +26,3 @@ const Customers = ({ customers }: any) => {
 }
 
 export default Customers
-
-export const getServerSideProps = async (context: any) => {
-  const res = await fetch('http://localhost:3000/api/users')
-  const customers = await res.json()
-
-  return {
-    props: {
-      customers,
-    },
-  }
-}

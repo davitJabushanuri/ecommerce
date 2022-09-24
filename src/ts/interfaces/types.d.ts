@@ -17,3 +17,15 @@ export interface IProduct {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface IPostProduct {
+  name: string
+  description: string
+  category: string
+  condition: string
+  image: string
+  brand: string
+  price: string
+  stock: string
+  shipping: string
+}

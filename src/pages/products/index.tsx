@@ -3,7 +3,7 @@ import styles from './[slug].module.scss'
 import Footer from 'components/Footer/Footer'
 import Header from 'components/Header/Header'
 
-import { IProduct } from 'ts/interfaces/IProduct'
+import { IProduct } from '@ts/interfaces/types'
 import Card from 'components/Card/Card'
 import { useQuery } from '@tanstack/react-query'
 

@@ -2,7 +2,7 @@ import axios from 'axios'
 import ProductDetails from 'components/ProductDetails/ProductDetails'
 import SecondaryHeader from 'components/SecondaryHeader/SecondaryHeader'
 import { NextPage } from 'next'
-import { IProduct } from '../../ts/interfaces/IProduct'
+import { IProduct } from '../../ts/interfaces/types'
 
 const ProductPage: NextPage<IProduct> = () => {
   return (

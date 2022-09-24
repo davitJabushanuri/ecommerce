@@ -34,7 +34,7 @@ const Products = () => {
             </div>
 
             <div className={styles.content}>
-              {products?.products.map((product: any) => {
+              {products?.map((product: any) => {
                 return (
                   <div key={product.id} className={styles.card}>
                     <div className={styles.imageContainer}>

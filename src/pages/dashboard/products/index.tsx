@@ -8,23 +8,32 @@ import fetchProduct from 'components/helpers/fetchProduct'
 import { useQuery } from '@tanstack/react-query'
 
 const handleProductUpdate = async (product: any, field: string) => {
-  console.log(product.id)
-
   const data = await fetchProduct(product.id)
-
   data[field] = !data[field]
 
-  const response = await fetch('/api/products/' + product.id, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      ...data,
-    }),
-  })
+  try {
+    const response = await fetch('/api/products/' + product.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...data,
+      }),
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
 
-  console.log(response)
+const handleProductDelete = (id: string) => {
+  try {
+    const response = fetch('/api/products/' + id, {
+      method: 'DELETE',
+    })
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 const Products = () => {
@@ -103,6 +112,11 @@ const Products = () => {
                       >
                         mark as on sale
                       </button>
+                      <div>
+                        <button onClick={() => handleProductDelete(product.id)}>
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )

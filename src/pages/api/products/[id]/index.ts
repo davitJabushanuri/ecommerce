@@ -49,4 +49,18 @@ export default async function products(
       return res.status(500).json(error.message.split(':').pop().trim())
     }
   }
+
+  if (req.method === 'DELETE') {
+    try {
+      const product = await prisma.product.delete({
+        where: {
+          id,
+        },
+      })
+
+      return res.status(200).json('Product deleted')
+    } catch (error: any) {
+      return res.status(500).json(error.message.split(':').pop().trim())
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-// import * as jwt from 'next-auth/jwt'
-// import { getSession } from 'next-auth/react'
+import { NextRequest } from 'next/server'
 
-export default async function middleware(req: NextRequest) {}
+export default async function middleware(req: NextRequest) {
+  console.log(req.url)
+}

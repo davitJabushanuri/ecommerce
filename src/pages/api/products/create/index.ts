@@ -33,14 +33,13 @@ export default async function products(
         image: body.image,
         brand: body.brand,
         category: body.category,
-        stock: Number(body.stock),
+        stock: body.stock,
         shipping: Number(body.shipping),
         condition: body.condition,
       },
     })
   } catch (error: any) {
-    const { errors } = error
-    return res.status(500).json({ errors })
+    return res.status(500).json(error.message.split(':').pop().trim())
   }
 
   return res.status(200).json({

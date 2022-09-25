@@ -6,6 +6,7 @@ import { productValidation } from 'components/Schemas/productValidation'
 import { useMutation } from '@tanstack/react-query'
 import postData from '@components/helpers/postData'
 import { IPostProduct } from '@ts/interfaces/types'
+import { useState } from 'react'
 
 interface IProductValues {
   name: string
@@ -20,6 +21,8 @@ interface IProductValues {
 }
 
 const ProductForm = () => {
+  const [error, setError] = useState('')
+
   const initialValues: IProductValues = {
     name: '',
     description: '',
@@ -36,7 +39,6 @@ const ProductForm = () => {
     initialValues: initialValues,
     validationSchema: productValidation,
     onSubmit: (values) => {
-      console.log(values)
       mutate(values)
     },
   })
@@ -68,8 +70,8 @@ const ProductForm = () => {
       onSuccess: () => {
         console.log('success')
       },
-      onError: () => {
-        console.log('error')
+      onError: (error: any) => {
+        setError(error.response.data)
       },
       onSettled: () => {
         console.log('settled')
@@ -248,6 +250,7 @@ const ProductForm = () => {
               : 'Submit'}
           </button>
         </div>
+        {isError && <div className={styles.inputError}>{error}</div>}
       </form>
     </div>
   )

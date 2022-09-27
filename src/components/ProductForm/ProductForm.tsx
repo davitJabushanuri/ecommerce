@@ -3,7 +3,7 @@ import styles from './ProductForm.module.scss'
 
 import { useFormik } from 'formik'
 import { productValidation } from 'components/Schemas/productValidation'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import postData from '@components/helpers/postData'
 import { IPostProduct } from '@ts/interfaces/types'
 import { useState } from 'react'
@@ -21,6 +21,7 @@ interface IProductValues {
 }
 
 const ProductForm = () => {
+  const queryClient = useQueryClient()
   const [error, setError] = useState('')
 
   const initialValues: IProductValues = {
@@ -69,6 +70,7 @@ const ProductForm = () => {
     {
       onSuccess: () => {
         console.log('success')
+        queryClient.invalidateQueries(['products'])
       },
       onError: (error: any) => {
         setError(error.response.data)

@@ -5,11 +5,10 @@ import styles from './products.module.scss'
 import layout from '../layout.module.scss'
 import fetchProducts from 'components/helpers/fetchProducts'
 import fetchProduct from 'components/helpers/fetchProduct'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const handleProductUpdate = async (product: any, field: string) => {
-  const data = await fetchProduct(product.id)
-  data[field] = !data[field]
+  product[field] = !product[field]
 
   try {
     const response = await fetch('/api/products/' + product.id, {
@@ -18,7 +17,7 @@ const handleProductUpdate = async (product: any, field: string) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        ...data,
+        ...product,
       }),
     })
   } catch (err) {
@@ -26,7 +25,8 @@ const handleProductUpdate = async (product: any, field: string) => {
   }
 }
 
-const handleProductDelete = (id: string) => {
+const handleProductDelete = (product: any) => {
+  const { id } = product
   try {
     const response = fetch('/api/products/' + id, {
       method: 'DELETE',
@@ -37,6 +37,24 @@ const handleProductDelete = (id: string) => {
 }
 
 const Products = () => {
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(
+    ({ product, field, func }: any) => func(product, field && field),
+    {
+      onSuccess: () => {
+        console.log('success')
+        queryClient.invalidateQueries(['products'])
+      },
+      onError: (error: any) => {
+        console.log(error)
+      },
+      onSettled: () => {
+        console.log('settled')
+      },
+    }
+  )
+
   const {
     data: products,
     isLoading,
@@ -82,8 +100,13 @@ const Products = () => {
                       <p>stock: {product?.stock}</p>
                       <p>{product?.isTrending ? 'Trending' : 'Not Trending'}</p>
                       <button
+                        disabled={mutation.isLoading}
                         onClick={() =>
-                          handleProductUpdate(product, 'isTrending')
+                          mutation.mutate({
+                            product,
+                            field: 'isTrending',
+                            func: handleProductUpdate,
+                          })
                         }
                       >
                         mark as trending
@@ -94,26 +117,54 @@ const Products = () => {
                           : 'Not best seller'}
                       </p>
                       <button
+                        disabled={mutation.isLoading}
                         onClick={() =>
-                          handleProductUpdate(product, 'isBestSeller')
+                          mutation.mutate({
+                            product,
+                            field: 'isBestSeller',
+                            func: handleProductUpdate,
+                          })
                         }
                       >
                         mark as Best seller
                       </button>
                       <p>{product?.isNew ? 'New arrival' : 'Not new'}</p>
                       <button
-                        onClick={() => handleProductUpdate(product, 'isNew')}
+                        disabled={mutation.isLoading}
+                        onClick={() =>
+                          mutation.mutate({
+                            product,
+                            field: 'isNew',
+                            func: handleProductUpdate,
+                          })
+                        }
                       >
                         Mark as new
                       </button>
                       <p>{product?.isOnSale ? 'On sale' : 'Not on sale'}</p>
                       <button
-                        onClick={() => handleProductUpdate(product, 'isOnSale')}
+                        disabled={mutation.isLoading}
+                        onClick={() =>
+                          mutation.mutate({
+                            product,
+                            field: 'isOnSale',
+                            func: handleProductUpdate,
+                          })
+                        }
                       >
                         mark as on sale
                       </button>
                       <div>
-                        <button onClick={() => handleProductDelete(product.id)}>
+                        <button
+                          disabled={mutation.isLoading}
+                          onClick={() =>
+                            mutation.mutate({
+                              product,
+                              field: 'delete',
+                              func: handleProductDelete,
+                            })
+                          }
+                        >
                           Delete
                         </button>
                       </div>

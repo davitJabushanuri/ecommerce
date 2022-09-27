@@ -17,7 +17,7 @@ export default async function products(
       data: {
         userId: body.userId,
         productId: body.productId,
-        rating: body.rating,
+        rating: Number(body.rating),
         comment: body.comment,
       },
     })

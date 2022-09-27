@@ -7,14 +7,23 @@ import {
 } from 'react-icons/ai'
 import Image from 'next/image'
 import { useState } from 'react'
-import { IProduct } from '../../ts/interfaces/types'
 import { useRouter } from 'next/router'
-import { useQuery, QueryCache } from '@tanstack/react-query'
-import fetchProducts from 'components/helpers/fetchProducts'
-import fetchProduct from 'components/helpers/fetchProduct'
+import {
+  useQuery,
+  QueryCache,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 import axios from 'axios'
+import { useFormik } from 'formik'
+import { reviewValidation } from '@components/Schemas/reviewValidation'
+
+import { useSession } from 'next-auth/react'
+import createReview from '@components/helpers/createReview'
 
 const ProductDetails: React.FC = () => {
+  const queryClient = useQueryClient()
+  const { data: session } = useSession()
   const [quantity, setQuantity] = useState(1)
   const router = useRouter()
   const { id } = router.query
@@ -28,6 +37,40 @@ const ProductDetails: React.FC = () => {
     },
   })
 
+  const formik = useFormik({
+    initialValues: {
+      rating: '',
+      comment: '',
+    },
+    validationSchema: reviewValidation,
+    onSubmit: (values) => {
+      if (session)
+        mutation.mutate({
+          values,
+          userEmail: session?.user.email,
+          productId: product.id,
+        })
+    },
+  })
+
+  const mutation = useMutation(
+    ({ values, userEmail, productId }: any) =>
+      createReview(values, userEmail, productId),
+    {
+      onSuccess: () => {
+        console.log('success')
+        queryClient.invalidateQueries(['product', id])
+        formik.resetForm()
+      },
+      onError: (error) => {
+        console.log(error)
+      },
+      onSettled: (data, error) => {
+        console.log('settled')
+      },
+    }
+  )
+
   const { data: product } = useQuery(
     ['product', id],
     async () => {
@@ -40,8 +83,6 @@ const ProductDetails: React.FC = () => {
     }
   )
   if (!product) return null
-
-  console.log(product)
 
   return (
     <div className={styles.container}>
@@ -92,7 +133,57 @@ const ProductDetails: React.FC = () => {
           <button className={styles.addToCart}>Add to Cart</button>
         </div>
       </div>
-      <div>
+
+      <div className={styles.reviewForm}>
+        <h2>Leave a review</h2>
+        <form onSubmit={formik.handleSubmit}>
+          <div className={styles.inputGroup}>
+            <label htmlFor="rating">Rating</label>
+            <input
+              id="rating"
+              name="rating"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.rating}
+            />
+
+            {formik.touched.rating && formik.errors.rating ? (
+              <div className={styles.inputError}>{formik.errors.rating}</div>
+            ) : null}
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label htmlFor="comment">Comment</label>
+            <input
+              id="comment"
+              name="comment"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.comment}
+            />
+
+            {formik.touched.comment && formik.errors.comment ? (
+              <div className={styles.inputError}>{formik.errors.comment}</div>
+            ) : null}
+          </div>
+
+          <div className={styles.buttonContainer}>
+            <button type="submit" disabled={mutation.isLoading}>
+              {mutation.isLoading
+                ? 'Saving...'
+                : mutation.isError
+                ? 'Error!'
+                : mutation.isSuccess
+                ? 'Saved!'
+                : 'Submit'}
+            </button>
+          </div>
+        </form>
+      </div>
+      <div className={styles.reviews}>
+        <h2>Reviews</h2>
         {product.reviews &&
           product.reviews.map((review: any) => {
             return (

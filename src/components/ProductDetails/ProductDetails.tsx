@@ -41,6 +41,8 @@ const ProductDetails: React.FC = () => {
   )
   if (!product) return null
 
+  console.log(product)
+
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
@@ -89,6 +91,17 @@ const ProductDetails: React.FC = () => {
           </div>
           <button className={styles.addToCart}>Add to Cart</button>
         </div>
+      </div>
+      <div>
+        {product.reviews &&
+          product.reviews.map((review: any) => {
+            return (
+              <div key={review.id}>
+                <p>{review.rating}</p>
+                <p>{review.comment}</p>
+              </div>
+            )
+          })}
       </div>
     </div>
   )

@@ -8,14 +8,13 @@ export default async function products(
   const { id }: any = req.query
   const { body } = req
 
-  console.log(req.body)
-
   if (req.method === 'GET') {
     try {
       const product = await prisma.product.findUnique({
         where: {
           id,
         },
+        include: { reviews: true },
       })
 
       if (!product) {

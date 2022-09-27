@@ -160,7 +160,7 @@ const Products = () => {
                           onClick={() =>
                             mutation.mutate({
                               product,
-                              field: 'delete',
+                              field: '',
                               func: handleProductDelete,
                             })
                           }

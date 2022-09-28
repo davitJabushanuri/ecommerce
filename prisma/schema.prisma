@@ -95,6 +95,9 @@ model Review {
   userId          String
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   product         Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userName        String
+  userEmail       String
+  userImage       String
   rating          Int   
   image           String?    
   title           String

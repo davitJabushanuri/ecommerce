@@ -18,7 +18,7 @@ const createReview = async (
   // find user in db
   const users = await findUsers()
   const user = users.find((user: any) => user.email === userEmail)
-
+  console.log(user)
   // create review
   try {
     const review = await fetch('http://localhost:3000/api/products/review', {
@@ -33,6 +33,9 @@ const createReview = async (
         image: values.image,
         title: values.title,
         description: values.description,
+        userName: user.name,
+        userEmail: user.email,
+        userImage: user.image,
       }),
     })
   } catch (err) {

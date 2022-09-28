@@ -21,6 +21,9 @@ export default async function products(
         image: body.image,
         title: body.title,
         description: body.description,
+        userName: body.userName,
+        userEmail: body.userEmail,
+        userImage: body.userImage,
       },
     })
 

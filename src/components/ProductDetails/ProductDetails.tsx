@@ -9,12 +9,7 @@ import {
 import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import {
-  useQuery,
-  QueryCache,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query'
+import { useQuery, QueryCache } from '@tanstack/react-query'
 import axios from 'axios'
 
 import Reviews from './Reviews'
@@ -97,10 +92,8 @@ const ProductDetails: React.FC = () => {
         </div>
       </div>
 
-      <div className={styles.reviewForm}>
-        <ReviewForm product={product} />
-      </div>
       <div className={styles.reviews}>
+        <ReviewForm product={product} />
         <Reviews product={product} />
       </div>
     </div>

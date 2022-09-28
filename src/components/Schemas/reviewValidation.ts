@@ -5,8 +5,14 @@ export const reviewValidation = yup.object().shape({
     .string()
     .required('Rating is required')
     .matches(/^[0-9]+$/, 'Rating must be a number'),
-  comment: yup
+  image: yup.string(),
+  title: yup
     .string()
-    .min(10, 'Comment must be at least 10 characters')
-    .max(100, 'Comment must be at most 100 characters'),
+    .required('Title is required')
+    .min(3, 'Please add a meaningful title'),
+  description: yup
+    .string()
+    .required('Description is required')
+    .min(10, 'Description must be at least 10 characters')
+    .max(100, 'Description must be at most 100 characters'),
 })

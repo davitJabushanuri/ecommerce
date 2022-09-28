@@ -21,7 +21,9 @@ const createReview = async (
         userId: user.id,
         productId: productId,
         rating: values.rating,
-        comment: values.comment,
+        image: values?.image,
+        title: values.title,
+        description: values.description,
       }),
     })
   } catch (err) {

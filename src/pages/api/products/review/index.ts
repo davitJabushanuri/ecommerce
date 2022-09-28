@@ -18,7 +18,9 @@ export default async function products(
         userId: body.userId,
         productId: body.productId,
         rating: Number(body.rating),
-        comment: body.comment,
+        image: body.image,
+        title: body.title,
+        description: body.description,
       },
     })
 

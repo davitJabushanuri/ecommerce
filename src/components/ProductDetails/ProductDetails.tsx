@@ -40,8 +40,11 @@ const ProductDetails: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       rating: '',
-      comment: '',
+      image: '',
+      title: '',
+      description: '',
     },
+
     validationSchema: reviewValidation,
     onSubmit: (values) => {
       if (session)
@@ -154,18 +157,52 @@ const ProductDetails: React.FC = () => {
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="comment">Comment</label>
+            <label htmlFor="image">image</label>
             <input
-              id="comment"
-              name="comment"
+              id="image"
+              name="image"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.comment}
+              value={formik.values.image}
             />
 
-            {formik.touched.comment && formik.errors.comment ? (
-              <div className={styles.inputError}>{formik.errors.comment}</div>
+            {formik.touched.image && formik.errors.image ? (
+              <div className={styles.inputError}>{formik.errors.image}</div>
+            ) : null}
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label htmlFor="title">Title</label>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.title}
+            />
+
+            {formik.touched.title && formik.errors.title ? (
+              <div className={styles.inputError}>{formik.errors.title}</div>
+            ) : null}
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label htmlFor="description">Description</label>
+            <input
+              id="description"
+              name="description"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.description}
+            />
+
+            {formik.touched.description && formik.errors.description ? (
+              <div className={styles.inputError}>
+                {formik.errors.description}
+              </div>
             ) : null}
           </div>
 

@@ -65,7 +65,7 @@ const ProductDetails: React.FC = () => {
       onError: (error) => {
         console.log(error)
       },
-      onSettled: (data, error) => {
+      onSettled: () => {
         console.log('settled')
       },
     }

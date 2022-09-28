@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import styles from './ProductDetails.module.scss'
 import {
   AiFillStar,
@@ -15,15 +16,11 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import axios from 'axios'
-import { useFormik } from 'formik'
-import { reviewValidation } from '@components/Schemas/reviewValidation'
 
-import { useSession } from 'next-auth/react'
-import createReview from '@components/helpers/createReview'
+import Reviews from './Reviews'
+import ReviewForm from './ReviewForm'
 
 const ProductDetails: React.FC = () => {
-  const queryClient = useQueryClient()
-  const { data: session } = useSession()
   const [quantity, setQuantity] = useState(1)
   const router = useRouter()
   const { id } = router.query
@@ -36,43 +33,6 @@ const ProductDetails: React.FC = () => {
       console.log(data)
     },
   })
-
-  const formik = useFormik({
-    initialValues: {
-      rating: '',
-      image: '',
-      title: '',
-      description: '',
-    },
-
-    validationSchema: reviewValidation,
-    onSubmit: (values) => {
-      if (session)
-        mutation.mutate({
-          values,
-          userEmail: session?.user.email,
-          productId: product.id,
-        })
-    },
-  })
-
-  const mutation = useMutation(
-    ({ values, userEmail, productId }: any) =>
-      createReview(values, userEmail, productId),
-    {
-      onSuccess: () => {
-        console.log('success')
-        queryClient.invalidateQueries(['product', id])
-        formik.resetForm()
-      },
-      onError: (error) => {
-        console.log(error)
-      },
-      onSettled: () => {
-        console.log('settled')
-      },
-    }
-  )
 
   const { data: product } = useQuery(
     ['product', id],
@@ -138,98 +98,10 @@ const ProductDetails: React.FC = () => {
       </div>
 
       <div className={styles.reviewForm}>
-        <h2>Leave a review</h2>
-        <form onSubmit={formik.handleSubmit}>
-          <div className={styles.inputGroup}>
-            <label htmlFor="rating">Rating</label>
-            <input
-              id="rating"
-              name="rating"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.rating}
-            />
-
-            {formik.touched.rating && formik.errors.rating ? (
-              <div className={styles.inputError}>{formik.errors.rating}</div>
-            ) : null}
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label htmlFor="image">image</label>
-            <input
-              id="image"
-              name="image"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.image}
-            />
-
-            {formik.touched.image && formik.errors.image ? (
-              <div className={styles.inputError}>{formik.errors.image}</div>
-            ) : null}
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label htmlFor="title">Title</label>
-            <input
-              id="title"
-              name="title"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.title}
-            />
-
-            {formik.touched.title && formik.errors.title ? (
-              <div className={styles.inputError}>{formik.errors.title}</div>
-            ) : null}
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label htmlFor="description">Description</label>
-            <input
-              id="description"
-              name="description"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.description}
-            />
-
-            {formik.touched.description && formik.errors.description ? (
-              <div className={styles.inputError}>
-                {formik.errors.description}
-              </div>
-            ) : null}
-          </div>
-
-          <div className={styles.buttonContainer}>
-            <button type="submit" disabled={mutation.isLoading}>
-              {mutation.isLoading
-                ? 'Saving...'
-                : mutation.isError
-                ? 'Error!'
-                : mutation.isSuccess
-                ? 'Saved!'
-                : 'Submit'}
-            </button>
-          </div>
-        </form>
+        <ReviewForm product={product} />
       </div>
       <div className={styles.reviews}>
-        <h2>Reviews</h2>
-        {product.reviews &&
-          product.reviews.map((review: any) => {
-            return (
-              <div key={review.id}>
-                <p>{review.rating}</p>
-                <p>{review.comment}</p>
-              </div>
-            )
-          })}
+        <Reviews product={product} />
       </div>
     </div>
   )

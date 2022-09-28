@@ -33,7 +33,7 @@ export default async function products(
         image: body.image,
         brand: body.brand,
         category: body.category,
-        stock: body.stock,
+        stock: Number(body.stock),
         shipping: Number(body.shipping),
         condition: body.condition,
       },

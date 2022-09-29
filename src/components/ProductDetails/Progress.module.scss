@@ -1,0 +1,31 @@
+.container {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  margin-bottom: 1.2rem;
+
+  .star {
+    color: #5f84e3;
+    display: flex;
+    align-items: center;
+
+    p {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      .value {
+        width: 0.8rem;
+      }
+    }
+  }
+
+  .bar {
+    .label {
+      width: 3rem;
+      display: flex;
+      justify-content: flex-end;
+      color: #323357;
+      font-size: 0.9rem;
+    }
+  }
+}

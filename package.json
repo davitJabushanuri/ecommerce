@@ -22,6 +22,7 @@
     "next-auth": "^4.10.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-svg-star-rating": "^2.1.2",
     "sass": "^1.54.0",
     "swiper": "^8.3.2",
     "yup": "^0.32.11",

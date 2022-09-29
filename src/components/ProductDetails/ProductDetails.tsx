@@ -14,6 +14,7 @@ import axios from 'axios'
 
 import Reviews from './Reviews'
 import ReviewForm from './ReviewForm'
+import Ratings from './Ratings'
 
 const ProductDetails: React.FC = () => {
   const [quantity, setQuantity] = useState(1)
@@ -93,6 +94,7 @@ const ProductDetails: React.FC = () => {
       </div>
 
       <div className={styles.reviews}>
+        <Ratings reviews={product.reviews} />
         <ReviewForm product={product} />
         <Reviews product={product} />
       </div>

@@ -1,13 +1,13 @@
+import styles from './product.module.scss'
+
 import Header from '@components/Header/Header'
-import axios from 'axios'
 import ProductDetails from 'components/ProductDetails/ProductDetails'
-import SecondaryHeader from 'components/SecondaryHeader/SecondaryHeader'
 import { NextPage } from 'next'
 import { IProduct } from '../../ts/interfaces/types'
 
 const ProductPage: NextPage<IProduct> = () => {
   return (
-    <div>
+    <div className={styles.container}>
       <main>
         <Header />
         <ProductDetails />
@@ -15,18 +15,5 @@ const ProductPage: NextPage<IProduct> = () => {
     </div>
   )
 }
-
-// export async function getServerSideProps(context: any) {
-//   const { id } = context.query
-//   const product = await axios
-//     .get(`http://localhost:3000/api/products/${id}`)
-//     .then((res) => res.data)
-//     .catch((err) => console.log(err))
-//   return {
-//     props: {
-//       product,
-//     },
-//   }
-// }
 
 export default ProductPage

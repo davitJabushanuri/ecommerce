@@ -1,5 +1,5 @@
 .container {
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 800px) {
     margin-top: 2rem;
     display: grid;
     gap: 1rem;
@@ -17,8 +17,7 @@
   .imageContainer {
     grid-area: image;
     position: relative;
-    width: 100%;
-    aspect-ratio: 12 / 10;
+    aspect-ratio: 12 / 8;
 
     @media screen and (min-width: 700px) {
       margin-left: 1rem;

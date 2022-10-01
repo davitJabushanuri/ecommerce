@@ -50,8 +50,6 @@ const ReviewForm = ({ product }: any) => {
     }
   )
 
-  console.log(formik.values)
-
   return (
     <div className={styles.container}>
       <h2>Create Review</h2>

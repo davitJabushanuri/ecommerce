@@ -95,6 +95,12 @@ const ProductDetails: React.FC = () => {
 
       <div className={styles.reviews}>
         <Ratings reviews={product.reviews} />
+
+        <div className={styles.createReviewButton}>
+          <h2>Review this product</h2>
+          <p>Share your thoughts with other customers</p>
+          <button>Write a customer review</button>
+        </div>
         <ReviewForm product={product} />
         <Reviews product={product} />
       </div>

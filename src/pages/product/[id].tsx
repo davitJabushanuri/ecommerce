@@ -1,3 +1,4 @@
+import Header from '@components/Header/Header'
 import axios from 'axios'
 import ProductDetails from 'components/ProductDetails/ProductDetails'
 import SecondaryHeader from 'components/SecondaryHeader/SecondaryHeader'
@@ -8,7 +9,7 @@ const ProductPage: NextPage<IProduct> = () => {
   return (
     <div>
       <main>
-        <SecondaryHeader header="Product Details" />
+        <Header />
         <ProductDetails />
       </main>
     </div>

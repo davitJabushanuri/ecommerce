@@ -1,5 +1,7 @@
 import styles from './ReviewForm.module.scss'
 
+import StarRating from 'react-svg-star-rating'
+
 import { reviewValidation } from '@components/Schemas/reviewValidation'
 import { useFormik } from 'formik'
 import { useSession } from 'next-auth/react'
@@ -48,19 +50,21 @@ const ReviewForm = ({ product }: any) => {
     }
   )
 
+  console.log(formik.values)
+
   return (
     <div className={styles.container}>
-      <h2>Leave a review</h2>
+      <h2>Create Review</h2>
       <form onSubmit={formik.handleSubmit}>
         <div className={styles.inputGroup}>
-          <label htmlFor="rating">Rating</label>
-          <input
-            id="rating"
-            name="rating"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.rating}
+          <label htmlFor="rating">Overall rating</label>
+          <StarRating
+            containerClassName={styles.starRating}
+            starClassName={styles.star}
+            activeColor="#FFCC48"
+            hoverColor="#FFCC48"
+            initialRating={Number(formik.values.rating)}
+            handleOnClick={(rating) => formik.setFieldValue('rating', rating)}
           />
 
           {formik.touched.rating && formik.errors.rating ? (
@@ -70,6 +74,7 @@ const ReviewForm = ({ product }: any) => {
 
         <div className={styles.inputGroup}>
           <label htmlFor="image">image</label>
+          <span>Customers find images more helpful than text alone</span>
           <input
             id="image"
             name="image"
@@ -85,7 +90,7 @@ const ReviewForm = ({ product }: any) => {
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title">Headline</label>
           <input
             id="title"
             name="title"
@@ -93,6 +98,7 @@ const ReviewForm = ({ product }: any) => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.title}
+            placeholder="What's most important to know?"
           />
 
           {formik.touched.title && formik.errors.title ? (
@@ -102,13 +108,13 @@ const ReviewForm = ({ product }: any) => {
 
         <div className={styles.inputGroup}>
           <label htmlFor="description">Description</label>
-          <input
+          <textarea
             id="description"
             name="description"
-            type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.description}
+            placeholder="What did you like or dislike?"
           />
 
           {formik.touched.description && formik.errors.description ? (

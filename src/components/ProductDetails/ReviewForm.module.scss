@@ -1,4 +1,8 @@
 .container {
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
   form {
     display: flex;
     flex-direction: column;
@@ -14,10 +18,18 @@
         font-weight: 600;
       }
 
-      input {
+      input,
+      textarea {
+        width: 100%;
         padding: 0.8rem;
         border: 1px solid #ccc;
         border-radius: 0.4rem;
+        font-size: 1rem;
+      }
+
+      textarea {
+        resize: none;
+        height: 10rem;
       }
 
       .inputError {

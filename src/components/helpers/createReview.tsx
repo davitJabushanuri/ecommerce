@@ -15,12 +15,10 @@ const createReview = async (
   userEmail: string,
   productId: string
 ) => {
-  // find user in db
-  const users = await findUsers()
-  const user = users.find((user: any) => user.email === userEmail)
-  console.log(user)
-  // create review
   try {
+    const users = await findUsers()
+    const user = users.find((user: any) => user.email === userEmail)
+
     const review = await fetch('http://localhost:3000/api/products/review', {
       method: 'POST',
       headers: {

@@ -4,9 +4,6 @@ import StarRating from 'react-svg-star-rating'
 import Moment from 'react-moment'
 
 const Reviews = ({ product }: any) => {
-  const time = new Date(product.reviews[0].createdAt)
-  console.log(time.toDateString())
-
   return (
     <div className={styles.container}>
       <h2>Reviews</h2>

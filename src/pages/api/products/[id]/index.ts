@@ -14,7 +14,14 @@ export default async function products(
         where: {
           id,
         },
-        include: { reviews: true },
+
+        include: {
+          reviews: {
+            orderBy: {
+              createdAt: 'desc',
+            },
+          },
+        },
       })
 
       if (!product) {

@@ -12,7 +12,7 @@ const Progress = ({ star = 0, value = 0 }: any) => {
       </div>
       <div className={styles.bar}>
         <ProgressBar
-          completed={value}
+          completed={value || 0}
           maxCompleted={100}
           bgColor={`#FFCC48`}
           baseBgColor={`#F5F8FF`}

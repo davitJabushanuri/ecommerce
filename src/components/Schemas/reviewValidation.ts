@@ -13,6 +13,5 @@ export const reviewValidation = yup.object().shape({
   description: yup
     .string()
     .required('Description is required')
-    .min(10, 'Description must be at least 10 characters')
-    .max(100, 'Description must be at most 100 characters'),
+    .min(50, 'Description must be at least 50 characters'),
 })

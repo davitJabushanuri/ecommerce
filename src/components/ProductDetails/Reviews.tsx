@@ -6,13 +6,31 @@ import { useSession } from 'next-auth/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import incrementHelpful from '@components/helpers/incrementHelpful'
 
+const createReport = async (id: string) => {
+  try {
+    const response = await fetch(`/api/products/review/report`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        reviewId: id,
+        message: 'This review is inappropriate',
+        description: 'This review is inappropriate',
+      }),
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const Reviews = ({ product }: any) => {
   const queryCache = useQueryClient()
   const { data: session } = useSession()
 
   const mutation = useMutation(
-    ({ id, userEmail, helpful }: any) =>
-      incrementHelpful(id, userEmail, helpful),
+    ({ id, userEmail, helpful, func }: any) =>
+      func(id, userEmail && userEmail, helpful && helpful),
     {
       onSuccess: () => {
         console.log('success')
@@ -80,12 +98,22 @@ const Reviews = ({ product }: any) => {
                         id: review.id,
                         userEmail: session?.user.email,
                         helpful: review.helpful,
+                        func: incrementHelpful,
                       })
                     }
                   >
                     Helpful
                   </button>
-                  <button>Report</button>
+                  <button
+                    onClick={() =>
+                      mutation.mutate({
+                        id: review.id,
+                        func: createReport,
+                      })
+                    }
+                  >
+                    Report
+                  </button>
                 </div>
               </div>
             </div>

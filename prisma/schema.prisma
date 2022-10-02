@@ -123,10 +123,10 @@ model Report {
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  message     String?
   description String?
   reviewId    String
   review      Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
-  message     String
 }
 
 model Order {

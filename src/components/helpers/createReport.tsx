@@ -1,4 +1,4 @@
-const createReport = async (id: string) => {
+const createReport = async (id: string, values: any) => {
   try {
     const response = await fetch(`/api/products/review/report`, {
       method: 'POST',
@@ -7,10 +7,11 @@ const createReport = async (id: string) => {
       },
       body: JSON.stringify({
         reviewId: id,
-        message: 'This review is inappropriate',
-        description: 'This review is inappropriate',
+        message: values.message,
+        description: values.description,
       }),
     })
+    console.log(response)
   } catch (error) {
     console.log(error)
   }

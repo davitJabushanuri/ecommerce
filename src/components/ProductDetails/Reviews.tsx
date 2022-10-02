@@ -5,11 +5,14 @@ import Moment from 'react-moment'
 import { useSession } from 'next-auth/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import incrementHelpful from '@components/helpers/incrementHelpful'
-import createReport from '@components/helpers/createReport'
+import Report from '@components/Report/Report'
+import { useState } from 'react'
 
 const Reviews = ({ product }: any) => {
   const queryCache = useQueryClient()
   const { data: session } = useSession()
+
+  const [modal, toggleModal] = useState(false)
 
   const mutation = useMutation(
     ({ id, userEmail, helpful, func }: any) =>
@@ -90,17 +93,14 @@ const Reviews = ({ product }: any) => {
                   </button>
                   <button
                     className={styles.report}
-                    onClick={() =>
-                      mutation.mutate({
-                        id: review.id,
-                        func: createReport,
-                      })
-                    }
+                    onClick={() => toggleModal(true)}
                   >
                     Report
                   </button>
                 </div>
               </div>
+
+              {modal && <Report toggleModal={toggleModal} review={review} />}
             </div>
           )
         })}

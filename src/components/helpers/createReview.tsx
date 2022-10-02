@@ -1,6 +1,6 @@
 const findUsers = async () => {
   try {
-    const data = await fetch('http://localhost:3000/api/users', {
+    const data = await fetch('/api/users', {
       method: 'GET',
     })
     const users = await data.json()
@@ -19,7 +19,7 @@ const createReview = async (
     const users = await findUsers()
     const user = users.find((user: any) => user.email === userEmail)
 
-    const review = await fetch('http://localhost:3000/api/products/review', {
+    const review = await fetch('/api/products/review', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

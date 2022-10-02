@@ -1,4 +1,4 @@
-import { prisma } from '../../../lib/prisma'
+import { prisma } from '../../../../lib/prisma'
 
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -6,6 +6,8 @@ export default async function favorites(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { body } = req
+
   if (req.method === 'GET') {
     try {
       const favorites = await prisma.favorite.findMany()
@@ -16,15 +18,14 @@ export default async function favorites(
   }
 
   if (req.method === 'POST') {
-    const { productId, userId } = req.body
     try {
       const favorite = await prisma.favorite.create({
         data: {
-          productId,
-          userId,
+          userEmail: body.userEmail,
+          productId: body.productId,
         },
       })
-      res.status(200).json(favorite)
+      res.status(200).json({ message: 'Product added to favorites' })
     } catch (e) {
       console.log(e)
     }

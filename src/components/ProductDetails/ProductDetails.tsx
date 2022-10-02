@@ -12,11 +12,15 @@ import { useRouter } from 'next/router'
 import { useQuery, QueryCache } from '@tanstack/react-query'
 import axios from 'axios'
 
+import { useSession } from 'next-auth/react'
+
 import Reviews from './Reviews'
 import ReviewForm from './ReviewForm'
 import Ratings from './Ratings'
+import addToFavorites from '@components/helpers/addToFavorites'
 
 const ProductDetails: React.FC = () => {
+  const { data: session } = useSession()
   const [quantity, setQuantity] = useState(1)
   const router = useRouter()
   const { id } = router.query
@@ -56,7 +60,10 @@ const ProductDetails: React.FC = () => {
       <div className={styles.infoContainer}>
         <div className={styles.info}>
           <span className={styles.shipping}>Free Shipping</span>
-          <button className={styles.favorites}>
+          <button
+            onClick={() => addToFavorites(session?.user.email, id)}
+            className={styles.favorites}
+          >
             <AiFillHeart />
           </button>
         </div>

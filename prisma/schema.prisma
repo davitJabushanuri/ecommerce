@@ -165,8 +165,8 @@ model Order {
 
 model Favorite {
   id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userEmail    String
+  user      User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   productId String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())

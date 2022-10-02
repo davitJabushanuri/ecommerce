@@ -5,24 +5,7 @@ import Moment from 'react-moment'
 import { useSession } from 'next-auth/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import incrementHelpful from '@components/helpers/incrementHelpful'
-
-const createReport = async (id: string) => {
-  try {
-    const response = await fetch(`/api/products/review/report`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        reviewId: id,
-        message: 'This review is inappropriate',
-        description: 'This review is inappropriate',
-      }),
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
+import createReport from '@components/helpers/createReport'
 
 const Reviews = ({ product }: any) => {
   const queryCache = useQueryClient()
@@ -93,6 +76,7 @@ const Reviews = ({ product }: any) => {
 
                 <div className={styles.buttons}>
                   <button
+                    className={styles.helpful}
                     onClick={() =>
                       mutation.mutate({
                         id: review.id,
@@ -105,6 +89,7 @@ const Reviews = ({ product }: any) => {
                     Helpful
                   </button>
                   <button
+                    className={styles.report}
                     onClick={() =>
                       mutation.mutate({
                         id: review.id,

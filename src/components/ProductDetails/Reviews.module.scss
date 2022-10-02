@@ -73,5 +73,46 @@
         object-fit: cover;
       }
     }
+
+    .feedback {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+
+      p {
+        color: rgb(124, 124, 124);
+      }
+
+      .buttons {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.4rem 1rem;
+          background-color: transparent;
+          border: 1px solid rgb(172, 172, 172);
+          border-radius: 0.6rem;
+          cursor: pointer;
+          font-size: 0.9rem;
+
+          &:hover {
+            color: rgb(109, 109, 109);
+          }
+        }
+
+        .report {
+          border: none;
+          border-left: 1px solid rgb(172, 172, 172);
+          border-radius: 0;
+          color: rgb(138, 137, 137);
+          padding: 0 1rem;
+        }
+      }
+    }
   }
 }

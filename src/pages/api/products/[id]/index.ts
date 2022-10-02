@@ -20,6 +20,10 @@ export default async function products(
             orderBy: {
               createdAt: 'desc',
             },
+
+            include: {
+              helpful: true,
+            },
           },
         },
       })

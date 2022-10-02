@@ -53,7 +53,7 @@ model VerificationToken {
 model User {
   id            String     @id @default(cuid())
   name          String?
-  email         String?    @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
   role          Role       @default(USER)
@@ -62,6 +62,7 @@ model User {
   reviews       Review[]
   orders        Order[]
   favorites     Favorite[]
+  helpful       Helpful[]
 }
 
 model Product {
@@ -102,10 +103,20 @@ model Review {
   image       String?
   title       String
   description String
-  helpful     Int      @default(0)
+  helpful     Helpful[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   Report      Report[]
+}
+
+model Helpful {
+  id        String  @id @default(cuid())
+  reviewId  String
+  review    Review  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  userEmail String
+  user      User    @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Report {

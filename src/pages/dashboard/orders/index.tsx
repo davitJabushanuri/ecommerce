@@ -3,7 +3,7 @@ import DashboardNavbar from '@components/dashboard/DashboardNavbar'
 import styles from './orders.module.scss'
 import layout from '../layout.module.scss'
 
-const orders = () => {
+const Orders = () => {
   return (
     <div className={styles.container}>
       <main>
@@ -22,4 +22,4 @@ const orders = () => {
   )
 }
 
-export default orders
+export default Orders

@@ -7,6 +7,27 @@ export default async function products(
 ) {
   const { body } = req
 
+  if (req.method === 'GET') {
+    try {
+      const reports = await prisma.report.findMany({
+        orderBy: {
+          createdAt: 'desc',
+        },
+
+        include: {
+          review: {
+            include: {
+              product: true,
+            },
+          },
+        },
+      })
+      res.status(200).json(reports)
+    } catch (error: any) {
+      res.status(500).json({ error: error.message })
+    }
+  }
+
   if (req.method === 'POST') {
     try {
       const review = await prisma.report.create({

@@ -9,6 +9,7 @@ import { RiSettingsLine } from 'react-icons/ri'
 import { IoLogoPolymer } from 'react-icons/io'
 import { BiBarChartAlt2 } from 'react-icons/bi'
 import { CgClose } from 'react-icons/cg'
+import { GoReport } from 'react-icons/go'
 
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/react'
@@ -101,6 +102,17 @@ const DashboardNavbar = () => {
           >
             <BiNotification />
             <span>Orders</span>
+          </a>
+        </Link>
+
+        <Link href={`/dashboard/reports`}>
+          <a
+            className={`${styles.navbar__item} ${
+              router.pathname == '/dashboard/reports' && styles.active
+            }`}
+          >
+            <GoReport />
+            <span>Reports</span>
           </a>
         </Link>
 

@@ -10,7 +10,11 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
   }
 
   try {
-    const users = await prisma.user.findMany()
+    const users = await prisma.user.findMany({
+      include: {
+        favorites: true,
+      },
+    })
     res.status(200).json(users)
   } catch (e) {
     console.log(e)

@@ -20,8 +20,10 @@ import Ratings from './Ratings'
 import addToFavorites from '@components/helpers/addToFavorites'
 
 const ProductDetails: React.FC = () => {
-  const { data: session } = useSession()
+  const [reviewModal, setReviewModal] = useState(false)
   const [quantity, setQuantity] = useState(1)
+
+  const { data: session } = useSession()
   const router = useRouter()
   const { id } = router.query
 
@@ -106,9 +108,13 @@ const ProductDetails: React.FC = () => {
         <div className={styles.createReviewButton}>
           <h2>Review this product</h2>
           <p>Share your thoughts with other customers</p>
-          <button>Write a customer review</button>
+          <button onClick={() => setReviewModal(true)}>
+            Write a customer review
+          </button>
         </div>
-        <ReviewForm product={product} />
+        {reviewModal && (
+          <ReviewForm product={product} setReviewModal={setReviewModal} />
+        )}
         <Reviews product={product} />
       </div>
     </div>

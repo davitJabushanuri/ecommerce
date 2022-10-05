@@ -1,62 +1,104 @@
 .container {
-  h2 {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
 
-    .inputGroup {
+  .modal {
+    overscroll-behavior: contain;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+
+    .header {
       display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
 
-      label {
-        font-size: 1.2rem;
-        font-weight: 600;
+      h2 {
+        font-size: 1.6rem;
       }
 
-      input,
-      textarea {
-        width: 100%;
-        padding: 0.8rem;
-        border: 1px solid #ccc;
-        border-radius: 0.4rem;
-        font-size: 1rem;
-      }
-
-      textarea {
-        resize: none;
-        height: 10rem;
-      }
-
-      .inputError {
-        color: red;
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-size: 1.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
-  }
 
-  .buttonContainer {
-    display: flex;
-    justify-content: flex-end;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
 
-    button {
-      padding: 0.8rem 1.2rem;
-      border: none;
-      border-radius: 0.4rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      background-color: aqua;
+      .inputGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
 
-      &:hover {
-        background-color: #56dada;
+        label {
+          font-size: 1.2rem;
+          font-weight: 600;
+
+          span {
+            font-weight: 400;
+            font-size: 1rem;
+          }
+        }
+
+        input,
+        textarea {
+          width: 100%;
+          padding: 0.8rem;
+          border: 1px solid #ccc;
+          border-radius: 0.4rem;
+          font-size: 1rem;
+        }
+
+        textarea {
+          resize: none;
+          height: 10rem;
+        }
+
+        .inputError {
+          color: red;
+        }
       }
+    }
 
-      &:active {
-        background-color: #00b8b8;
+    .buttonContainer {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        padding: 0.8rem 1.2rem;
+        border: none;
+        border-radius: 0.4rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        cursor: pointer;
+        background-color: aqua;
+
+        &:hover {
+          background-color: #56dada;
+        }
+
+        &:active {
+          background-color: #00b8b8;
+        }
       }
     }
   }

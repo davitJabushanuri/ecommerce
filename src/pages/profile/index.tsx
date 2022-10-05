@@ -1,5 +1,5 @@
+import Header from '@components/Header/Header'
 import { useQuery } from '@tanstack/react-query'
-import SecondaryHeader from 'components/SecondaryHeader/SecondaryHeader'
 import { useSession } from 'next-auth/react'
 
 const getUser = async (userEmail: any) => {
@@ -23,7 +23,7 @@ const User = () => {
   return (
     <div>
       <main>
-        <SecondaryHeader header="My Profile" />
+        <Header />
       </main>
     </div>
   )

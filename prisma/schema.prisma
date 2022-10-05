@@ -53,7 +53,7 @@ model VerificationToken {
 model User {
   id            String     @id @default(cuid())
   name          String?
-  email         String    @unique
+  email         String     @unique
   emailVerified DateTime?
   image         String?
   role          Role       @default(USER)
@@ -63,10 +63,11 @@ model User {
   orders        Order[]
   favorites     Favorite[]
   helpful       Helpful[]
+  cartItems     Cart[]
 }
 
 model Product {
-  id           String  @id @default(cuid())
+  id           String     @id @default(cuid())
   name         String
   description  String
   price        Int
@@ -76,26 +77,26 @@ model Product {
   condition    String
   stock        Int
   shipping     Int
-  rating       Int     @default(0)
-  numReviews   Int     @default(0)
-  isBestSeller Boolean @default(false)
-  isNew        Boolean @default(false)
-  isOnSale     Boolean @default(false)
-  isTrending   Boolean @default(false)
-
-  reviews   Review[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  orders    Order[]
-  favorites Favorite[]
+  rating       Int        @default(0)
+  numReviews   Int        @default(0)
+  isBestSeller Boolean    @default(false)
+  isNew        Boolean    @default(false)
+  isOnSale     Boolean    @default(false)
+  isTrending   Boolean    @default(false)
+  reviews      Review[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  orders       Order[]
+  favorites    Favorite[]
+  cartItems    Cart[]
 }
 
 model Review {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId   String
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
   userName    String
   userEmail   String
   userImage   String
@@ -104,17 +105,17 @@ model Review {
   title       String
   description String
   helpful     Helpful[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   Report      Report[]
 }
 
 model Helpful {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   reviewId  String
-  review    Review  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
   userEmail String
-  user      User    @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  user      User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -129,43 +130,50 @@ model Report {
   review      Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
 }
 
-model Order {
-  id          String    @id @default(cuid())
-  userEmail   String
-  user        User      @relation(fields: [userEmail], references: [id], onDelete: Cascade)
-  products    Product[]
-  name        String
-  description String?
-  image       String
-  price       Int       @default(0)
-  quantity    Int       @default(0)
-
-  shippingAddress String
-  shippingCity    String
-  shippingState   String
-  shippingZip     String
-
-  paymentMethod String
-  paymentStatus String
-  paymentAmount Int    @default(0)
-  tax           Int    @default(0)
-  shipping      Int    @default(0)
-  total         Int    @default(0)
-
-  isPaid      Boolean   @default(false)
-  paidAt      DateTime?
-  isShipped   Boolean   @default(false)
-  shippedAt   DateTime?
-  isDelivered Boolean   @default(false)
-  deliveredAt DateTime?
-
+model Cart {
+  id        String   @id @default(cuid())
+  userEmail String
+  user      User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+model Order {
+  id              String    @id @default(cuid())
+  userEmail       String
+  user            User      @relation(fields: [userEmail], references: [id], onDelete: Cascade)
+  products        Product[]
+  name            String
+  description     String?
+  image           String
+  price           Int       @default(0)
+  quantity        Int       @default(0)
+  shippingAddress String
+  shippingCity    String
+  shippingState   String
+  shippingZip     String
+  paymentMethod   String
+  paymentStatus   String
+  paymentAmount   Int       @default(0)
+  tax             Int       @default(0)
+  shipping        Int       @default(0)
+  total           Int       @default(0)
+  isPaid          Boolean   @default(false)
+  paidAt          DateTime?
+  isShipped       Boolean   @default(false)
+  shippedAt       DateTime?
+  isDelivered     Boolean   @default(false)
+  deliveredAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
 model Favorite {
   id        String   @id @default(cuid())
-  userEmail    String
+  userEmail String
   user      User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   productId String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)

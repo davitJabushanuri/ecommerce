@@ -43,6 +43,7 @@ const ReviewForm = ({ product, setReviewModal }: any) => {
         console.log('success')
         queryClient.invalidateQueries(['product', product.id])
         formik.resetForm()
+        setReviewModal(false)
       },
       onError: (error) => {
         console.log(error)

@@ -13,15 +13,15 @@
   .modal {
     background-color: #fff;
     padding: 2rem;
-    border-radius: 0.5rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
     width: 100%;
     height: 100%;
     overflow: auto;
 
     @media (min-width: 700px) and (min-height: 900px) {
-      width: fit-content;
+      width: 500px;
       height: fit-content;
+      border-radius: 0.5rem;
     }
 
     .header {

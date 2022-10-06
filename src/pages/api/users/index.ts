@@ -17,7 +17,11 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
             product: true,
           },
         },
-        cartItems: true,
+        cartItems: {
+          include: {
+            product: true,
+          },
+        },
       },
     })
     res.status(200).json(users)

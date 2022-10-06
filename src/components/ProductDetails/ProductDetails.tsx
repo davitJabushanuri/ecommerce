@@ -120,6 +120,7 @@ const ProductDetails: React.FC = () => {
           <span className={styles.shipping}>Free Shipping</span>
           {alreadyInFavorites ? (
             <button
+              disabled={favoriteMutation.isLoading}
               onClick={() =>
                 favoriteMutation.mutate({
                   func: removeFromFavorites,
@@ -132,6 +133,7 @@ const ProductDetails: React.FC = () => {
             </button>
           ) : (
             <button
+              disabled={favoriteMutation.isLoading}
               onClick={() =>
                 favoriteMutation.mutate({
                   func: addToFavorites,

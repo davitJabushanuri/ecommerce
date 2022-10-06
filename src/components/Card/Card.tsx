@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { AiFillHeart } from 'react-icons/ai'
 
 import { useSession } from 'next-auth/react'
-import addToFavorites from '@components/helpers/addToFavorites'
+import addToFavorites from '@components/helpers/toggleFavorites'
 
 const Card = ({ product }: any) => {
   const router = useRouter()

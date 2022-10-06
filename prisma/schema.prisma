@@ -143,7 +143,7 @@ model Cart {
 
 model Order {
   id              String    @id @default(cuid())
-  userId       String
+  userId          String
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   products        Product[]
   name            String
@@ -173,7 +173,7 @@ model Order {
 
 model Favorite {
   id        String   @id @default(cuid())
-  userId String
+  userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)

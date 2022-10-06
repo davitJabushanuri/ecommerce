@@ -1,20 +1,17 @@
 import addToCart from '@components/helpers/addToCart'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import useUser from './useUser'
 
-const useCart = (productId: any, quantity: any) => {
+const useCart = (id: any) => {
   const queryClient = useQueryClient()
-  const user = useUser()
-  const userId = user?.id
-  console.log(userId)
-  console.log(user)
 
   return useMutation(
-    ({ productId, quantity }: any) => addToCart(userId, productId, quantity),
+    ({ userId, productId, quantity }: any) => {
+      return addToCart(userId, productId, quantity)
+    },
     {
-      onSuccess: () => {
-        console.log('success')
-        queryClient.invalidateQueries(['product', productId])
+      onSuccess: (productId) => {
+        console.log('success', id)
+        queryClient.invalidateQueries(['users'])
       },
       onError: (error) => {
         console.log(error)

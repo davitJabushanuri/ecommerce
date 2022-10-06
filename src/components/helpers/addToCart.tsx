@@ -1,4 +1,8 @@
-const addToCart = async (userEmail: any, productId: any, quantity: number) => {
+const addToCart = async (userId: any, productId: any, quantity: number) => {
+  // if (!userId) {
+  //   throw new Error('User not logged in')
+  // }
+
   try {
     const response = await fetch('/api/products/cart', {
       method: 'POST',
@@ -6,7 +10,7 @@ const addToCart = async (userEmail: any, productId: any, quantity: number) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userEmail,
+        userId,
         productId,
         quantity,
       }),

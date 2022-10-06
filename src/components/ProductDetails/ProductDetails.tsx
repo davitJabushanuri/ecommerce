@@ -10,27 +10,19 @@ import {
 import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-
-import { useSession } from 'next-auth/react'
 
 import Reviews from './Reviews'
 import ReviewForm from './ReviewForm'
 import Ratings from './Ratings'
-import addToFavorites from '@components/helpers/addToFavorites'
-import addToCart from '@components/helpers/addToCart'
-import removeFromFavorites from '@components/helpers/removeFromFavorites'
 import useProduct from '@components/hooks/useProduct'
 import useUser from '@components/hooks/useUser'
 import useCart from '@components/hooks/useCart'
+import useFavorites from '@components/hooks/useFavorites'
 
 const ProductDetails: React.FC = () => {
   const [reviewModal, setReviewModal] = useState(false)
   const [quantity, setQuantity] = useState(1)
 
-  const queryClient = useQueryClient()
-
-  const { data: session } = useSession()
   const router = useRouter()
   const { id } = router.query
 
@@ -45,24 +37,9 @@ const ProductDetails: React.FC = () => {
     (cart: any) => cart.productId === id
   )
 
-  const favoriteMutation = useMutation(
-    ({ func, userEmail, productId }: any) =>
-      func(userEmail && userEmail, productId && productId),
-    {
-      onSuccess: () => {
-        console.log('success')
-        queryClient.invalidateQueries(['users'])
-      },
-      onError: (error) => {
-        console.log(error)
-      },
-      onSettled: () => {
-        console.log('settled')
-      },
-    }
-  )
+  const favoriteMutation = useFavorites()
 
-  const cartMutation = useCart(id, quantity)
+  const cartMutation = useCart(id)
 
   if (product.isLoading) return <div>Loading...</div>
 
@@ -84,8 +61,9 @@ const ProductDetails: React.FC = () => {
               disabled={favoriteMutation.isLoading}
               onClick={() =>
                 favoriteMutation.mutate({
-                  func: removeFromFavorites,
+                  userId: user?.id,
                   productId: id,
+                  action: 'remove',
                 })
               }
               className={styles.favorites}
@@ -97,9 +75,9 @@ const ProductDetails: React.FC = () => {
               disabled={favoriteMutation.isLoading}
               onClick={() =>
                 favoriteMutation.mutate({
-                  func: addToFavorites,
-                  userEmail: session?.user?.email,
+                  userId: user?.id,
                   productId: id,
+                  action: 'add',
                 })
               }
               className={styles.favorites}
@@ -147,7 +125,7 @@ const ProductDetails: React.FC = () => {
               }
               onClick={() =>
                 cartMutation.mutate({
-                  userEmail: session?.user.email,
+                  userId: user?.id,
                   productId: id,
                   quantity,
                 })

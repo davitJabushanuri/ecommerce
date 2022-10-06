@@ -25,7 +25,7 @@ export default async function favorites(
     try {
       const favorite = await prisma.favorite.create({
         data: {
-          userEmail: body.userEmail,
+          userId: body.userId,
           productId: body.productId,
         },
       })

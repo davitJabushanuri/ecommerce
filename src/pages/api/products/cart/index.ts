@@ -9,7 +9,7 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
     try {
       const cart = await prisma.cart.create({
         data: {
-          userEmail: body.userEmail,
+          userId: body.userId,
           productId: body.productId,
           quantity: body.quantity,
         },

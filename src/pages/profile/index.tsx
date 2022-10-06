@@ -3,11 +3,13 @@ import styles from './profile.module.scss'
 import Card from '@components/Card/Card'
 import Header from '@components/Header/Header'
 import fetchUsers from '@components/helpers/fetchUsers'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
+import removeFromFavorites from '@components/helpers/removeFromFavorites'
 
 const User = () => {
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
 
   const {
     data: users,
@@ -15,7 +17,22 @@ const User = () => {
     isError,
   } = useQuery(['users'], () => fetchUsers())
   const user = users?.find((user: any) => user.email === session?.user?.email)
-  console.log(user)
+
+  const favoriteMutation = useMutation(
+    (productId: any) => removeFromFavorites(productId),
+    {
+      onSuccess: () => {
+        console.log('success')
+        queryClient.invalidateQueries(['users'])
+      },
+      onError: (error) => {
+        console.log(error)
+      },
+      onSettled: () => {
+        console.log('settled')
+      },
+    }
+  )
 
   if (isLoading) return <div>Loading...</div>
 
@@ -23,10 +40,19 @@ const User = () => {
     <div className={styles.container}>
       <main>
         <Header />
-        <h1>Profile</h1>
         <div className={styles.favorites}>
           {user.favorites.map((favorite: any) => {
-            return <Card key={favorite.id} product={favorite.product} />
+            return (
+              <div key={favorite.id}>
+                <Card product={favorite.product} />
+                <button
+                  disabled={favoriteMutation.isLoading}
+                  onClick={() => favoriteMutation.mutate(favorite.product.id)}
+                >
+                  remove from favorites
+                </button>
+              </div>
+            )
           })}
         </div>
       </main>

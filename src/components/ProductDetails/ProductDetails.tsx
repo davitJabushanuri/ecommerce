@@ -10,13 +10,7 @@ import {
 import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import {
-  useQuery,
-  QueryCache,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query'
-import axios from 'axios'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { useSession } from 'next-auth/react'
 
@@ -25,8 +19,10 @@ import ReviewForm from './ReviewForm'
 import Ratings from './Ratings'
 import addToFavorites from '@components/helpers/addToFavorites'
 import addToCart from '@components/helpers/addToCart'
-import fetchUsers from '@components/helpers/fetchUsers'
 import removeFromFavorites from '@components/helpers/removeFromFavorites'
+import useProduct from '@components/hooks/useProduct'
+import useUser from '@components/hooks/useUser'
+import useCart from '@components/hooks/useCart'
 
 const ProductDetails: React.FC = () => {
   const [reviewModal, setReviewModal] = useState(false)
@@ -38,18 +34,8 @@ const ProductDetails: React.FC = () => {
   const router = useRouter()
   const { id } = router.query
 
-  const queryCache = new QueryCache({
-    onError: (error) => {
-      console.log(error)
-    },
-    onSuccess: (data) => {
-      console.log(data)
-    },
-  })
-
-  const { data: users } = useQuery(['users'], () => fetchUsers())
-
-  const user = users?.find((user: any) => user.email === session?.user?.email)
+  const product = useProduct(id)
+  const user = useUser()
 
   const alreadyInFavorites = user?.favorites?.some(
     (favorite: any) => favorite.productId === id
@@ -58,16 +44,6 @@ const ProductDetails: React.FC = () => {
   const alreadyInCart = user?.cartItems?.some(
     (cart: any) => cart.productId === id
   )
-
-  const {
-    data: product,
-    isLoading,
-    isError,
-  } = useQuery(['product', id], async () => {
-    return axios.get(`/api/products/${id}`).then((response) => {
-      return response.data
-    })
-  })
 
   const favoriteMutation = useMutation(
     ({ func, userEmail, productId }: any) =>
@@ -86,32 +62,17 @@ const ProductDetails: React.FC = () => {
     }
   )
 
-  const cartMutation = useMutation(
-    ({ userEmail, productId, quantity }: any) =>
-      addToCart(userEmail, productId, quantity),
-    {
-      onSuccess: () => {
-        console.log('success')
-        queryClient.invalidateQueries(['product', id])
-      },
-      onError: (error) => {
-        console.log(error)
-      },
-      onSettled: () => {
-        console.log('settled')
-      },
-    }
-  )
+  const cartMutation = useCart(id, quantity)
 
-  if (isLoading) return <div>Loading...</div>
+  if (product.isLoading) return <div>Loading...</div>
 
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
         <Image
           className={styles.image}
-          src={product?.image}
-          alt={product?.name}
+          src={product?.data.image}
+          alt={product?.data.name}
           layout="fill"
         />
       </div>
@@ -147,16 +108,16 @@ const ProductDetails: React.FC = () => {
             </button>
           )}
         </div>
-        <h1 className={styles.title}>{product?.name}</h1>
-        <p className={styles.description}>{product?.description}</p>
-        <p className={styles.price}>{product?.price}</p>
+        <h1 className={styles.title}>{product?.data.name}</h1>
+        <p className={styles.description}>{product?.data.description}</p>
+        <p className={styles.price}>{product?.data.price}</p>
         <p className={styles.rating}>
-          <span>{product?.rating}</span>
+          <span>{product?.data.rating}</span>
           <AiFillStar />
         </p>
       </div>
       <div className={styles.payment}>
-        <p>{product?.stock ? 'In stock' : 'Out of stock'}</p>
+        <p>{product?.data.stock ? 'In stock' : 'Out of stock'}</p>
         <div className={styles.actions}>
           <div className={styles.quantity}>
             <button
@@ -169,7 +130,7 @@ const ProductDetails: React.FC = () => {
             <span>{quantity}</span>
 
             <button
-              disabled={quantity >= product?.stock}
+              disabled={quantity >= product?.data.stock}
               onClick={() => setQuantity((prev) => prev + 1)}
               className={styles.plus}
             >
@@ -182,11 +143,10 @@ const ProductDetails: React.FC = () => {
             <button
               className={styles.addToCart}
               disabled={
-                !product?.stock || cartMutation.isLoading || alreadyInCart
+                !product?.data.stock || cartMutation.isLoading || alreadyInCart
               }
               onClick={() =>
                 cartMutation.mutate({
-                  func: addToCart,
                   userEmail: session?.user.email,
                   productId: id,
                   quantity,
@@ -200,7 +160,7 @@ const ProductDetails: React.FC = () => {
       </div>
 
       <div className={styles.reviews}>
-        <Ratings reviews={product.reviews} />
+        <Ratings reviews={product?.data.reviews} />
 
         <div className={styles.createReviewButton}>
           <h2>Review this product</h2>
@@ -210,9 +170,9 @@ const ProductDetails: React.FC = () => {
           </button>
         </div>
         {reviewModal && (
-          <ReviewForm product={product} setReviewModal={setReviewModal} />
+          <ReviewForm product={product?.data} setReviewModal={setReviewModal} />
         )}
-        <Reviews product={product} />
+        <Reviews product={product?.data} />
       </div>
     </div>
   )

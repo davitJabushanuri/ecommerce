@@ -114,8 +114,8 @@ model Helpful {
   id        String   @id @default(cuid())
   reviewId  String
   review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
-  userEmail String
-  user      User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -132,8 +132,8 @@ model Report {
 
 model Cart {
   id        String   @id @default(cuid())
-  userEmail String
-  user      User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity  Int
@@ -143,8 +143,8 @@ model Cart {
 
 model Order {
   id              String    @id @default(cuid())
-  userEmail       String
-  user            User      @relation(fields: [userEmail], references: [id], onDelete: Cascade)
+  userId       String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   products        Product[]
   name            String
   description     String?
@@ -173,8 +173,8 @@ model Order {
 
 model Favorite {
   id        String   @id @default(cuid())
-  userEmail String
-  user      User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  userId String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())

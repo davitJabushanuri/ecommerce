@@ -10,7 +10,11 @@ export default async function favorites(
 
   if (req.method === 'GET') {
     try {
-      const favorites = await prisma.favorite.findMany()
+      const favorites = await prisma.favorite.findMany({
+        include: {
+          product: true,
+        },
+      })
       res.status(200).json(favorites)
     } catch (e) {
       console.log(e)
@@ -26,6 +30,19 @@ export default async function favorites(
         },
       })
       res.status(200).json({ message: 'Product added to favorites' })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  if (req.method === 'DELETE') {
+    try {
+      const favorite = await prisma.favorite.deleteMany({
+        where: {
+          productId: body.productId,
+        },
+      })
+      res.status(200).json({ message: 'Product removed from favorites' })
     } catch (e) {
       console.log(e)
     }

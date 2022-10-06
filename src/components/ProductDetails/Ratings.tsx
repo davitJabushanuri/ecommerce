@@ -7,6 +7,8 @@ import getPercentage from '@components/helpers/getPercentage'
 const Ratings = ({ reviews }: any) => {
   const averageRating = parseFloat(getAverageRating(reviews)) || 0
 
+  if (!reviews) return <div>error</div>
+
   return (
     <div className={styles.container}>
       <h2>Customer reviews</h2>
@@ -25,7 +27,7 @@ const Ratings = ({ reviews }: any) => {
             <p>{averageRating} out of 5</p>
           </div>
           <p className={styles.customerCount}>
-            {reviews.length} customer ratings
+            {reviews?.length} customer ratings
           </p>
         </div>
       </div>

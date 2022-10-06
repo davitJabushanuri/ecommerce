@@ -12,7 +12,12 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
   try {
     const users = await prisma.user.findMany({
       include: {
-        favorites: true,
+        favorites: {
+          include: {
+            product: true,
+          },
+        },
+        cartItems: true,
       },
     })
     res.status(200).json(users)

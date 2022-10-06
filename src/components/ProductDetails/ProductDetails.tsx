@@ -5,11 +5,17 @@ import {
   AiFillHeart,
   AiOutlinePlus,
   AiOutlineMinus,
+  AiOutlineHeart,
 } from 'react-icons/ai'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { useQuery, QueryCache } from '@tanstack/react-query'
+import {
+  useQuery,
+  QueryCache,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 import axios from 'axios'
 
 import { useSession } from 'next-auth/react'
@@ -18,31 +24,15 @@ import Reviews from './Reviews'
 import ReviewForm from './ReviewForm'
 import Ratings from './Ratings'
 import addToFavorites from '@components/helpers/addToFavorites'
-
-const addToCart = async (userEmail: any, productId: any, quantity: number) => {
-  console.log(userEmail, productId)
-  try {
-    const product = await fetch('/api/products/cart', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userEmail,
-        productId,
-        quantity,
-      }),
-    })
-
-    console.log(product)
-  } catch (error) {
-    console.log(error)
-  }
-}
+import addToCart from '@components/helpers/addToCart'
+import fetchUsers from '@components/helpers/fetchUsers'
+import removeFromFavorites from '@components/helpers/removeFromFavorites'
 
 const ProductDetails: React.FC = () => {
   const [reviewModal, setReviewModal] = useState(false)
   const [quantity, setQuantity] = useState(1)
+
+  const queryClient = useQueryClient()
 
   const { data: session } = useSession()
   const router = useRouter()
@@ -57,21 +47,62 @@ const ProductDetails: React.FC = () => {
     },
   })
 
+  const { data: users } = useQuery(['users'], () => fetchUsers())
+
+  const user = users?.find((user: any) => user.email === session?.user?.email)
+
+  const alreadyInFavorites = user?.favorites?.some(
+    (favorite: any) => favorite.productId === id
+  )
+
+  const alreadyInCart = user?.cartItems?.some(
+    (cart: any) => cart.productId === id
+  )
+
   const {
     data: product,
     isLoading,
     isError,
-  } = useQuery(
-    ['product', id],
-    async () => {
-      return axios.get(`/api/products/${id}`).then((response) => {
-        return response.data
-      })
-    },
+  } = useQuery(['product', id], async () => {
+    return axios.get(`/api/products/${id}`).then((response) => {
+      return response.data
+    })
+  })
+
+  const favoriteMutation = useMutation(
+    ({ func, userEmail, productId }: any) =>
+      func(userEmail && userEmail, productId && productId),
     {
-      initialData: () => console.log(queryCache.findAll(['products'])),
+      onSuccess: () => {
+        console.log('success')
+        queryClient.invalidateQueries(['users'])
+      },
+      onError: (error) => {
+        console.log(error)
+      },
+      onSettled: () => {
+        console.log('settled')
+      },
     }
   )
+
+  const cartMutation = useMutation(
+    ({ userEmail, productId, quantity }: any) =>
+      addToCart(userEmail, productId, quantity),
+    {
+      onSuccess: () => {
+        console.log('success')
+        queryClient.invalidateQueries(['product', id])
+      },
+      onError: (error) => {
+        console.log(error)
+      },
+      onSettled: () => {
+        console.log('settled')
+      },
+    }
+  )
+
   if (isLoading) return <div>Loading...</div>
 
   return (
@@ -87,12 +118,32 @@ const ProductDetails: React.FC = () => {
       <div className={styles.infoContainer}>
         <div className={styles.info}>
           <span className={styles.shipping}>Free Shipping</span>
-          <button
-            onClick={() => addToFavorites(session?.user.email, id)}
-            className={styles.favorites}
-          >
-            <AiFillHeart />
-          </button>
+          {alreadyInFavorites ? (
+            <button
+              onClick={() =>
+                favoriteMutation.mutate({
+                  func: removeFromFavorites,
+                  productId: id,
+                })
+              }
+              className={styles.favorites}
+            >
+              <AiFillHeart />
+            </button>
+          ) : (
+            <button
+              onClick={() =>
+                favoriteMutation.mutate({
+                  func: addToFavorites,
+                  userEmail: session?.user?.email,
+                  productId: id,
+                })
+              }
+              className={styles.favorites}
+            >
+              <AiOutlineHeart />
+            </button>
+          )}
         </div>
         <h1 className={styles.title}>{product?.name}</h1>
         <p className={styles.description}>{product?.description}</p>
@@ -123,12 +174,26 @@ const ProductDetails: React.FC = () => {
               <AiOutlinePlus />
             </button>
           </div>
-          <button
-            onClick={() => addToCart(session?.user.email, id, quantity)}
-            className={styles.addToCart}
-          >
-            Add to Cart
-          </button>
+          {alreadyInCart ? (
+            <button className={styles.alreadyInCart}>Already in Cart</button>
+          ) : (
+            <button
+              className={styles.addToCart}
+              disabled={
+                !product?.stock || cartMutation.isLoading || alreadyInCart
+              }
+              onClick={() =>
+                cartMutation.mutate({
+                  func: addToCart,
+                  userEmail: session?.user.email,
+                  productId: id,
+                  quantity,
+                })
+              }
+            >
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
 

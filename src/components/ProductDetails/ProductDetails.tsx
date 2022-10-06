@@ -148,7 +148,11 @@ const ProductDetails: React.FC = () => {
           </button>
         </div>
         {reviewModal && (
-          <ReviewForm product={product?.data} setReviewModal={setReviewModal} />
+          <ReviewForm
+            userId={user.id}
+            product={product?.data}
+            setReviewModal={setReviewModal}
+          />
         )}
         <Reviews product={product?.data} />
       </div>

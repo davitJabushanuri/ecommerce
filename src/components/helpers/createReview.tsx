@@ -10,14 +10,10 @@ const findUsers = async () => {
   }
 }
 
-const createReview = async (
-  values: any,
-  userEmail: string,
-  productId: string
-) => {
+const createReview = async (values: any, userId: string, productId: string) => {
   try {
     const users = await findUsers()
-    const user = users.find((user: any) => user.email === userEmail)
+    const user = users.find((user: any) => user.id === userId)
 
     const review = await fetch('/api/products/review', {
       method: 'POST',

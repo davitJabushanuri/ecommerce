@@ -1,21 +1,12 @@
 import styles from './ReviewForm.module.scss'
-
 import StarRating from 'react-svg-star-rating'
-
 import { MdOutlineClose } from 'react-icons/md'
-
 import { reviewValidation } from '@components/Schemas/reviewValidation'
 import { useFormik } from 'formik'
-import { useSession } from 'next-auth/react'
-
-import createReview from '@components/helpers/createReview'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
+import useReview from '@components/hooks/useReview'
 
-const ReviewForm = ({ product, setReviewModal }: any) => {
-  const { data: session } = useSession()
-  const queryClient = useQueryClient()
-
+const ReviewForm = ({ userId, product, setReviewModal }: any) => {
   const formik = useFormik({
     initialValues: {
       rating: '',
@@ -26,33 +17,15 @@ const ReviewForm = ({ product, setReviewModal }: any) => {
 
     validationSchema: reviewValidation,
     onSubmit: (values) => {
-      if (session)
-        mutation.mutate({
-          values,
-          userEmail: session?.user.email,
-          productId: product.id,
-        })
+      mutation.mutate({
+        values,
+        userId,
+        productId: product.id,
+      })
     },
   })
 
-  const mutation = useMutation(
-    ({ values, userEmail, productId }: any) =>
-      createReview(values, userEmail, productId),
-    {
-      onSuccess: () => {
-        console.log('success')
-        queryClient.invalidateQueries(['product', product.id])
-        formik.resetForm()
-        setReviewModal(false)
-      },
-      onError: (error) => {
-        console.log(error)
-      },
-      onSettled: () => {
-        console.log('settled')
-      },
-    }
-  )
+  const mutation = useReview(product.id, formik, setReviewModal)
 
   useEffect(() => {
     document.body.style.overflowY = 'hidden'

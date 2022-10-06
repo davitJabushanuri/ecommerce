@@ -19,6 +19,27 @@ import ReviewForm from './ReviewForm'
 import Ratings from './Ratings'
 import addToFavorites from '@components/helpers/addToFavorites'
 
+const addToCart = async (userEmail: any, productId: any, quantity: number) => {
+  console.log(userEmail, productId)
+  try {
+    const product = await fetch('/api/products/cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userEmail,
+        productId,
+        quantity,
+      }),
+    })
+
+    console.log(product)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const ProductDetails: React.FC = () => {
   const [reviewModal, setReviewModal] = useState(false)
   const [quantity, setQuantity] = useState(1)
@@ -36,7 +57,11 @@ const ProductDetails: React.FC = () => {
     },
   })
 
-  const { data: product } = useQuery(
+  const {
+    data: product,
+    isLoading,
+    isError,
+  } = useQuery(
     ['product', id],
     async () => {
       return axios.get(`/api/products/${id}`).then((response) => {
@@ -47,7 +72,7 @@ const ProductDetails: React.FC = () => {
       initialData: () => console.log(queryCache.findAll(['products'])),
     }
   )
-  if (!product) return null
+  if (isLoading) return <div>Loading...</div>
 
   return (
     <div className={styles.container}>
@@ -98,7 +123,12 @@ const ProductDetails: React.FC = () => {
               <AiOutlinePlus />
             </button>
           </div>
-          <button className={styles.addToCart}>Add to Cart</button>
+          <button
+            onClick={() => addToCart(session?.user.email, id, quantity)}
+            className={styles.addToCart}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
 

@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 3rem;
   padding: 1rem;
+  overflow: hidden;
 
   h2 {
     font-size: 1.6rem;
@@ -60,6 +61,10 @@
       gap: 0.5rem;
       color: rgb(172, 172, 172);
       font-size: 0.9rem;
+    }
+
+    .description {
+      word-break: break-all;
     }
 
     .imageContainer {

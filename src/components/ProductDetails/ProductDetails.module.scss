@@ -3,25 +3,16 @@
     margin-top: 2rem;
     display: grid;
     gap: 1rem;
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
       'image details'
       'image payment';
-  }
-
-  @media screen and (min-width: 1024px) {
-    grid-template-columns: 2fr 2fr 280px;
-    grid-template-areas: 'image details payment';
   }
 
   .imageContainer {
     grid-area: image;
     position: relative;
     aspect-ratio: 12 / 8;
-
-    @media screen and (min-width: 700px) {
-      margin-left: 1rem;
-    }
 
     .image {
       object-fit: cover;

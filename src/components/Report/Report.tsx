@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import styles from './Report.module.scss'
 
 import { MdOutlineClose } from 'react-icons/md'
+import useReport from '@components/hooks/useReport'
 
 const Report = ({ toggleModal, review }: any) => {
   const queryClient = useQueryClient()
@@ -15,26 +16,14 @@ const Report = ({ toggleModal, review }: any) => {
       description: '',
     },
     onSubmit: (values) => {
-      mutation.mutate(values)
+      mutation.mutate({
+        values: values,
+        reviewId: review.id,
+      })
     },
   })
 
-  const mutation = useMutation(
-    (values: any) => createReport(review.id, values),
-    {
-      onSuccess: () => {
-        console.log('success')
-        queryClient.invalidateQueries(['product', review.productId])
-        toggleModal(false)
-      },
-      onError: (error) => {
-        console.log(error)
-      },
-      onSettled: () => {
-        console.log('settled')
-      },
-    }
-  )
+  const mutation = useReport(toggleModal, review.productId)
 
   useEffect(() => {
     document.body.style.overflowY = 'hidden'

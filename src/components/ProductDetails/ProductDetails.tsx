@@ -75,6 +75,21 @@ const ProductDetails: React.FC = () => {
           />{' '}
           <a href="#reviews">{product.data.reviews.length} ratings</a>
         </div>
+
+        <div className={styles.shippingContainer}>
+          <p>
+            {product.data.shipping === 0 ? (
+              <div className={`${styles.shipping} ${styles.freeShipping}`}>
+                <p>Free shipping</p>
+              </div>
+            ) : (
+              <div>
+                <p>Shipping: ${product.data.shipping}</p>
+              </div>
+            )}
+          </p>
+        </div>
+
         <p className={styles.price}>
           <span>
             <BiDollar />
@@ -101,20 +116,6 @@ const ProductDetails: React.FC = () => {
               <p>Out of stock.</p>
             </div>
           )}
-        </div>
-
-        <div className={styles.shippingContainer}>
-          <p>
-            {product.data.shipping === 0 ? (
-              <div className={`${styles.shipping} ${styles.freeShipping}`}>
-                <p>Free shipping</p>
-              </div>
-            ) : (
-              <div>
-                <p>Shipping: ${product.data.shipping}</p>
-              </div>
-            )}
-          </p>
         </div>
 
         <p className={styles.description}>{product?.data.description}</p>

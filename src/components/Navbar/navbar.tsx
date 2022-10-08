@@ -5,8 +5,12 @@ import { BiShoppingBag, BiBell } from 'react-icons/bi'
 import { TbLayoutDashboard } from 'react-icons/tb'
 import Link from 'next/link'
 import User from 'components/helpers/User/User'
+import useUser from '@components/hooks/useUser'
 
 const Navbar = () => {
+  const user = useUser()
+  console.log(user.cartItems.length)
+
   return (
     <div className={styles.container}>
       <div className={styles.home}>
@@ -21,6 +25,11 @@ const Navbar = () => {
         <Link href="/shopping-cart">
           <a>
             <BiShoppingBag />
+            {user.cartItems.length > 0 && (
+              <span className={styles.cartItemsCounter}>
+                {user.cartItems.length}
+              </span>
+            )}
           </a>
         </Link>
       </div>

@@ -43,6 +43,7 @@
     }
 
     .price {
+      margin-top: 1rem;
       font-size: 1.6rem;
       font-weight: 500;
       display: flex;
@@ -54,6 +55,7 @@
     }
 
     .stockContainer {
+      margin-bottom: 1rem;
       .stock {
         display: flex;
         align-items: flex-end;
@@ -67,11 +69,12 @@
     }
 
     .shippingContainer {
-      margin: 1rem 0;
+      margin: 0.4rem 0;
       display: flex;
       .shipping {
         padding: 0.2rem 0.5rem;
         border-radius: 0.2rem;
+        font-size: 0.9rem;
       }
 
       .freeShipping {

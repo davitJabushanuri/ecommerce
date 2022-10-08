@@ -1,5 +1,3 @@
-import createReport from '@components/helpers/createReport'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useFormik } from 'formik'
 import { useEffect } from 'react'
 import styles from './Report.module.scss'
@@ -8,22 +6,22 @@ import { MdOutlineClose } from 'react-icons/md'
 import useReport from '@components/hooks/useReport'
 
 const Report = ({ toggleModal, review }: any) => {
-  const queryClient = useQueryClient()
-
   const formik = useFormik({
     initialValues: {
       message: '',
       description: '',
     },
     onSubmit: (values) => {
-      mutation.mutate({
+      reportMutation.mutate({
         values: values,
         reviewId: review.id,
       })
+
+      formik.resetForm()
     },
   })
 
-  const mutation = useReport(toggleModal, review.productId)
+  const reportMutation = useReport(toggleModal, review.productId)
 
   useEffect(() => {
     document.body.style.overflowY = 'hidden'
@@ -76,12 +74,12 @@ const Report = ({ toggleModal, review }: any) => {
           </div>
 
           <div className={styles.buttonContainer}>
-            <button type="submit" disabled={mutation.isLoading}>
-              {mutation.isLoading
+            <button type="submit" disabled={reportMutation.isLoading}>
+              {reportMutation.isLoading
                 ? 'Saving...'
-                : mutation.isError
+                : reportMutation.isError
                 ? 'Error!'
-                : mutation.isSuccess
+                : reportMutation.isSuccess
                 ? 'Saved!'
                 : 'Submit'}
             </button>

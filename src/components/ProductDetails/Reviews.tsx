@@ -2,34 +2,16 @@
 import styles from './Reviews.module.scss'
 import StarRating from 'react-svg-star-rating'
 import Moment from 'react-moment'
-import { useSession } from 'next-auth/react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import incrementHelpful from '@components/helpers/incrementHelpful'
 import Report from '@components/Report/Report'
 import { useState } from 'react'
+import useUser from '@components/hooks/useUser'
+import useHelpful from '@components/hooks/useHelpful'
 
 const Reviews = ({ product }: any) => {
-  const queryCache = useQueryClient()
-  const { data: session } = useSession()
-
   const [modal, toggleModal] = useState(false)
+  const user = useUser()
 
-  const mutation = useMutation(
-    ({ id, userEmail, helpful, func }: any) =>
-      func(id, userEmail && userEmail, helpful && helpful),
-    {
-      onSuccess: () => {
-        console.log('success')
-        queryCache.invalidateQueries(['product', product.id])
-      },
-      onError: () => {
-        console.log('error')
-      },
-      onSettled: () => {
-        console.log('settled')
-      },
-    }
-  )
+  const helpfulMutation = useHelpful()
 
   return (
     <div className={styles.container}>
@@ -81,11 +63,10 @@ const Reviews = ({ product }: any) => {
                   <button
                     className={styles.helpful}
                     onClick={() =>
-                      mutation.mutate({
+                      helpfulMutation.mutate({
                         id: review.id,
-                        userEmail: session?.user.email,
+                        userId: user.id,
                         helpful: review.helpful,
-                        func: incrementHelpful,
                       })
                     }
                   >

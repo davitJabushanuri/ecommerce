@@ -11,7 +11,7 @@ export default async function products(
     try {
       const review = await prisma.helpful.create({
         data: {
-          userEmail: body.userEmail,
+          userId: body.userId,
           reviewId: body.reviewId,
         },
       })

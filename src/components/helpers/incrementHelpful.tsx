@@ -1,8 +1,8 @@
-const incrementHelpful = async (id: string, userEmail: any, helpful: any) => {
+const incrementHelpful = async (id: string, userId: any, helpful: any) => {
   try {
+    console.log(helpful)
     // check if user has already voted
-    if (helpful.filter((user: any) => user.userEmail === userEmail).length > 0)
-      return
+    if (helpful.filter((user: any) => user.userId === userId).length > 0) return
 
     const response = await fetch(`/api/products/review/feedback`, {
       method: 'POST',
@@ -10,10 +10,11 @@ const incrementHelpful = async (id: string, userEmail: any, helpful: any) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userEmail,
+        userId,
         reviewId: id,
       }),
     })
+    console.log(response)
   } catch (err) {
     console.log(err)
   }

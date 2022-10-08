@@ -1,34 +1,17 @@
 import styles from './cart.module.scss'
 
 import Header from '@components/Header/Header'
-import fetchUsers from '@components/helpers/fetchUsers'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Card from '@components/Card/Card'
 import removeFromCart from '@components/helpers/removeFromCart'
+import useUser from '@components/hooks/useUser'
+import useCart from '@components/hooks/useCart'
 
 const ShoppingCart = () => {
-  const queryClient = useQueryClient()
-  const { data: session } = useSession()
-  const { data: users } = useQuery(['users'], () => fetchUsers())
-  const user = users?.find((user: any) => user.email === session?.user?.email)
+  const user = useUser()
+  const cartMutation = useCart('remove')
 
-  console.log(user)
-
-  const cartMutation = useMutation((id: any) => removeFromCart(id), {
-    onSuccess: () => {
-      console.log('success')
-      queryClient.invalidateQueries(['users'])
-    },
-    onError: (error) => {
-      console.log(error)
-    },
-    onSettled: () => {
-      console.log('settled')
-    },
-  })
-
-  if (!users) return <div>Loading...</div>
+  if (!user) return <div>Loading...</div>
 
   return (
     <div className={styles.container}>
@@ -43,7 +26,13 @@ const ShoppingCart = () => {
                 <Card product={cartItem.product} />
                 <button
                   disabled={cartMutation.isLoading}
-                  onClick={() => cartMutation.mutate(cartItem.id)}
+                  onClick={() =>
+                    cartMutation.mutate({
+                      userId: user.id,
+                      productId: cartItem.id,
+                      quantity: '1',
+                    })
+                  }
                 >
                   remove
                 </button>

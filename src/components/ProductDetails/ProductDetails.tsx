@@ -8,7 +8,7 @@ import {
   AiOutlineHeart,
 } from 'react-icons/ai'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import Reviews from './Reviews'
@@ -29,17 +29,19 @@ const ProductDetails: React.FC = () => {
   const product = useProduct(id)
   const user = useUser()
 
-  const alreadyInFavorites = user?.favorites?.some(
-    (favorite: any) => favorite.productId === id
+  const alreadyInFavorites = useMemo(
+    () => user?.favorites?.some((favorite: any) => favorite.productId === id),
+    [id, user?.favorites]
   )
 
-  const alreadyInCart = user?.cartItems?.some(
-    (cart: any) => cart.productId === id
+  const alreadyInCart = useMemo(
+    () => user?.cartItems?.some((cart: any) => cart.productId === id),
+    [id, user?.cartItems]
   )
 
   const favoriteMutation = useFavorites()
 
-  const cartMutation = useCart(id)
+  const cartMutation = useCart('add')
 
   if (product.isLoading) return <div>Loading...</div>
 

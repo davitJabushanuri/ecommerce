@@ -1,15 +1,10 @@
 import Image from 'next/image'
 import styles from './Card.module.scss'
 import { useRouter } from 'next/router'
-
 import { AiFillHeart } from 'react-icons/ai'
-
-import { useSession } from 'next-auth/react'
-import addToFavorites from '@components/helpers/toggleFavorites'
 
 const Card = ({ product }: any) => {
   const router = useRouter()
-  const { data: session } = useSession()
 
   return (
     <div
@@ -40,10 +35,7 @@ const Card = ({ product }: any) => {
       </div>
 
       {product.isBestSeller && <p className={styles.bestseller}>Best Seller</p>}
-      <button
-        onClick={(e) => addToFavorites(session?.user.email, product.id)}
-        className={styles.favorites}
-      >
+      <button className={styles.favorites}>
         <AiFillHeart />
       </button>
     </div>

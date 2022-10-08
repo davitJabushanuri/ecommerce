@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from './ProductDetails.module.scss'
 import {
-  AiFillStar,
   AiFillHeart,
   AiOutlinePlus,
   AiOutlineMinus,
   AiOutlineHeart,
 } from 'react-icons/ai'
+import { BiDollar } from 'react-icons/bi'
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -18,6 +18,8 @@ import useProduct from '@components/hooks/useProduct'
 import useUser from '@components/hooks/useUser'
 import useCart from '@components/hooks/useCart'
 import useFavorites from '@components/hooks/useFavorites'
+import StarRating from 'react-svg-star-rating'
+import getAverageRating from '@components/helpers/getAverageRating'
 
 const ProductDetails: React.FC = () => {
   const [reviewModal, setReviewModal] = useState(false)
@@ -39,6 +41,10 @@ const ProductDetails: React.FC = () => {
     [id, user?.cartItems]
   )
 
+  const averageRating = parseFloat(getAverageRating(product?.data.reviews)) || 0
+
+  console.log(averageRating)
+
   const favoriteMutation = useFavorites()
 
   const cartMutation = useCart('add')
@@ -56,47 +62,65 @@ const ProductDetails: React.FC = () => {
         />
       </div>
       <div className={styles.infoContainer}>
-        <div className={styles.info}>
-          <span className={styles.shipping}>Free Shipping</span>
-          {alreadyInFavorites ? (
-            <button
-              disabled={favoriteMutation.isLoading}
-              onClick={() =>
-                favoriteMutation.mutate({
-                  userId: user?.id,
-                  productId: id,
-                  action: 'remove',
-                })
-              }
-              className={styles.favorites}
-            >
-              <AiFillHeart />
-            </button>
+        <h1 className={styles.title}>{product?.data.name}</h1>
+        <div className={styles.ratingOverview}>
+          <StarRating
+            unit="float"
+            count={5}
+            isReadOnly={true}
+            initialRating={averageRating}
+            size={16}
+            starClassName={styles.star}
+            containerClassName={styles.starContainer}
+          />{' '}
+          <a href="#reviews">{product.data.reviews.length} ratings</a>
+        </div>
+        <p className={styles.price}>
+          <span>
+            <BiDollar />
+          </span>
+          <p>{product?.data.price}</p>
+        </p>
+
+        <div className={styles.stockContainer}>
+          {product?.data.stock ? (
+            <div className={styles.stock}>
+              <p>In stock.</p>
+              <span>
+                {product.data.stock > 100
+                  ? 'More than 100 available'
+                  : product.data.stock > 10
+                  ? 'more than 10 available'
+                  : product.data.stock <= 10
+                  ? `${product.data.stock`available`}`
+                  : ''}
+              </span>
+            </div>
           ) : (
-            <button
-              disabled={favoriteMutation.isLoading}
-              onClick={() =>
-                favoriteMutation.mutate({
-                  userId: user?.id,
-                  productId: id,
-                  action: 'add',
-                })
-              }
-              className={styles.favorites}
-            >
-              <AiOutlineHeart />
-            </button>
+            <div className={styles.stock}>
+              <p>Out of stock.</p>
+            </div>
           )}
         </div>
-        <h1 className={styles.title}>{product?.data.name}</h1>
+
+        <div className={styles.shippingContainer}>
+          <p>
+            {product.data.shipping === 0 ? (
+              <div className={`${styles.shipping} ${styles.freeShipping}`}>
+                <p>Free shipping</p>
+              </div>
+            ) : (
+              <div>
+                <p>Shipping: ${product.data.shipping}</p>
+              </div>
+            )}
+          </p>
+        </div>
+
         <p className={styles.description}>{product?.data.description}</p>
-        <p className={styles.price}>{product?.data.price}</p>
-        <p className={styles.rating}>
-          <span>{product?.data.rating}</span>
-          <AiFillStar />
-        </p>
       </div>
       <div className={styles.payment}>
+        <p className={styles.price}>{product?.data.price}</p>
         <p>{product?.data.stock ? 'In stock' : 'Out of stock'}</p>
         <div className={styles.actions}>
           <div className={styles.quantity}>
@@ -137,9 +161,40 @@ const ProductDetails: React.FC = () => {
             </button>
           )}
         </div>
+        <div className={styles.favoritesContainer}>
+          {alreadyInFavorites ? (
+            <button
+              disabled={favoriteMutation.isLoading}
+              onClick={() =>
+                favoriteMutation.mutate({
+                  userId: user?.id,
+                  productId: id,
+                  action: 'remove',
+                })
+              }
+              className={styles.favorites}
+            >
+              <AiFillHeart /> <span>REMOVE FROM FAVORITES</span>
+            </button>
+          ) : (
+            <button
+              disabled={favoriteMutation.isLoading}
+              onClick={() =>
+                favoriteMutation.mutate({
+                  userId: user?.id,
+                  productId: id,
+                  action: 'add',
+                })
+              }
+              className={styles.favorites}
+            >
+              <AiOutlineHeart /> <span>ADD TO FAVORITES</span>
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className={styles.reviews}>
+      <div id="reviews" className={styles.reviews}>
         <Ratings reviews={product?.data.reviews} />
 
         <div className={styles.createReviewButton}>
@@ -149,6 +204,7 @@ const ProductDetails: React.FC = () => {
             Write a customer review
           </button>
         </div>
+        <Reviews product={product?.data} />
         {reviewModal && (
           <ReviewForm
             userId={user.id}
@@ -156,7 +212,6 @@ const ProductDetails: React.FC = () => {
             setReviewModal={setReviewModal}
           />
         )}
-        <Reviews product={product?.data} />
       </div>
     </div>
   )

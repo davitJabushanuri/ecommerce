@@ -3,9 +3,13 @@ import StarRating from 'react-svg-star-rating'
 import getAverageRating from '@components/helpers/getAverageRating'
 import Progress from './Progress'
 import getPercentage from '@components/helpers/getPercentage'
+import { useMemo } from 'react'
 
 const Ratings = ({ reviews }: any) => {
-  const averageRating = parseFloat(getAverageRating(reviews)) || 0
+  const averageRating = useMemo(
+    () => parseFloat(getAverageRating(reviews)) || 0,
+    [reviews]
+  )
 
   if (!reviews) return <div>error</div>
 

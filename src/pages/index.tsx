@@ -5,12 +5,8 @@ import Header from 'components/Header/Header'
 import CardsContainer from 'components/CardsContainer/CardsContainer'
 import Hero from 'components/Hero/Hero'
 import Footer from 'components/Footer/Footer'
-import useUsers from '@components/hooks/useUsers'
 
 const Home: NextPage = () => {
-  const users = useUsers()
-  console.log(users)
-
   return (
     <div>
       <Head>

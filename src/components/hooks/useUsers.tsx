@@ -1,8 +1,10 @@
 import fetchUsers from '@components/helpers/fetchUsers'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 const useUsers = () => {
-  return useQuery(['users'], () => fetchUsers())
+  const queryClient = useQueryClient()
+
+  return useQuery(['users'], () => fetchUsers(), {})
 }
 
 export default useUsers

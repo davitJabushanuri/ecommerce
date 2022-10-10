@@ -1,12 +1,23 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 
 const useProduct = (id: any) => {
-  return useQuery(['product', id], async () => {
-    return axios.get(`/api/products/${id}`).then((response) => {
-      return response.data
-    })
-  })
+  const queryClient = useQueryClient()
+
+  return useQuery(
+    ['product', id],
+    async () => {
+      return axios.get(`/api/products/${id}`).then((response) => {
+        return response.data
+      })
+    },
+    {
+      initialData: () =>
+        queryClient
+          .getQueryData(['products'])
+          ?.find((product: any) => product.id === id),
+    }
+  )
 }
 
 export default useProduct

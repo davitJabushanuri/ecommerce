@@ -43,22 +43,18 @@ const ProductDetails: React.FC = () => {
     [id, user?.cartItems]
   )
 
-  const totalAmount = 0
+  const totalAmount = product.isSuccess ? product.data.price * quantity : 0
 
-  // useMemo(
-  //   () => product.data.price * quantity,
-  //   [product.data.price, quantity]
-  // )
-
-  const averageRating = 0
-
-  // parseFloat(getAverageRating(product?.data.reviews)) ||
+  const averageRating = product.isSuccess
+    ? parseFloat(getAverageRating(product?.data.reviews))
+    : 0
 
   const favoriteMutation = useFavorites()
 
   const cartMutation = useCart('add')
 
   if (product.isLoading) return <div>Loading...</div>
+  if (product.isError) return <div>Error</div>
 
   return (
     <div className={styles.container}>
@@ -86,7 +82,7 @@ const ProductDetails: React.FC = () => {
         </div>
 
         <div className={styles.shippingContainer}>
-          <p>
+          <div>
             {product.data.shipping === 0 ? (
               <div className={`${styles.shipping} ${styles.freeShipping}`}>
                 <p>Free shipping</p>
@@ -96,7 +92,7 @@ const ProductDetails: React.FC = () => {
                 <p>Shipping: ${product.data.shipping}</p>
               </div>
             )}
-          </p>
+          </div>
         </div>
 
         <p className={styles.price}>

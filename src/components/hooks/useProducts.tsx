@@ -1,8 +1,10 @@
 import fetchProducts from '@components/helpers/fetchProducts'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 const useProducts = () => {
-  return useQuery(['products'], fetchProducts)
+  const queryClient = useQueryClient()
+
+  return useQuery(['products'], fetchProducts, {})
 }
 
 export default useProducts

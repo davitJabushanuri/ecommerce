@@ -12,10 +12,11 @@ const useProduct = (id: any) => {
       })
     },
     {
-      initialData: () =>
-        queryClient
+      initialData: () => {
+        return queryClient
           .getQueryData(['products'])
-          ?.find((product: any) => product.id === id),
+          ?.find((product: any) => product.id === id)
+      },
     }
   )
 }

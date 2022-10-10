@@ -43,7 +43,9 @@ const ProductDetails: React.FC = () => {
     [id, user?.cartItems]
   )
 
-  const totalAmount = product.isSuccess ? product.data.price * quantity : 0
+  const totalAmount = product.isSuccess
+    ? product.data.price * quantity + product.data.shipping
+    : 0
 
   const averageRating = product.isSuccess
     ? parseFloat(getAverageRating(product?.data.reviews))
@@ -78,7 +80,9 @@ const ProductDetails: React.FC = () => {
             starClassName={styles.star}
             containerClassName={styles.starContainer}
           />{' '}
-          <a href="#reviews">{product.data.reviews.length} ratings</a>
+          <a href="#reviews">
+            {product.isSuccess ? product.data.reviews.length : 0} ratings
+          </a>
         </div>
 
         <div className={styles.shippingContainer}>

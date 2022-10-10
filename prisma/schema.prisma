@@ -64,6 +64,8 @@ model User {
   favorites     Favorite[]
   helpful       Helpful[]
   cartItems     Cart[]
+  questions     Question[]
+  answers       Answer[]
 }
 
 model Product {
@@ -89,6 +91,7 @@ model Product {
   orders       Order[]
   favorites    Favorite[]
   cartItems    Cart[]
+  questions    Question[]
 }
 
 model Review {
@@ -128,6 +131,29 @@ model Report {
   description String?
   reviewId    String
   review      Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+}
+
+model Question {
+  id         String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  message     String
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers     Answer[]
+}
+
+model Answer {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  message     String
+  questionId  String
+  question    Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Cart {

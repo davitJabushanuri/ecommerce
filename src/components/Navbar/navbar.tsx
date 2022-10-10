@@ -9,7 +9,6 @@ import useUser from '@components/hooks/useUser'
 
 const Navbar = () => {
   const user = useUser()
-  console.log(user.cartItems.length)
 
   return (
     <div className={styles.container}>
@@ -25,7 +24,7 @@ const Navbar = () => {
         <Link href="/shopping-cart">
           <a>
             <BiShoppingBag />
-            {user.cartItems.length > 0 && (
+            {user.cartItems && (
               <span className={styles.cartItemsCounter}>
                 {user.cartItems.length}
               </span>

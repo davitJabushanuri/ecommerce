@@ -7,6 +7,7 @@ import {
   AiOutlineHeart,
 } from 'react-icons/ai'
 import { BiDollar } from 'react-icons/bi'
+import { MdDone } from 'react-icons/md'
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -30,6 +31,7 @@ const ProductDetails: React.FC = () => {
 
   const product = useProduct(id)
   const user = useUser()
+  console.log(product.data)
 
   const alreadyInFavorites = useMemo(
     () => user?.favorites?.some((favorite: any) => favorite.productId === id),
@@ -41,9 +43,16 @@ const ProductDetails: React.FC = () => {
     [id, user?.cartItems]
   )
 
-  const averageRating = parseFloat(getAverageRating(product?.data.reviews)) || 0
+  const totalAmount = 0
 
-  console.log(averageRating)
+  // useMemo(
+  //   () => product.data.price * quantity,
+  //   [product.data.price, quantity]
+  // )
+
+  const averageRating = 0
+
+  // parseFloat(getAverageRating(product?.data.reviews)) ||
 
   const favoriteMutation = useFavorites()
 
@@ -121,7 +130,7 @@ const ProductDetails: React.FC = () => {
         <p className={styles.description}>{product?.data.description}</p>
       </div>
       <div className={styles.payment}>
-        <p className={styles.price}>{product?.data.price}</p>
+        <p className={styles.totalAmount}>{totalAmount}</p>
         <p>{product?.data.stock ? 'In stock' : 'Out of stock'}</p>
         <div className={styles.actions}>
           <div className={styles.quantity}>
@@ -143,7 +152,10 @@ const ProductDetails: React.FC = () => {
             </button>
           </div>
           {alreadyInCart ? (
-            <button className={styles.alreadyInCart}>Already in Cart</button>
+            <button className={styles.alreadyInCart}>
+              <MdDone />
+              <span>Already in Your Cart</span>
+            </button>
           ) : (
             <button
               className={styles.addToCart}

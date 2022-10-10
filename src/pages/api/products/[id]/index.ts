@@ -17,12 +17,11 @@ export default async function products(
 
         include: {
           reviews: {
-            orderBy: {
-              createdAt: 'desc',
-            },
-
             include: {
               helpful: true,
+            },
+            orderBy: {
+              createdAt: 'desc',
             },
           },
         },

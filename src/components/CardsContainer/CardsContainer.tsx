@@ -11,19 +11,18 @@ import 'swiper/css/navigation'
 
 import Link from 'next/link'
 import { IProduct } from '../../ts/interfaces/types'
-import { useQuery } from '@tanstack/react-query'
-import fetchProducts from 'components/helpers/fetchProducts'
+import useProducts from '@components/hooks/useProducts'
 
 interface IProps {
   title: string
 }
 
 const CardsContainer: React.FC<IProps> = ({ title }) => {
-  const {
-    data: products,
-    isLoading,
-    isError,
-  } = useQuery(['products'], fetchProducts)
+  const products = useProducts()
+
+  if (products.isLoading) return <div>Loading...</div>
+
+  if (products.isError) return <div>Error</div>
 
   return (
     <div className={styles.container}>
@@ -61,8 +60,8 @@ const CardsContainer: React.FC<IProps> = ({ title }) => {
           },
         }}
       >
-        {products &&
-          products
+        {products.isSuccess &&
+          products.data
             .filter((product: IProduct) => {
               switch (title) {
                 case 'New Arrivals':

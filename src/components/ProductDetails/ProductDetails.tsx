@@ -21,6 +21,7 @@ import useCart from '@components/hooks/useCart'
 import useFavorites from '@components/hooks/useFavorites'
 import StarRating from 'react-svg-star-rating'
 import getAverageRating from '@components/helpers/getAverageRating'
+import Questions from './Questions'
 
 const ProductDetails: React.FC = () => {
   const [reviewModal, setReviewModal] = useState(false)
@@ -81,7 +82,7 @@ const ProductDetails: React.FC = () => {
             containerClassName={styles.starContainer}
           />{' '}
           <a href="#reviews">
-            {product.isSuccess ? product.data.reviews.length : 0} ratings
+            {product.data.reviews ? product.data.reviews.length : 0} ratings
           </a>
         </div>
 
@@ -205,6 +206,10 @@ const ProductDetails: React.FC = () => {
             </button>
           )}
         </div>
+      </div>
+
+      <div className={styles.questions}>
+        <Questions />
       </div>
 
       <div id="reviews" className={styles.reviews}>

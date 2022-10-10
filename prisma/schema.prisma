@@ -66,6 +66,8 @@ model User {
   cartItems     Cart[]
   questions     Question[]
   answers       Answer[]
+  answerPoints  AnswerPoints[]
+  questionPoints QuestionPoints[]
 }
 
 model Product {
@@ -138,11 +140,23 @@ model Question {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   message     String
+  userName    String
   productId   String
   product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   answers     Answer[]
+  questionPoints QuestionPoints[]
+}
+
+model QuestionPoints {
+  id        String   @id @default(cuid())
+  questionId  String
+  question    Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Answer {
@@ -150,10 +164,22 @@ model Answer {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   message     String
+  userName    String
   questionId  String
   question    Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answerPoits AnswerPoints[]
+}
+
+model AnswerPoints{
+  id        String   @id @default(cuid())
+  answerId  String
+  answer    Answer   @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Cart {

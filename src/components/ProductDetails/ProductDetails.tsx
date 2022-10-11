@@ -22,6 +22,7 @@ import useFavorites from '@components/hooks/useFavorites'
 import StarRating from 'react-svg-star-rating'
 import getAverageRating from '@components/helpers/getAverageRating'
 import Questions from './Questions'
+import QuestionForm from './QuestionForm'
 
 const ProductDetails: React.FC = () => {
   const [reviewModal, setReviewModal] = useState(false)
@@ -130,6 +131,8 @@ const ProductDetails: React.FC = () => {
 
         <p className={styles.description}>{product?.data.description}</p>
       </div>
+
+      {/* PAYMENT */}
       <div className={styles.payment}>
         <p className={styles.totalAmount}>{totalAmount}</p>
         <p>{product?.data.stock ? 'In stock' : 'Out of stock'}</p>
@@ -175,6 +178,7 @@ const ProductDetails: React.FC = () => {
             </button>
           )}
         </div>
+
         <div className={styles.favoritesContainer}>
           {alreadyInFavorites ? (
             <button
@@ -208,10 +212,17 @@ const ProductDetails: React.FC = () => {
         </div>
       </div>
 
+      {/* QUESTIONS */}
       <div className={styles.questions}>
         <Questions />
+        <QuestionForm
+          productId={product.data.id}
+          userId={user.id}
+          userName={user.name}
+        />
       </div>
 
+      {/* REVIEWS */}
       <div id="reviews" className={styles.reviews}>
         <Ratings reviews={product?.data.reviews} />
 

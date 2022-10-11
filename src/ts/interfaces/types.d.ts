@@ -38,4 +38,15 @@ interface IQuestion {
   id?: string
   createdAt?: Date
   updatedAt?: Date
+  answers?: IAnswer[]
+}
+
+interface IAnswer {
+  id?: string
+  message: string
+  userName: string
+  userId: string
+  questionId: string
+  createdAt?: Date
+  updatedAt?: Date
 }

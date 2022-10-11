@@ -214,7 +214,12 @@ const ProductDetails: React.FC = () => {
 
       {/* QUESTIONS */}
       <div className={styles.questions}>
-        <Questions questions={product.data.questions} />
+        <Questions
+          questions={product.data.questions}
+          productId={product.data.id}
+          userId={user.id}
+          userName={user.name}
+        />
         <QuestionForm
           productId={product.data.id}
           userId={user.id}

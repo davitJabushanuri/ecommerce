@@ -16,7 +16,13 @@
         flex-direction: column;
         span {
           color: #0071a5;
+          width: fit-content;
           cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+            color: #005a8b;
+          }
         }
       }
 

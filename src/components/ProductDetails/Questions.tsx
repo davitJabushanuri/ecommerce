@@ -1,7 +1,8 @@
 import { IQuestion } from '@ts/interfaces/types'
 import styles from './Questions.module.scss'
 import Moment from 'react-moment'
-import useAnswer from '@components/hooks/useAnswer'
+import { useState } from 'react'
+import AnswerForm from './AnswerForm'
 
 interface Props {
   questions: IQuestion[]
@@ -16,7 +17,10 @@ const Questions: React.FC<Props> = ({
   userId,
   userName,
 }) => {
-  const answerMutation = useAnswer(productId)
+  const [answerModal, setAnswerModal] = useState({
+    questionId: '',
+    show: false,
+  })
 
   return (
     <div className={styles.container}>
@@ -35,11 +39,9 @@ const Questions: React.FC<Props> = ({
                 <div className={styles.questionInfo}>
                   <span
                     onClick={() =>
-                      answerMutation.mutate({
-                        message: 'this is a test answer',
+                      setAnswerModal({
                         questionId: question.id!,
-                        userId: userId,
-                        userName: userName,
+                        show: true,
                       })
                     }
                   >
@@ -80,6 +82,15 @@ const Questions: React.FC<Props> = ({
             </div>
           )
         })}
+        {answerModal.show && (
+          <AnswerForm
+            questionId={answerModal.questionId}
+            userId={userId}
+            userName={userName}
+            setAnswerModal={setAnswerModal}
+            productId={productId}
+          />
+        )}
       </div>
     </div>
   )

@@ -85,6 +85,11 @@ const ProductDetails: React.FC = () => {
           <a href="#reviews">
             {product.data.reviews ? product.data.reviews.length : 0} ratings
           </a>
+          <div className={styles.divider}></div>
+          <a href="#questions">
+            {product.data.questions ? product.data.questions.length : 0}{' '}
+            questions
+          </a>
         </div>
 
         <div className={styles.shippingContainer}>
@@ -213,7 +218,7 @@ const ProductDetails: React.FC = () => {
       </div>
 
       {/* QUESTIONS */}
-      <div className={styles.questions}>
+      <div id="questions" className={styles.questions}>
         <Questions
           questions={product.data.questions}
           productId={product.data.id}

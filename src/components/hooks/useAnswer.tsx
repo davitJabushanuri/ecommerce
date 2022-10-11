@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { IAnswer } from '@ts/interfaces/types'
 
-const useAnswer = (id: string) => {
+const useAnswer = (id: string, setAnswerModal: any) => {
   const queryClient = useQueryClient()
 
   return useMutation(
@@ -12,6 +12,10 @@ const useAnswer = (id: string) => {
       onSuccess: () => {
         console.log('success')
         queryClient.invalidateQueries(['product', id])
+        setAnswerModal({
+          questionId: '',
+          show: false,
+        })
       },
       onError: (error) => {
         console.log(error)

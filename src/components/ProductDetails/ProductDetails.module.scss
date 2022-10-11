@@ -6,7 +6,9 @@
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       'image details'
-      'image payment';
+      'image payment'
+      'questions .'
+      'reviews .';
   }
 
   .imageContainer {
@@ -35,6 +37,13 @@
 
       .starContainer {
         display: flex;
+      }
+
+      .divider {
+        margin: 0 0.4rem;
+        width: 2px;
+        height: 1rem;
+        background-color: #000;
       }
 
       a {
@@ -173,7 +182,15 @@
     }
   }
 
+  .questions {
+    grid-area: questions;
+    padding: 1rem;
+  }
+
   .reviews {
+    grid-area: reviews;
+    padding: 1rem;
+
     .createReviewButton {
       display: flex;
       flex-direction: column;

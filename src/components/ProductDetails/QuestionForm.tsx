@@ -28,17 +28,19 @@ const QuestionForm = ({ productId, userId, userName }: IQuestionForm) => {
 
   return (
     <div className={styles.container}>
+      <h2>Don&rsquo;t see the answer you&rsquo;re looking for?</h2>
       <form onSubmit={formik.handleSubmit}>
+        <h3>Post your question</h3>
         <input
           type="text"
           id="question"
           name="question"
-          placeholder="Ask a question"
+          placeholder="Please enter a question"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.question}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Post</button>
       </form>
     </div>
   )

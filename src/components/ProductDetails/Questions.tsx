@@ -24,8 +24,6 @@ const Questions: React.FC<Props> = ({
 
   const [questionFilter, setQuestionFilter] = useState('')
 
-  console.log(questionFilter)
-
   return (
     <div className={styles.container}>
       <h2>Customer questions & answers</h2>

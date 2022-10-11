@@ -22,66 +22,81 @@ const Questions: React.FC<Props> = ({
     show: false,
   })
 
+  const [questionFilter, setQuestionFilter] = useState('')
+
+  console.log(questionFilter)
+
   return (
     <div className={styles.container}>
       <h2>Customer questions & answers</h2>
 
       <div className={styles.searchQuestion}>
-        <input type="text" placeholder="Have a question? Search for answers" />
+        <input
+          type="text"
+          placeholder="Have a question? Search for answers"
+          onChange={(e) => setQuestionFilter(e.target.value)}
+        />
       </div>
 
       <div className={styles.questions}>
-        {questions.map((question) => {
-          return (
-            <div className={styles.question} key={question.id}>
-              <div className={styles.grid}>
-                <span className={styles.questionLabel}>Question:</span>
-                <div className={styles.questionInfo}>
-                  <span
-                    onClick={() =>
-                      setAnswerModal({
-                        questionId: question.id!,
-                        show: true,
-                      })
-                    }
-                  >
-                    {question.message}
-                  </span>
-                  <p>
-                    asked on{' '}
-                    <Moment format="MMMM D, YYYY">{question.createdAt}</Moment>
-                  </p>
+        {questions
+          .filter((question) => {
+            if (questionFilter === '') return question
+            return question.message.includes(questionFilter)
+          })
+          .map((question) => {
+            return (
+              <div className={styles.question} key={question.id}>
+                <div className={styles.grid}>
+                  <span className={styles.questionLabel}>Question:</span>
+                  <div className={styles.questionInfo}>
+                    <span
+                      onClick={() =>
+                        setAnswerModal({
+                          questionId: question.id!,
+                          show: true,
+                        })
+                      }
+                    >
+                      {question.message}
+                    </span>
+                    <p>
+                      asked on{' '}
+                      <Moment format="MMMM D, YYYY">
+                        {question.createdAt}
+                      </Moment>
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <div className={styles.grid}>
-                {question.answers!.length > 0 && (
-                  <span className={styles.answerLabel}>
-                    {question.answers?.length == 1 ? `Answer:` : `Answers:`}
-                  </span>
-                )}
-                <div className={styles.answers}>
-                  {question.answers &&
-                    question?.answers.map((answer) => {
-                      return (
-                        <div className={styles.answer} key={answer.id}>
-                          <div className={styles.answerInfo}>
-                            <span>{answer.message}</span>
-                            <p>
-                              By {answer.userName.split(' ')[0]} on{' '}
-                              <Moment format="MMMM D, YYYY">
-                                {answer.createdAt}
-                              </Moment>
-                            </p>
+                <div className={styles.grid}>
+                  {question.answers!.length > 0 && (
+                    <span className={styles.answerLabel}>
+                      {question.answers?.length == 1 ? `Answer:` : `Answers:`}
+                    </span>
+                  )}
+                  <div className={styles.answers}>
+                    {question.answers &&
+                      question?.answers.map((answer) => {
+                        return (
+                          <div className={styles.answer} key={answer.id}>
+                            <div className={styles.answerInfo}>
+                              <span>{answer.message}</span>
+                              <p>
+                                By {answer.userName.split(' ')[0]} on{' '}
+                                <Moment format="MMMM D, YYYY">
+                                  {answer.createdAt}
+                                </Moment>
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      )
-                    })}
+                        )
+                      })}
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
         {answerModal.show && (
           <AnswerForm
             questionId={answerModal.questionId}

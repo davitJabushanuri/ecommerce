@@ -33,7 +33,6 @@ const ProductDetails: React.FC = () => {
 
   const product = useProduct(id)
   const user = useUser()
-  console.log(product.data)
 
   const alreadyInFavorites = useMemo(
     () => user?.favorites?.some((favorite: any) => favorite.productId === id),
@@ -51,6 +50,12 @@ const ProductDetails: React.FC = () => {
 
   const averageRating = product.isSuccess
     ? parseFloat(getAverageRating(product?.data.reviews))
+    : 0
+
+  const answeredQuestions = product.isSuccess
+    ? product.data.questions.filter(
+        (question: any) => question.answers.length > 0
+      ).length
     : 0
 
   const favoriteMutation = useFavorites()
@@ -87,8 +92,7 @@ const ProductDetails: React.FC = () => {
           </a>
           <div className={styles.divider}></div>
           <a href="#questions">
-            {product.data.questions ? product.data.questions.length : 0}{' '}
-            questions
+            {product.data.questions ? answeredQuestions : 0} answered questions
           </a>
         </div>
 
@@ -106,12 +110,12 @@ const ProductDetails: React.FC = () => {
           </div>
         </div>
 
-        <p className={styles.price}>
+        <div className={styles.price}>
           <span>
             <BiDollar />
           </span>
           <p>{product?.data.price}</p>
-        </p>
+        </div>
 
         <div className={styles.stockContainer}>
           {product?.data.stock ? (

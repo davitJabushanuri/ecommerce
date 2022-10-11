@@ -6,7 +6,7 @@
 
     .question {
       .grid {
-        margin-bottom: 0.4rem;
+        margin-bottom: 0.2rem;
         display: grid;
         grid-template-columns: 100px 1fr;
       }
@@ -23,14 +23,14 @@
       p {
         font-size: 12px;
       }
-      .answers {
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
+      .grid {
+        display: grid;
+        grid-template-columns: 100px 1fr;
 
-        .answer {
-          display: grid;
-          grid-template-columns: 100px 1fr;
+        .answers {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
         }
       }
     }

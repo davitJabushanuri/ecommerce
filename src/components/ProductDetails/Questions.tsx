@@ -52,24 +52,30 @@ const Questions: React.FC<Props> = ({
                 </div>
               </div>
 
-              <div className={styles.answers}>
-                {question.answers &&
-                  question?.answers.map((answer) => {
-                    return (
-                      <div className={styles.answer} key={answer.id}>
-                        <span className={styles.answerLabel}>Answer:</span>
-                        <div className={styles.answerInfo}>
-                          <span>{answer.message}</span>
-                          <p>
-                            By {answer.userName} on{' '}
-                            <Moment format="MMMM D, YYYY">
-                              {answer.createdAt}
-                            </Moment>
-                          </p>
+              <div className={styles.grid}>
+                {question.answers!.length > 0 && (
+                  <span className={styles.answerLabel}>
+                    {question.answers?.length == 1 ? `Answer:` : `Answers:`}
+                  </span>
+                )}
+                <div className={styles.answers}>
+                  {question.answers &&
+                    question?.answers.map((answer) => {
+                      return (
+                        <div className={styles.answer} key={answer.id}>
+                          <div className={styles.answerInfo}>
+                            <span>{answer.message}</span>
+                            <p>
+                              By {answer.userName.split(' ')[0]} on{' '}
+                              <Moment format="MMMM D, YYYY">
+                                {answer.createdAt}
+                              </Moment>
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    )
-                  })}
+                      )
+                    })}
+                </div>
               </div>
             </div>
           )

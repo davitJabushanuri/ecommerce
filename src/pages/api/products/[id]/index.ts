@@ -24,6 +24,11 @@ export default async function products(
               createdAt: 'desc',
             },
           },
+          questions: {
+            include: {
+              answers: true,
+            },
+          },
         },
       })
 

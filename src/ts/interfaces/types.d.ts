@@ -29,3 +29,13 @@ export interface IPostProduct {
   stock: string
   shipping: string
 }
+
+interface IQuestion {
+  message: string
+  userName: string
+  userId: string
+  productId: string
+  id?: string
+  createdAt?: Date
+  updatedAt?: Date
+}

@@ -24,7 +24,7 @@ const QuestionForm = ({ productId, userId, userName }: IQuestionForm) => {
     },
   })
 
-  const questionMutation = useQuestion()
+  const questionMutation = useQuestion(productId)
 
   return (
     <div className={styles.container}>

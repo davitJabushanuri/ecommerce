@@ -1,22 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { IQuestion } from '@ts/interfaces/types'
 
-interface IQuestion {
-  message: string
-  userName: string
-  userId: string
-  productId: string
-}
-
-const useQuestion = () => {
+const useQuestion = (id: string) => {
   const queryClient = useQueryClient()
 
   return useMutation(
-    ({ message, userName, productId, userId }: IQuestion) =>
-      createQuestion({ message, userName, userId, productId }),
+    ({ message, userName, productId, userId }: IQuestion) => {
+      return createQuestion({ message, userName, userId, productId })
+    },
     {
-      onSuccess: (productId) => {
-        console.log('success')
-        queryClient.invalidateQueries(['product', productId])
+      onSuccess: () => {
+        console.log('success', id)
+        queryClient.invalidateQueries(['product', id])
       },
       onError: (error) => {
         console.log(error)

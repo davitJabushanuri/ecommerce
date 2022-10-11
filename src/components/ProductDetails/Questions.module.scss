@@ -26,9 +26,15 @@
 
     .question {
       .grid {
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.8rem;
         display: grid;
         grid-template-columns: 100px 1fr;
+
+        .questionLabel {
+          font-size: 1rem;
+          font-weight: 600;
+          color: #0f0f11;
+        }
       }
 
       .questionInfo {
@@ -52,6 +58,12 @@
       .grid {
         display: grid;
         grid-template-columns: 100px 1fr;
+
+        .answerLabel {
+          font-size: 1rem;
+          font-weight: 600;
+          color: #0f0f11;
+        }
 
         .answers {
           display: flex;

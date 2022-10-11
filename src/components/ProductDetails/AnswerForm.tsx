@@ -8,6 +8,7 @@ interface IAnswerForm {
   userName: string
   setAnswerModal: any
   productId: string
+  question: string
 }
 
 const AnswerForm = ({
@@ -16,6 +17,7 @@ const AnswerForm = ({
   userName,
   setAnswerModal,
   productId,
+  question,
 }: IAnswerForm) => {
   const formik = useFormik({
     initialValues: {
@@ -38,12 +40,14 @@ const AnswerForm = ({
       onClick={() =>
         setAnswerModal({
           questionId: '',
+          question: '',
           show: false,
         })
       }
       className={styles.container}
     >
       <div onClick={(e) => e.stopPropagation()} className={styles.modal}>
+        <p>{question}</p>
         <form onSubmit={formik.handleSubmit}>
           <textarea
             id="message"
@@ -51,9 +55,10 @@ const AnswerForm = ({
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.message}
+            placeholder="Type your answer here..."
           />
           <button disabled={answerMutation.isLoading} type="submit">
-            Submit
+            Answer
           </button>
         </form>
       </div>

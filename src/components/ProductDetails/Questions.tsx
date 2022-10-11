@@ -19,6 +19,7 @@ const Questions: React.FC<Props> = ({
 }) => {
   const [answerModal, setAnswerModal] = useState({
     questionId: '',
+    question: '',
     show: false,
   })
 
@@ -52,6 +53,7 @@ const Questions: React.FC<Props> = ({
                       onClick={() =>
                         setAnswerModal({
                           questionId: question.id!,
+                          question: question.message,
                           show: true,
                         })
                       }
@@ -102,6 +104,7 @@ const Questions: React.FC<Props> = ({
             userName={userName}
             setAnswerModal={setAnswerModal}
             productId={productId}
+            question={answerModal.question}
           />
         )}
       </div>

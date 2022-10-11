@@ -25,8 +25,15 @@ export default async function products(
             },
           },
           questions: {
+            orderBy: {
+              createdAt: 'desc',
+            },
             include: {
-              answers: true,
+              answers: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },

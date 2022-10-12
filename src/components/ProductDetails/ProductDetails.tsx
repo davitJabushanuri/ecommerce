@@ -23,10 +23,12 @@ import StarRating from 'react-svg-star-rating'
 import getAverageRating from '@components/helpers/getAverageRating'
 import Questions from './Questions'
 import QuestionForm from './QuestionForm'
+import useAuth from '@components/hooks/useAuth'
 
 const ProductDetails: React.FC = () => {
   const [reviewModal, setReviewModal] = useState(false)
   const [quantity, setQuantity] = useState(1)
+  const session = useAuth()
 
   const router = useRouter()
   const { id } = router.query
@@ -34,15 +36,13 @@ const ProductDetails: React.FC = () => {
   const product = useProduct(id)
   const user = useUser()
 
-  const alreadyInFavorites = useMemo(
-    () => user?.favorites?.some((favorite: any) => favorite.productId === id),
-    [id, user?.favorites]
-  )
+  const alreadyInFavorites = user
+    ? user?.favorites?.some((favorite: any) => favorite.productId === id)
+    : false
 
-  const alreadyInCart = useMemo(
-    () => user?.cartItems?.some((cart: any) => cart.productId === id),
-    [id, user?.cartItems]
-  )
+  const alreadyInCart = user
+    ? user?.cartItems?.some((cart: any) => cart.productId === id)
+    : false
 
   const totalAmount = product.isSuccess
     ? product.data.price * quantity + product.data.shipping
@@ -175,13 +175,15 @@ const ProductDetails: React.FC = () => {
               disabled={
                 !product?.data.stock || cartMutation.isLoading || alreadyInCart
               }
-              onClick={() =>
-                cartMutation.mutate({
-                  userId: user?.id,
-                  productId: id,
-                  quantity,
-                })
-              }
+              onClick={() => {
+                if (session)
+                  cartMutation.mutate({
+                    userId: user?.id,
+                    productId: id,
+                    quantity,
+                  })
+                else router.push('/auth/signin')
+              }}
             >
               Add to Cart
             </button>
@@ -192,13 +194,15 @@ const ProductDetails: React.FC = () => {
           {alreadyInFavorites ? (
             <button
               disabled={favoriteMutation.isLoading}
-              onClick={() =>
-                favoriteMutation.mutate({
-                  userId: user?.id,
-                  productId: id,
-                  action: 'remove',
-                })
-              }
+              onClick={() => {
+                if (session)
+                  favoriteMutation.mutate({
+                    userId: user?.id,
+                    productId: id,
+                    action: 'remove',
+                  })
+                else router.push('/auth/signin')
+              }}
               className={styles.favorites}
             >
               <AiFillHeart /> <span>REMOVE FROM FAVORITES</span>
@@ -206,13 +210,15 @@ const ProductDetails: React.FC = () => {
           ) : (
             <button
               disabled={favoriteMutation.isLoading}
-              onClick={() =>
-                favoriteMutation.mutate({
-                  userId: user?.id,
-                  productId: id,
-                  action: 'add',
-                })
-              }
+              onClick={() => {
+                if (session)
+                  favoriteMutation.mutate({
+                    userId: user?.id,
+                    productId: id,
+                    action: 'add',
+                  })
+                else router.push('/auth/signin')
+              }}
               className={styles.favorites}
             >
               <AiOutlineHeart /> <span>ADD TO FAVORITES</span>
@@ -224,33 +230,38 @@ const ProductDetails: React.FC = () => {
       {/* QUESTIONS */}
       <div id="questions" className={styles.questions}>
         <Questions
-          questions={product.data.questions}
-          productId={product.data.id}
-          userId={user.id}
-          userName={user.name}
+          questions={product.data?.questions}
+          productId={product.data?.id}
+          userId={user?.id}
+          userName={user?.name}
         />
         <QuestionForm
-          productId={product.data.id}
-          userId={user.id}
-          userName={user.name}
+          productId={product.data?.id}
+          userId={user?.id}
+          userName={user?.name}
         />
       </div>
 
       {/* REVIEWS */}
       <div id="reviews" className={styles.reviews}>
-        <Ratings reviews={product?.data.reviews} />
+        <Ratings reviews={product.data?.reviews} />
 
         <div className={styles.createReviewButton}>
           <h2>Review this product</h2>
           <p>Share your thoughts with other customers</p>
-          <button onClick={() => setReviewModal(true)}>
+          <button
+            onClick={() => {
+              if (session) setReviewModal(true)
+              else router.push('auth/signin')
+            }}
+          >
             Write a customer review
           </button>
         </div>
         <Reviews product={product?.data} />
         {reviewModal && (
           <ReviewForm
-            userId={user.id}
+            userId={user?.id}
             product={product?.data}
             setReviewModal={setReviewModal}
           />

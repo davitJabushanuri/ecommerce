@@ -5,8 +5,11 @@ import { reviewValidation } from '@components/Schemas/reviewValidation'
 import { useFormik } from 'formik'
 import { useEffect } from 'react'
 import useReview from '@components/hooks/useReview'
+import useAuth from '@components/hooks/useAuth'
 
 const ReviewForm = ({ userId, product, setReviewModal }: any) => {
+  const session = useAuth()
+
   const formik = useFormik({
     initialValues: {
       rating: '',
@@ -17,11 +20,12 @@ const ReviewForm = ({ userId, product, setReviewModal }: any) => {
 
     validationSchema: reviewValidation,
     onSubmit: (values) => {
-      mutation.mutate({
-        values,
-        userId,
-        productId: product.id,
-      })
+      if (session)
+        mutation.mutate({
+          values,
+          userId,
+          productId: product.id,
+        })
     },
   })
 

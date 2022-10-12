@@ -4,18 +4,21 @@ import styles from './Report.module.scss'
 
 import { MdOutlineClose } from 'react-icons/md'
 import useReport from '@components/hooks/useReport'
+import useAuth from '@components/hooks/useAuth'
 
 const Report = ({ toggleModal, review }: any) => {
+  const session = useAuth()
   const formik = useFormik({
     initialValues: {
       message: '',
       description: '',
     },
     onSubmit: (values) => {
-      reportMutation.mutate({
-        values: values,
-        reviewId: review.id,
-      })
+      if (session)
+        reportMutation.mutate({
+          values: values,
+          reviewId: review.id,
+        })
 
       formik.resetForm()
     },

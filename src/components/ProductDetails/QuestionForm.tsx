@@ -1,6 +1,8 @@
 import styles from './QuestionForm.module.scss'
 import { useFormik } from 'formik'
 import useQuestion from '@components/hooks/useQuestion'
+import useAuth from '@components/hooks/useAuth'
+import { questionValidation } from '@components/Schemas/questionValidation'
 
 interface IQuestionForm {
   productId: string
@@ -9,17 +11,22 @@ interface IQuestionForm {
 }
 
 const QuestionForm = ({ productId, userId, userName }: IQuestionForm) => {
+  const session = useAuth()
+
   const formik = useFormik({
     initialValues: {
       question: '',
     },
+    validationSchema: questionValidation,
+
     onSubmit: (values) => {
-      questionMutation.mutate({
-        message: values.question,
-        userName: userName,
-        userId: userId,
-        productId: productId,
-      })
+      if (session)
+        questionMutation.mutate({
+          message: values.question,
+          userName: userName,
+          userId: userId,
+          productId: productId,
+        })
       formik.resetForm()
     },
   })
@@ -40,6 +47,11 @@ const QuestionForm = ({ productId, userId, userName }: IQuestionForm) => {
           onBlur={formik.handleBlur}
           value={formik.values.question}
         />
+        <span style={{ color: 'red', fontSize: '14px' }}>
+          {formik.errors.question && formik.touched.question
+            ? formik.errors.question
+            : null}
+        </span>
         <button type="submit">Post</button>
       </form>
     </div>

@@ -6,9 +6,11 @@ import Report from '@components/Report/Report'
 import { useState } from 'react'
 import useUser from '@components/hooks/useUser'
 import useHelpful from '@components/hooks/useHelpful'
+import useAuth from '@components/hooks/useAuth'
 
 const Reviews = ({ product }: any) => {
   const [modal, toggleModal] = useState(false)
+  const session = useAuth()
   const user = useUser()
 
   const helpfulMutation = useHelpful()
@@ -62,13 +64,14 @@ const Reviews = ({ product }: any) => {
                 <div className={styles.buttons}>
                   <button
                     className={styles.helpful}
-                    onClick={() =>
-                      helpfulMutation.mutate({
-                        id: review.id,
-                        userId: user.id,
-                        helpful: review.helpful,
-                      })
-                    }
+                    onClick={() => {
+                      if (session)
+                        helpfulMutation.mutate({
+                          id: review.id,
+                          userId: user.id,
+                          helpful: review.helpful,
+                        })
+                    }}
                   >
                     Helpful
                   </button>

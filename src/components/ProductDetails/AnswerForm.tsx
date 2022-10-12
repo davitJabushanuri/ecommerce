@@ -1,6 +1,8 @@
 import useAnswer from '@components/hooks/useAnswer'
 import styles from './AnswerForm.module.scss'
 import { useFormik } from 'formik'
+import useAuth from '@components/hooks/useAuth'
+import { answerValidation } from '@components/Schemas/questionValidation'
 
 interface IAnswerForm {
   questionId: string
@@ -19,17 +21,22 @@ const AnswerForm = ({
   productId,
   question,
 }: IAnswerForm) => {
+  const session = useAuth()
+
   const formik = useFormik({
     initialValues: {
       message: '',
     },
+    validationSchema: answerValidation,
+
     onSubmit: (values) => {
-      answerMutation.mutate({
-        message: values.message,
-        questionId: questionId,
-        userId: userId,
-        userName: userName,
-      })
+      if (session)
+        answerMutation.mutate({
+          message: values.message,
+          questionId: questionId,
+          userId: userId,
+          userName: userName,
+        })
     },
   })
 
@@ -57,6 +64,11 @@ const AnswerForm = ({
             value={formik.values.message}
             placeholder="Type your answer here..."
           />
+          <span style={{ color: 'red', fontSize: '14px' }}>
+            {formik.errors.message && formik.touched.message
+              ? formik.errors.message
+              : null}
+          </span>
           <button disabled={answerMutation.isLoading} type="submit">
             Answer
           </button>

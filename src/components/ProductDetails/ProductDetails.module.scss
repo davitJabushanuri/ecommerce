@@ -102,10 +102,6 @@
 
     @media screen and (min-width: 700px) {
     }
-    p {
-      color: #59ce8f;
-      font-weight: 600;
-    }
 
     .actions {
       display: flex;
@@ -120,44 +116,66 @@
       }
 
       .quantity {
-        display: flex;
+        display: grid;
+        grid-template-columns: 2rem 1.2rem;
+        grid-template-rows: 1rem 1rem;
+        grid-template-areas:
+          'input minus'
+          'input plus';
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        border-radius: 0.2rem;
+        overflow: hidden;
         align-items: center;
-        justify-content: center;
-        gap: 0.8rem;
 
-        span {
-          width: 20px;
-          font-size: 1.2rem;
-          text-align: center;
+        input {
+          height: 100%;
+          padding-left: 0.6rem;
+          grid-area: input;
+          outline: none;
+          border-right: 1px solid rgba(0, 0, 0, 0.4);
         }
 
         button {
-          border: none;
-          background-color: #59ce8f;
-          color: white;
-          padding: 0.3rem;
-          border-radius: 0.4rem;
-          font-size: 0.8rem;
           cursor: pointer;
-          box-shadow: rgba(34, 219, 17, 0.2) 0px 8px 24px;
+          background-color: #fff;
+          font-size: 0.8rem;
+          font-weight: 600;
         }
 
         .minus {
-          border: 1px solid #59ce8f;
-          background-color: #fff;
-          color: #59ce8f;
+          grid-area: minus;
+        }
+
+        .plus {
+          grid-area: plus;
+        }
+      }
+
+      .alreadyInCart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.2rem;
+        color: green;
+        border: 1px solid green;
+        border-radius: 0.3rem;
+        width: 100%;
+        max-width: 300px;
+        padding: 0.7rem;
+
+        span {
+          font-size: 1rem;
         }
       }
 
       .addToCart {
         width: 100%;
         max-width: 300px;
-        background-color: #59ce8f;
+        background-color: #1f61b5;
         color: white;
         border-radius: 0.3rem;
         padding: 0.7rem;
-        font-weight: bold;
-        font-size: 0.9rem;
         box-shadow: rgba(34, 219, 17, 0.2) 0px 8px 24px;
       }
     }

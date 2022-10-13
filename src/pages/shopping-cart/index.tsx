@@ -11,8 +11,6 @@ const ShoppingCart = () => {
   const user = useUser()
   const cartMutation = useCart('remove')
 
-  if (!user) return <div>Loading...</div>
-
   return (
     <div className={styles.container}>
       <main>
@@ -20,25 +18,26 @@ const ShoppingCart = () => {
         <h1>Shopping Cart</h1>
 
         <div className={styles.cart}>
-          {user?.cartItems?.map((cartItem: any) => {
-            return (
-              <div key={cartItem.id}>
-                <Card product={cartItem.product} />
-                <button
-                  disabled={cartMutation.isLoading}
-                  onClick={() =>
-                    cartMutation.mutate({
-                      userId: user.id,
-                      productId: cartItem.id,
-                      quantity: '1',
-                    })
-                  }
-                >
-                  remove
-                </button>
-              </div>
-            )
-          })}
+          {user &&
+            user?.cartItems?.map((cartItem: any) => {
+              return (
+                <div key={cartItem.id}>
+                  <Card product={cartItem.product} />
+                  <button
+                    disabled={cartMutation.isLoading}
+                    onClick={() =>
+                      cartMutation.mutate({
+                        userId: user.id,
+                        productId: cartItem.id,
+                        quantity: '1',
+                      })
+                    }
+                  >
+                    remove
+                  </button>
+                </div>
+              )
+            })}
         </div>
       </main>
     </div>

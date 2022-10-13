@@ -147,21 +147,26 @@ const ProductDetails: React.FC = () => {
         <p>{product?.data.stock ? 'In stock' : 'Out of stock'}</p>
         <div className={styles.actions}>
           <div className={styles.quantity}>
+            <input
+              type="text"
+              value={Number(quantity)}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+            />
+
             <button
               disabled={quantity <= 1}
               onClick={() => setQuantity((prev) => prev - 1)}
               className={styles.minus}
             >
-              <AiOutlineMinus />
+              {/* <AiOutlineMinus /> */}-
             </button>
-            <span>{quantity}</span>
 
             <button
               disabled={quantity >= product?.data.stock}
               onClick={() => setQuantity((prev) => prev + 1)}
               className={styles.plus}
             >
-              <AiOutlinePlus />
+              {/* <AiOutlinePlus /> */}+
             </button>
           </div>
           {alreadyInCart ? (
@@ -185,7 +190,7 @@ const ProductDetails: React.FC = () => {
                 else router.push('/auth/signin')
               }}
             >
-              Add to Cart
+              {cartMutation.isLoading ? `Loading...` : `Add to Cart`}
             </button>
           )}
         </div>

@@ -177,8 +177,10 @@ const ProductDetails: React.FC = () => {
           </div>
           {alreadyInCart ? (
             <button className={styles.alreadyInCart}>
-              <MdDone />
-              <span>Already in Your Cart</span>
+              <span className={styles.icon}>
+                <MdDone />
+              </span>
+              <p>Already in Your Cart</p>
             </button>
           ) : (
             <button

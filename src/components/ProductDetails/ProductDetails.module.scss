@@ -99,22 +99,21 @@
   .payment {
     margin: 2rem 0;
     grid-area: payment;
-    border: 1px solid rgb(219, 219, 219);
-    padding: 1rem;
     border-radius: 0.2rem;
 
     @media screen and (min-width: 700px) {
     }
 
     .totalAmount {
-      margin-top: 1rem;
+      position: relative;
+      right: 0.4rem;
       font-size: 1.6rem;
       font-weight: 500;
       display: flex;
       align-items: center;
 
       span {
-        font-size: 1rem;
+        display: flex;
       }
     }
 
@@ -180,7 +179,6 @@
         justify-content: center;
         align-items: center;
         gap: 0.5rem;
-        font-size: 1.2rem;
         color: green;
         border: 1px solid green;
         border-radius: 0.3rem;
@@ -188,18 +186,25 @@
         padding: 0.7rem;
         background-color: #fff;
 
-        span {
-          font-size: 1rem;
+        .icon {
+          height: 1.4rem;
+          width: 1.4rem;
+          background-color: green;
+          color: #fff;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
 
       .addToCart {
+        width: 100%;
         max-width: 300px;
         background-color: #1f61b5;
         color: white;
         border-radius: 0.3rem;
         padding: 0.7rem;
-        box-shadow: rgba(34, 219, 17, 0.2) 0px 8px 24px;
       }
     }
 

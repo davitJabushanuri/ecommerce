@@ -97,10 +97,25 @@
     }
   }
   .payment {
+    margin: 2rem 0;
     grid-area: payment;
+    border: 1px solid rgb(219, 219, 219);
     padding: 1rem;
+    border-radius: 0.2rem;
 
     @media screen and (min-width: 700px) {
+    }
+
+    .totalAmount {
+      margin-top: 1rem;
+      font-size: 1.6rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+
+      span {
+        font-size: 1rem;
+      }
     }
 
     .actions {
@@ -133,6 +148,11 @@
           grid-area: input;
           outline: none;
           border-right: 1px solid rgba(0, 0, 0, 0.4);
+          background-color: #fff;
+
+          &:disabled {
+            cursor: default;
+          }
         }
 
         button {
@@ -140,6 +160,10 @@
           background-color: #fff;
           font-size: 0.8rem;
           font-weight: 600;
+
+          &:disabled {
+            cursor: default;
+          }
         }
 
         .minus {
@@ -160,9 +184,9 @@
         color: green;
         border: 1px solid green;
         border-radius: 0.3rem;
-        width: 100%;
         max-width: 300px;
         padding: 0.7rem;
+        background-color: #fff;
 
         span {
           font-size: 1rem;
@@ -170,7 +194,6 @@
       }
 
       .addToCart {
-        width: 100%;
         max-width: 300px;
         background-color: #1f61b5;
         color: white;
@@ -181,15 +204,15 @@
     }
 
     .favoritesContainer {
+      margin: 1rem 0;
       .favorites {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 1.2rem;
         font-weight: 600;
 
         span {
-          font-size: 1rem;
+          font-size: 0.9rem;
         }
 
         &:hover {

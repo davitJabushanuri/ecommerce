@@ -143,7 +143,12 @@ const ProductDetails: React.FC = () => {
 
       {/* PAYMENT */}
       <div className={styles.payment}>
-        <p className={styles.totalAmount}>{totalAmount}</p>
+        <div className={styles.totalAmount}>
+          <span>
+            <BiDollar />
+          </span>
+          <p>{totalAmount}</p>
+        </div>
         <p>{product?.data.stock ? 'In stock' : 'Out of stock'}</p>
         <div className={styles.actions}>
           <div className={styles.quantity}>
@@ -151,10 +156,11 @@ const ProductDetails: React.FC = () => {
               type="text"
               value={Number(quantity)}
               onChange={(e) => setQuantity(Number(e.target.value))}
+              disabled={alreadyInCart}
             />
 
             <button
-              disabled={quantity <= 1}
+              disabled={quantity <= 1 || alreadyInCart}
               onClick={() => setQuantity((prev) => prev - 1)}
               className={styles.minus}
             >
@@ -162,7 +168,7 @@ const ProductDetails: React.FC = () => {
             </button>
 
             <button
-              disabled={quantity >= product?.data.stock}
+              disabled={quantity >= product?.data.stock || alreadyInCart}
               onClick={() => setQuantity((prev) => prev + 1)}
               className={styles.plus}
             >
@@ -190,7 +196,11 @@ const ProductDetails: React.FC = () => {
                 else router.push('/auth/signin')
               }}
             >
-              {cartMutation.isLoading ? `Loading...` : `Add to Cart`}
+              {cartMutation.isLoading
+                ? `Loading...`
+                : cartMutation.isSuccess
+                ? `Added To Cart`
+                : `Add to Cart`}
             </button>
           )}
         </div>
@@ -210,7 +220,12 @@ const ProductDetails: React.FC = () => {
               }}
               className={styles.favorites}
             >
-              <AiFillHeart /> <span>REMOVE FROM FAVORITES</span>
+              <AiFillHeart />{' '}
+              <span>
+                {favoriteMutation.isLoading
+                  ? `LOADING...`
+                  : `REMOVE FROM FAVORITES`}
+              </span>
             </button>
           ) : (
             <button
@@ -226,7 +241,10 @@ const ProductDetails: React.FC = () => {
               }}
               className={styles.favorites}
             >
-              <AiOutlineHeart /> <span>ADD TO FAVORITES</span>
+              <AiOutlineHeart />{' '}
+              <span>
+                {favoriteMutation.isLoading ? `LOADING...` : `ADD TO FAVORITES`}
+              </span>
             </button>
           )}
         </div>

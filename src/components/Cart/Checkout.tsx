@@ -25,7 +25,7 @@ const Checkout = ({ cart }: any) => {
           <p>Shipping:</p>
           <p>{shippingTotal === 0 ? `Free` : `USD ` + shippingTotal}</p>
         </div>
-        <div className={styles.orderItem}>
+        <div className={`${styles.orderItem} ${styles.orderTotal}`}>
           <p>Order Total:</p>
           <p>USD {itemsTotal + shippingTotal}</p>
         </div>
@@ -33,7 +33,7 @@ const Checkout = ({ cart }: any) => {
         <div className={styles.buttonContainer}>
           <button className={styles.checkout}>Place your order</button>
           <p>
-            By placing your order, you agree to Amazon&lsquo;s{' '}
+            By placing your order, you agree to our{' '}
             <a href="#">privacy notice</a> and <a href="#">conditions of use</a>
             .
           </p>

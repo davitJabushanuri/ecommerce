@@ -24,7 +24,7 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
     try {
       const product = await prisma.cart.update({
         where: { id: body.id },
-        data: { quantity: body.quantity },
+        data: { quantity: Number(body.quantity) },
       })
       return res.status(200).json({ message: 'Product updated', product })
     } catch (e: any) {

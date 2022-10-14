@@ -1,6 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 1rem;
 
   .cart {
     display: flex;
@@ -10,6 +11,6 @@
 
   @media (min-width: 800px) {
     grid-template-columns: 2fr 1fr;
-    gap: 1rem;
+    padding: 1rem;
   }
 }

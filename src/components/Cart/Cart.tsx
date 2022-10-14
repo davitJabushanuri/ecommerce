@@ -27,7 +27,7 @@ const Cart = () => {
 
       {/* CHECKOUT */}
       <div className={styles.checkout}>
-        <Checkout />
+        <Checkout cart={user?.cartItems} />
       </div>
     </div>
   )

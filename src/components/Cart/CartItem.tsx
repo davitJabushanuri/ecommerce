@@ -58,7 +58,7 @@ const CartItem: React.FC<CartItemProps> = ({
             <input
               type="text"
               value={quantity || 1}
-              onBlur={(e) => {
+              onChange={(e) => {
                 quantityMutation.mutate({
                   id: cartItemId,
                   quantity: e.target.value,

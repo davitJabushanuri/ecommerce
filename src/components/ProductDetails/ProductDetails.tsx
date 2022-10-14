@@ -117,6 +117,12 @@ const ProductDetails: React.FC = () => {
           <p>{product?.data.price}</p>
         </div>
 
+        <div className={styles.condition}>
+          <p>
+            <span>Condition:</span> {product?.data.condition}
+          </p>
+        </div>
+
         <div className={styles.stockContainer}>
           {product?.data.stock ? (
             <div className={styles.stock}>
@@ -127,7 +133,7 @@ const ProductDetails: React.FC = () => {
                   : product.data.stock > 10
                   ? 'more than 10 available'
                   : product.data.stock <= 10
-                  ? `${product.data.stock`available`}`
+                  ? product.data?.stock + ' ' + 'available'
                   : ''}
               </span>
             </div>

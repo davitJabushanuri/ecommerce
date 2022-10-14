@@ -22,21 +22,19 @@
 
     h2 {
       font-weight: 500;
-      margin-bottom: 0.5rem;
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
+    .inStock {
+      color: green;
+    }
+
     .price {
       font-weight: 600;
       font-size: 1.2rem;
-    }
-
-    .inStock {
-      color: green;
-      font-weight: 500;
     }
 
     .outOfStock {
@@ -52,7 +50,7 @@
 
       .quantity {
         display: grid;
-        grid-template-columns: 1.4rem 1rem 1.4rem;
+        grid-template-columns: 1.4rem 1.2rem 1.4rem;
         gap: 0.4rem;
         width: fit-content;
         border: 2px solid #ccc;

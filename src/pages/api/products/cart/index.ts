@@ -20,6 +20,19 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
+  if (req.method === 'PUT') {
+    try {
+      const product = await prisma.cart.update({
+        where: { id: body.id },
+        data: { quantity: body.quantity },
+      })
+      return res.status(200).json({ message: 'Product updated', product })
+    } catch (e: any) {
+      console.log(e)
+      return res.status(500).json({ message: e.message })
+    }
+  }
+
   if (req.method === 'DELETE') {
     try {
       const cart = await prisma.cart.delete({

@@ -18,6 +18,9 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
           },
         },
         cartItems: {
+          orderBy: {
+            createdAt: 'asc',
+          },
           include: {
             product: true,
           },

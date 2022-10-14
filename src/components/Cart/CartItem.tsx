@@ -5,23 +5,23 @@ import { useState } from 'react'
 import styles from './CartItem.module.scss'
 
 import { FaTrash } from 'react-icons/fa'
+import useQuantity from '@components/hooks/useQuantity'
 
 interface CartItemProps {
   userId: string
-  productId: string
+  cartItemId: string
   product: IProduct
   quantity: number
 }
 
 const CartItem: React.FC<CartItemProps> = ({
   userId,
-  productId,
+  cartItemId,
   product,
   quantity,
 }) => {
   const cartMutation = useCart('remove')
-
-  const [quantityState, setQuantity] = useState(quantity || 1)
+  const quantityMutation = useQuantity()
 
   return (
     <div className={styles.container}>
@@ -31,37 +31,48 @@ const CartItem: React.FC<CartItemProps> = ({
 
       <div className={styles.info}>
         <h2>{product?.name}</h2>
+        <div className={product.stock > 0 ? styles.inStock : styles.outOfStock}>
+          <p>{product.stock === 0 ? 'Out of stock' : 'In stock'}</p>
+        </div>
         <p className={styles.price}>${product?.price}</p>
         <p>
           {product?.shipping === 0
             ? `Free shipping`
-            : product?.shipping + ' ' + '$'}
+            : 'Shipping: ' + '$' + product?.shipping}
         </p>
-        <div className={product.stock > 0 ? styles.inStock : styles.outOfStock}>
-          <p>{product.stock === 0 ? 'Out of stock' : 'In stock'}</p>
-        </div>
 
         <div className={styles.deleteContainer}>
           <div className={styles.quantity}>
             <button
               className={styles.minus}
-              disabled={quantityState === 1}
+              disabled={quantity === 1}
               onClick={() => {
-                setQuantity((prevQuantity) => prevQuantity - 1)
+                quantityMutation.mutate({
+                  id: cartItemId,
+                  quantity: quantity - 1,
+                })
               }}
             >
               -
             </button>
             <input
               type="text"
-              value={quantityState}
-              onChange={(e) => setQuantity(Number(e.target.value))}
+              value={quantity || 1}
+              onBlur={(e) => {
+                quantityMutation.mutate({
+                  id: cartItemId,
+                  quantity: e.target.value,
+                })
+              }}
             />
             <button
               className={styles.plus}
-              disabled={quantityState >= product?.stock}
+              disabled={quantity >= product?.stock}
               onClick={() => {
-                setQuantity((prevQuantity) => prevQuantity + 1)
+                quantityMutation.mutate({
+                  id: cartItemId,
+                  quantity: quantity + 1,
+                })
               }}
             >
               +
@@ -73,7 +84,7 @@ const CartItem: React.FC<CartItemProps> = ({
             onClick={() =>
               cartMutation.mutate({
                 userId: userId,
-                productId: productId,
+                productId: cartItemId,
                 quantity: '1',
               })
             }

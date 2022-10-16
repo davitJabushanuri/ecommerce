@@ -1,8 +1,6 @@
 import styles from './Checkout.module.scss'
 
 const Checkout = ({ cart }: any) => {
-  console.log(cart)
-
   const itemsTotal = cart
     ? cart
         .map((item: any) => item.product.price * item.quantity)

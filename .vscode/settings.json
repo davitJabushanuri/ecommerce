@@ -5,6 +5,7 @@
     "nextauth",
     "ramonak",
     "Swiper",
+    "toastify",
     "zustand"
   ]
 }

@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import useCart from '@components/hooks/useCart'
 import { IProduct } from '@ts/interfaces/types'
-import { useState } from 'react'
 import styles from './CartItem.module.scss'
 
 import { FaTrash } from 'react-icons/fa'

@@ -90,7 +90,6 @@ model Product {
   reviews      Review[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  orders       Order[]
   favorites    Favorite[]
   cartItems    Cart[]
   questions    Question[]
@@ -188,6 +187,8 @@ model Cart {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderId   String?
+  order     Order?   @relation(fields: [orderId], references: [id])
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -197,12 +198,8 @@ model Order {
   id              String    @id @default(cuid())
   userId          String
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  products        Product[]
-  name            String
-  description     String?
-  image           String
-  price           Int       @default(0)
-  quantity        Int       @default(0)
+  cartId          String
+  cartItems       Cart[]
   shippingAddress String
   shippingCity    String
   shippingState   String

@@ -4,8 +4,10 @@ import { MdCancel } from 'react-icons/md'
 import { useState } from 'react'
 import useProducts from '@components/hooks/useProducts'
 import { IProduct } from '@ts/interfaces/types'
+import { useRouter } from 'next/router'
 
 const Search = () => {
+  const router = useRouter()
   const [search, setSearch] = useState('')
   const products = useProducts()
 
@@ -14,6 +16,11 @@ const Search = () => {
         return product.name.toLowerCase().includes(search.toLowerCase())
       })
     : []
+
+  const handleSearch = (id: string) => {
+    setSearch('')
+    router.push(`/product/${id}`)
+  }
 
   if (products.isLoading) return <p>Loading...</p>
 
@@ -39,7 +46,11 @@ const Search = () => {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product: IProduct) => {
             return (
-              <div className={styles.result} key={product.id}>
+              <div
+                onClick={() => handleSearch(product.id)}
+                className={styles.result}
+                key={product.id}
+              >
                 <p>{product.name}</p>
               </div>
             )

@@ -23,7 +23,6 @@ export default async function products(
     })
   }
 
-  // post data to database
   try {
     const product = await prisma.product.create({
       data: {

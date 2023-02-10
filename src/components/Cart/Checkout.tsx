@@ -1,6 +1,10 @@
 import styles from './Checkout.module.scss'
 
-const Checkout = ({ cart }: any) => {
+const handleCheckout = (userId: string) => {
+  console.log(userId)
+}
+
+const Checkout = ({ cart, userId }: any) => {
   const itemsTotal = cart
     ? cart
         .map((item: any) => item.product.price * item.quantity)
@@ -29,7 +33,12 @@ const Checkout = ({ cart }: any) => {
         </div>
 
         <div className={styles.buttonContainer}>
-          <button className={styles.checkout}>Place your order</button>
+          <button
+            onClick={() => handleCheckout(userId)}
+            className={styles.checkout}
+          >
+            Place your order
+          </button>
           <p>
             By placing your order, you agree to our{' '}
             <a href="#">privacy notice</a> and <a href="#">conditions of use</a>

@@ -43,7 +43,7 @@ const Search = () => {
         </button>
       </div>
       <div className={`${styles.results}  ${search && styles.showResults}`}>
-        {filteredProducts.length > 0 ? (
+        {filteredProducts?.length > 0 ? (
           filteredProducts.map((product: IProduct) => {
             return (
               <div

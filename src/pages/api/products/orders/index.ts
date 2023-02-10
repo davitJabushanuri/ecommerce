@@ -13,12 +13,11 @@ export default async function orders(
       const order = await prisma.order.create({
         data: {
           userId: body.userId,
-          cartId: body.cartId,
         },
       })
       return res.status(200).json(order)
-    } catch (e) {
-      console.log(e)
+    } catch (e: any) {
+      res.status(500).json(e.message)
     }
   }
 }

@@ -15,8 +15,8 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
         },
       })
       res.status(200).json({ message: 'Product added to cart' })
-    } catch (e) {
-      console.log(e)
+    } catch (e: any) {
+      res.status(500).json({ message: e.message })
     }
   }
 
@@ -35,7 +35,7 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === 'DELETE') {
     try {
-      const cart = await prisma.cart.delete({
+      await prisma.cart.delete({
         where: {
           id: body.id,
         },

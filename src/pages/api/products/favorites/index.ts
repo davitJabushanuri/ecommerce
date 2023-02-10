@@ -16,8 +16,8 @@ export default async function favorites(
         },
       })
       res.status(200).json(favorites)
-    } catch (e) {
-      console.log(e)
+    } catch (e: any) {
+      res.status(500).json(e.message)
     }
   }
 
